@@ -7,6 +7,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.perfree.entity.User;
 import com.perfree.service.UserService;
 
+/**
+ * 测试
+ * @author Perfree
+ *
+ */
 @RestController
 public class TestController {
 
@@ -15,6 +20,6 @@ public class TestController {
 	
 	@RequestMapping("/")
 	public User index() {
-		return testService.getUser();
+		return testService.getUserById(1);
 	}
 }
