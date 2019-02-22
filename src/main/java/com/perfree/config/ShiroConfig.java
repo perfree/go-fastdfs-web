@@ -61,6 +61,7 @@ public class ShiroConfig {
     @Bean
     public DefaultWebSessionManager sessionManager() {
         DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
+        sessionManager.setSessionIdUrlRewritingEnabled(false);
         return sessionManager;
     }
     
@@ -119,4 +120,5 @@ public class ShiroConfig {
 		ShiroRealm authRealm = new ShiroRealm();
 		return authRealm;
 	}
+	
 }
