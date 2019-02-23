@@ -29,10 +29,13 @@ public class SystemController {
 	 * @return
 	 */
 	@RequestMapping(method=RequestMethod.POST,path="/doLogin")
-	public AjaxResult doLogin(User user) {
+	public AjaxResult doLogin(User user,Boolean rememberMe) {
 		AjaxResult result = null;
+		if(rememberMe == null) {
+            rememberMe = false;
+        }
 		try {
-			UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(user.getAccount(),user.getPassword());
+			UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(user.getAccount(),user.getPassword(),rememberMe);
 			Subject subject = SecurityUtils.getSubject();
 			subject.login(usernamePasswordToken);
 			result = new AjaxResult(AjaxResult.AJAX_SUCCESS);

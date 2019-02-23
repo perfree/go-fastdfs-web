@@ -79,7 +79,9 @@ public class ShiroRealm extends AuthorizingRealm{
 			String md5Hash = new Md5Hash(userToken.getPassword(), user.getCredentialsSalt()).toString();
 			userToken.setPassword(md5Hash.toCharArray());
 		}
-		SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(user,user.getPassword(),getName());
+		String password = user.getPassword();
+		user.setPassword(null);
+		SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(user,password,getName());
 		return simpleAuthenticationInfo;
 	}
 	

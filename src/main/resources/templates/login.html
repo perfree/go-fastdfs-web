@@ -10,16 +10,17 @@
 <div class="login">
 	<div class="message">GoFastDfs-管理登录</div>
 	<div id="darkbannerwrap"></div>
-	<form method="post" class="layui-form" >
+	<form method="post" class="layui-form" action="/doLogin">
 	    <input name="account" placeholder="用户名"  type="text" lay-verify="required" class="layui-input" >
 	    <hr class="hr15">
 	    <input name="password" lay-verify="required" placeholder="密码"  type="password" class="layui-input">
 	    <hr class="hr15">
-	    <input class="loginin" value="登录" lay-submit lay-filter="login" style="width:100%;" type="submit">
-	    <hr class="hr20" >
-	    <div>
-	    	前端静态展示，请随意输入，即可登录。
+	    <div style="height: 20px;">
+	    	<input type="checkbox" name="rememberMe" title="记住我" lay-skin="primary">
+	    	<a href="#" style="float: right;color:#666">忘记密码</a>
 	    </div>
+	    <hr class="hr15">
+	    <input class="loginin" value="登录" lay-submit lay-filter="login" style="width:100%;" type="submit">
 	</form>
 </div>
 <script th:src="@{/plugins/layui/layui.js}"></script>
