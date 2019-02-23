@@ -1,10 +1,42 @@
-<!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>登录</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<title>登录</title>
+	<link rel="stylesheet" th:href="@{/css/login.css}" media="all">
+	<link rel="stylesheet" th:href="@{/plugins/layui/css/layui.css}" media="all">
 </head>
-<body>
-登录
+<body class="login-bg">
+<div class="login">
+	<div class="message">GoFastDfs-管理登录</div>
+	<div id="darkbannerwrap"></div>
+	<form method="post" class="layui-form" >
+	    <input name="account" placeholder="用户名"  type="text" lay-verify="required" class="layui-input" >
+	    <hr class="hr15">
+	    <input name="password" lay-verify="required" placeholder="密码"  type="password" class="layui-input">
+	    <hr class="hr15">
+	    <input class="loginin" value="登录" lay-submit lay-filter="login" style="width:100%;" type="submit">
+	    <hr class="hr20" >
+	    <div>
+	    	前端静态展示，请随意输入，即可登录。
+	    </div>
+	</form>
+</div>
+<script th:src="@{/plugins/layui/layui.js}"></script>
+<script type="text/javascript">
+layui.use(['form','jquery','layer'], function(){
+  var form = layui.form,$=layui.jquery,layer=layui.layer;
+  form.on('submit(login)', function(data){
+	  $.post("/doLogin",data.field,function(result){
+		 if(result.state == 200){
+			  location.href='/';
+		 }else{
+			 layer.msg(result.msg);
+		 }
+	  });
+	  return false;
+  });
+});
+</script>
 </body>
 </html>

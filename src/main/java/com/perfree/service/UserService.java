@@ -32,7 +32,6 @@ public class UserService {
 	 * @return User
 	 */
 	public User getUserByAccount(String account) {
-		// TODO Auto-generated method stub
-		return null;
+		return userMapper.getUserByAccount(account);
 	}
 }

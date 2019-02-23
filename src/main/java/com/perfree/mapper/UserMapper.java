@@ -19,4 +19,12 @@ public interface UserMapper{
 	@Select("select * from t_user where id = #{id}")
 	User getUserById(Integer id);
 
+	/**
+	 * 根据用户账户查询用户信息
+	 * @param account
+	 * @return
+	 */
+	@Select("select * from t_user where account = #{account}")
+	User getUserByAccount(String account);
+
 }

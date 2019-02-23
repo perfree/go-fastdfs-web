@@ -3,7 +3,9 @@ package com.perfree.config;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
+import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
+import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
@@ -67,11 +69,11 @@ public class ShiroRealm extends AuthorizingRealm{
 		User user = userService.getUserByAccount(account);
 		//判断user是否为空
 		if(user == null) {
-			return null;
+			throw new UnknownAccountException("账户不存在");
 		}
 		//判断密码是否为空
 		if(user.getPassword() == null) {
-			return null;
+			throw new IncorrectCredentialsException("密码为空");
 		}else {
 			//md5加密加盐,放入token
 			String md5Hash = new Md5Hash(userToken.getPassword(), user.getCredentialsSalt()).toString();
