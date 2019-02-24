@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>菜单模板</title>
+</head>
+<body>
+	<div class="perfree-menu" th:fragment="menu">
+		<!-- menu start 菜单部分开始 -->
+		<div class="layui-side layui-bg-black left-navbar-menu">
+			<div class="layui-side-scroll">
+				<div class="layui-logo">
+					<a href="#" class="logo-text">
+						<i class="fa fa-pagelines" style="font-size: 20px;"></i>
+						<span class='logo-text-value'>Go-Fastdfs-admin</span>
+					</a>
+				</div>
+				<ul class="layui-nav layui-nav-tree left-menu" lay-filter="menu" lay-shrink="all">
+					<!-- 菜单列表 -->
+					<li class="layui-nav-item" lay-unselect>
+						<a href="javascript:;" class="nav-menu-a" onclick="openTab('book','控制台','main','1');">
+							<i class="fa fa-home" style="font-size: 16px;"></i>&nbsp;&nbsp;<span class="menu-text">控制台</span>
+						</a>
+					</li>
+					<li class="layui-nav-item" lay-unselect>
+						<a href="javascript:;" class="nav-menu-a" >
+							<i class="fa fa-file-archive-o" style="font-size: 14px;"></i>&nbsp;&nbsp;<span class="menu-text">文件管理</span>
+						</a>
+						<dl class="layui-nav-child">
+							<dd class="child-menu" lay-unselect>
+								<a href="javascript:;" onclick="openTab('file','文件上传','/main','2');" class="nav-menu-a-child" >文件上传</a>
+							</dd>
+						</dl>
+					</li>
+					<li class="layui-nav-item" lay-unselect>
+						<a href="javascript:;" class="nav-menu-a" >
+							<i class="fa fa-cubes" style="font-size: 14px;"></i>&nbsp;&nbsp;<span class="menu-text">集群管理</span>
+						</a>
+						<dl class="layui-nav-child">
+							<dd class="child-menu" lay-unselect>
+								<a href="javascript:;" onclick="openTab('cube','添加集群','/main','3');" class="nav-menu-a-child" >添加集群</a>
+							</dd>
+						</dl>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<!-- menu end 菜单部分结束 -->
+	</div>
+</body>
+</html>

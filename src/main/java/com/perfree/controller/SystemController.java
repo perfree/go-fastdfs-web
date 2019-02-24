@@ -6,8 +6,11 @@ import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
+import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.perfree.common.AjaxResult;
@@ -18,7 +21,7 @@ import com.perfree.entity.User;
  * @author Perfree
  *
  */
-@RestController
+@Controller
 public class SystemController {
 	
 	private static Logger logger = Logger.getLogger(SystemController.class);
@@ -28,6 +31,7 @@ public class SystemController {
 	 * @param user
 	 * @return
 	 */
+	@ResponseBody
 	@RequestMapping(method=RequestMethod.POST,path="/doLogin")
 	public AjaxResult doLogin(User user,Boolean rememberMe) {
 		AjaxResult result = null;
@@ -39,16 +43,31 @@ public class SystemController {
 			Subject subject = SecurityUtils.getSubject();
 			subject.login(usernamePasswordToken);
 			result = new AjaxResult(AjaxResult.AJAX_SUCCESS);
+			logger.info(user.getAccount()+" >>>login");
 		}catch (IncorrectCredentialsException e) {
-			logger.error(user.getAccount()+e.getMessage());
+			logger.info(user.getAccount()+e.getMessage());
 			result = new AjaxResult(AjaxResult.AJAX_ERROR,"密码错误");
 		}catch (UnknownAccountException e) {
-			logger.error(user.getAccount()+e.getMessage());
+			logger.info(user.getAccount()+e.getMessage());
 			result = new AjaxResult(AjaxResult.AJAX_ERROR,"用户不存在");
 		}catch (Exception e) {
 			logger.error(user.getAccount()+e.getMessage());
 			result = new AjaxResult(AjaxResult.AJAX_ERROR,"系统异常");
 		}
 		return result;
+	}
+	
+	/**
+	 * 登出
+	 * @return
+	 */
+	@RequestMapping(path="/logout",method=RequestMethod.GET)
+	public String logout() {
+		Subject subject = SecurityUtils.getSubject();
+        User user=new User();
+        BeanUtils.copyProperties(subject.getPrincipals().getPrimaryPrincipal(), user);
+        logger.info(user.getAccount()+" >>>logout");
+        subject.logout();
+		return "redirect:/login";
 	}
 }

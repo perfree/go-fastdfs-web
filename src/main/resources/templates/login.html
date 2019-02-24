@@ -5,6 +5,10 @@
 	<title>登录</title>
 	<link rel="stylesheet" th:href="@{/css/login.css}" media="all">
 	<link rel="stylesheet" th:href="@{/plugins/layui/css/layui.css}" media="all">
+	<script type="text/javascript">
+	if (window != top) 
+		top.location.href = location.href; 
+	</script>
 </head>
 <body class="login-bg">
 <div class="login">

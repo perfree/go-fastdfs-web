@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>GoFastDfs管理平台</title>
+<link rel="stylesheet" th:href="@{/plugins/layui/css/layui.css}" media="all">
+<link rel="stylesheet" th:href="@{/plugins/layer/theme/default/layer.css}">
+<link rel="stylesheet" th:href="@{/css/index.css}">
+<link rel="stylesheet" th:href="@{/css/theme/white.css}">
+<link rel="stylesheet" th:href="@{/plugins/font-awesome/css/font-awesome.min.css}">
+</head>
+<body class="layui-layout-body">
+	<div class="layui-layout layui-layout-admin">
+		<!-- 引入头部模板 -->
+		<div th:include="public/header :: header"></div>
+
+		<!-- 引入菜单模板 -->
+		<div th:include="public/menu :: menu"></div>
+
+		<!-- 引入内容模板 -->
+		<div th:include="public/content :: content"></div>
+
+		<!-- footer start 底部footer开始 -->
+		<div class="layui-footer">© GoFastDfsWeb - Perfree</div>
+		<!-- footer end 底部footer结束 -->
+	</div>
+	<!-- theme start 主题设置开始 -->
+	<div class="layui-card theme">
+		<div class="layui-card-header">主题设置</div>
+		<div class="layui-card-body theme-box-body"></div>
+	</div>
+	<!-- theme end 主题设置结束 -->
+	<script th:src="@{/js/jquery.min.js}"></script>
+	<script th:src="@{/plugins/layer/layer.js}"></script>
+	<script th:src="@{/plugins/layui/layui.js}"></script>
+	<script th:src="@{/plugins/perfree/common.js}"></script>
+	<script th:src="@{/plugins/perfree/theme.js}"></script>
+	<script th:src="@{/plugins/perfree/index.js}"></script>
+	<script>
+	//ifram自适应
+	util.iframeAuto();
+	//初始化主题,如自己增加主题,可参考theme.js,增加json格式信息及css文件即可
+	util.initTheme(theme);
+	layui.use('element', function(){
+	  var element = layui.element;
+	});
+	</script>
+</body>
+</html>

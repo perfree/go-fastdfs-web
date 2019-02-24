@@ -1,0 +1,39 @@
+
+2019-02-24 10:13:46
+[INFO]-[Thread: http-nio-8888-exec-6]-[com.perfree.controller.SystemController.logout()]: admin >>>logout
+
+2019-02-24 10:14:33
+[ERROR]-[Thread: http-nio-8888-exec-10]-[com.perfree.controller.SystemController.doLogin()]: admin >>>login
+
+2019-02-24 10:14:37
+[INFO]-[Thread: http-nio-8888-exec-9]-[com.perfree.controller.SystemController.logout()]: admin >>>logout
+
+2019-02-24 10:14:44
+[ERROR]-[Thread: http-nio-8888-exec-8]-[com.perfree.controller.SystemController.doLogin()]: admin >>>login
+
+2019-02-24 10:17:13
+[INFO]-[Thread: http-nio-8888-exec-2]-[com.perfree.controller.SystemController.logout()]: admin >>>logout
+
+2019-02-24 10:22:25
+[ERROR]-[Thread: http-nio-8888-exec-6]-[com.perfree.controller.SystemController.doLogin()]: admin >>>login
+
+2019-02-24 10:22:52
+[ERROR]-[Thread: http-nio-8888-exec-1]-[com.perfree.controller.SystemController.doLogin()]: admin >>>login
+
+2019-02-24 10:26:54
+[ERROR]-[Thread: http-nio-8888-exec-6]-[com.perfree.controller.SystemController.doLogin()]: admin >>>login
+
+2019-02-24 10:27:16
+[INFO]-[Thread: http-nio-8888-exec-4]-[com.perfree.controller.SystemController.logout()]: admin >>>logout
+
+2019-02-24 10:27:26
+[ERROR]-[Thread: http-nio-8888-exec-6]-[com.perfree.controller.SystemController.doLogin()]: admin >>>login
+
+2019-02-24 10:28:22
+[ERROR]-[Thread: http-nio-8888-exec-3]-[com.perfree.controller.SystemController.doLogin()]: admin >>>login
+
+2019-02-24 10:34:48
+[INFO]-[Thread: http-nio-8888-exec-7]-[com.perfree.controller.SystemController.doLogin()]: admin >>>login
+
+2019-02-24 10:35:17
+[INFO]-[Thread: http-nio-8888-exec-3]-[com.perfree.controller.SystemController.doLogin()]: admin >>>login

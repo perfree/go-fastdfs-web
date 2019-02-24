@@ -1,0 +1,21 @@
+.layui-layout-admin .layui-header {
+    background-color: #393D49;
+}
+.layui-nav{
+	background-color: #393d49;
+}
+.layui-bg-black {
+    background-color: #393d49!important;
+}
+.layui-layout-admin .layui-logo{
+	border-bottom: 1px solid #32343a;
+}
+.layui-tab-card>.layui-tab-title{
+	background-color: #ffffff;
+}
+.layui-tab-card>.layui-tab-title .layui-this {
+    background-color: #009688;
+}
+.layui-tab-brief>.layui-tab-title .layui-this {
+    color: #f7f7f7;
+}

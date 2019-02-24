@@ -76,7 +76,6 @@ public class ShiroConfig {
 		//角色/权限认证失败跳转页面
 		shiroFilterFactoryBean.setUnauthorizedUrl("/403");
 		Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
-		filterChainDefinitionMap.put("/", "user");
 		//配置无需认证页面/url
 		filterChainDefinitionMap.put("/login", "anon");
 		filterChainDefinitionMap.put("/doLogin", "anon");
