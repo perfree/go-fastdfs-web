@@ -91,7 +91,7 @@ public class ShiroConfig {
 		filterChainDefinitionMap.put("/plugins/**", "anon");
 		filterChainDefinitionMap.put("/fonts/**", "anon");
 		//配置所有页面必须登录
-		filterChainDefinitionMap.put("/**", "authc");
+		filterChainDefinitionMap.put("/**", "user");
 		//配置权限拦截(后期加)
 		//filterChainDefinitionMap.put("/**", "roles[admin]");
 		shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
