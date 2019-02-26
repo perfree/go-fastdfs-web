@@ -4,9 +4,58 @@
 <meta charset="UTF-8">
 <title>控制台</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link rel="stylesheet" th:href="@{/plugins/layui/css/layui.css}" media="all">
+<link rel="stylesheet" th:href="@{/plugins/font-awesome/css/font-awesome.min.css}" media="all">
+<style type="text/css">
+	.page-view-totla {
+		font-size: 36px;
+		color: #666;
+		line-height: 36px;
+		padding: 5px 0 10px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		word-break: break-all;
+		white-space: nowrap;
+	}
+</style>
 </head>
 <body>
-	<div class="layui-container" style="width: 100%;">
+<div class="layui-container" style="width: 100%;">
+	<div class="layui-row">
+		<div class="layui-col-md3" style="padding:5px;">
+			<div class="layui-card">
+				<div class="layui-card-header">文件总数(30天)<i class="fa fa-calculator" style="font-size: 16px;position: absolute;right: 15px;top: 10px;"></i></div>
+				<div class="layui-card-body">
+					<p class="page-view-totla">76</p>
+				</div>
+			</div>
+		</div>
+		<div class="layui-col-md3" style="padding:5px;">
+			<div class="layui-card">
+				<div class="layui-card-header">文件大小(30天)<i class="fa fa-file-archive-o" style="font-size: 16px;position: absolute;right: 15px;top: 10px;"></i></div>
+				<div class="layui-card-body">
+					<p class="page-view-totla">150M</p>
+				</div>
+			</div>
+		</div>
+		<div class="layui-col-md3" style="padding:5px;">
+			<div class="layui-card">
+				<div class="layui-card-header">设备数量<i class="fa fa-desktop" style="font-size: 16px;position: absolute;right: 15px;top: 10px;"></i></div>
+				<div class="layui-card-body">
+					<p class="page-view-totla">10台</p>
+				</div>
+			</div>
+		</div>
+		<div class="layui-col-md3" style="padding:5px;">
+			<div class="layui-card">
+				<div class="layui-card-header">预留<i class="fa fa-fire" style="font-size: 16px;position: absolute;right: 15px;top: 10px;"></i></div>
+				<div class="layui-card-body">
+					<p class="page-view-totla">10</p>
+				</div>
+			</div>
+		</div>
 	</div>
+</div>
+<script th:src="@{/plugins/layui/layui.js}"></script>
 </body>
 </html>
