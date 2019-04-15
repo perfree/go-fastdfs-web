@@ -1,5 +1,6 @@
 package com.perfree.controller;
 
+
 import org.apache.log4j.Logger;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -24,6 +25,24 @@ import com.perfree.entity.User;
 public class SystemController {
 	
 	private static Logger logger = Logger.getLogger(SystemController.class);
+	
+	/**
+	 * 首页
+	 * @return
+	 */
+	@RequestMapping("/")
+	public String index() {
+		return "index";
+	}
+	
+	/**
+	 * 登录页
+	 * @return
+	 */
+	@RequestMapping("/login")
+	public String login() {
+		return "login";
+	}
 	
 	/**
 	 * 登录操作

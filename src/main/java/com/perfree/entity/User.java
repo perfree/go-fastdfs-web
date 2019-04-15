@@ -1,7 +1,6 @@
 package com.perfree.entity;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import lombok.Data;
 
@@ -14,5 +13,5 @@ public class User implements Serializable{
 	private String name;
 	private String credentialsSalt;
 	private String email;
-	private Date createTime;
+	private String createTime;
 }

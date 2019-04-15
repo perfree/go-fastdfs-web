@@ -1,5 +1,6 @@
 package com.perfree.mapper;
 
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 
 import com.perfree.entity.User;
@@ -26,5 +27,8 @@ public interface UserMapper{
 	 */
 	@Select("select * from t_user where account = #{account}")
 	User getUserByAccount(String account);
+
+	@Insert("insert into t_user(account, password, name, credentialsSalt, email,createTime) values(#{account},#{password},#{name},#{credentialsSalt},#{email},#{createTime})")
+	void saveUser(User user);
 
 }

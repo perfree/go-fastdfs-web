@@ -10,32 +10,24 @@ html, body {
 	font-family: Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei,
 		微软雅黑, Arial, sans-serif;
 }
-.login-bg {
+.install-bg {
   /*background: #eeeeee 0 0 no-repeat;*/
   background: url(/images/bg.png) no-repeat center;
   background-size: cover;
-  overflow: hidden;
+  background-attachment:fixed;
 }
-.login {
-  margin: 120px auto 0 auto;
-  min-height: 420px;
-  max-width: 420px;
-  padding: 40px;
-  background-color: #ffffff;
-  margin-left: auto;
-  margin-right: auto;
-  border-radius: 4px;
-  /* overflow-x: hidden; */
-  box-sizing: border-box;
+.install{
+	margin: 120px auto 0 auto;
+    min-height: 420px;
+    max-width: 420px;
+    padding: 40px;
+    background-color: #ffffff;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 4px;
+    box-sizing: border-box;
 }
-.login a.logo {
-  display: block;
-  height: 58px;
-  width: 167px;
-  margin: 0 auto 30px auto;
-  background-size: 167px 42px;
-}
-.login .message {
+.install .message {
   margin: 10px 0 0 -58px;
   padding: 18px 10px 18px 60px;
   background: #189F92;
@@ -43,18 +35,18 @@ html, body {
   color: #fff;
   font-size: 16px;
 }
-.login #darkbannerwrap {
+.install #darkbannerwrap {
   background: url(/images/aiwrap.png);
   width: 18px;
   height: 10px;
   margin: 0 0 20px -58px;
   position: relative;
 }
-.login input[type=text],
-.login input[type=file],
-.login input[type=password],
-.login input[type=email],
-.login select {
+.install input[type=text],
+.install input[type=file],
+.install input[type=password],
+.install input[type=email],
+.install select {
   border: 1px solid #DCDEE0;
   vertical-align: middle;
   border-radius: 3px;
@@ -66,15 +58,15 @@ html, body {
   width: 100%;
   box-sizing: border-box;
 }
-.login input[type=text]:focus,
-.login input[type=file]:focus,
-.login input[type=password]:focus,
-.login input[type=email]:focus,
-.login select:focus {
+.install input[type=text]:focus,
+.install input[type=file]:focus,
+.install input[type=password]:focus,
+.install input[type=email]:focus,
+.install select:focus {
   border: 1px solid #27A9E3;
 }
-.login input[type=submit],
-.login input[type=button] {
+.install input[type=submit],
+.install input[type=button] {
   display: inline-block;
   padding: 12px 24px;
   margin: 0px;
@@ -92,17 +84,17 @@ html, body {
   outline: none;
   width: 100%;
 }
-.login hr {
+.install hr {
   background: #fff 0 0 no-repeat;
 }
-.login hr.hr15 {
+.install hr.hr15 {
   height: 15px;
   border: none;
   margin: 0px;
   padding: 0px;
   width: 100%;
 }
-.login hr.hr20 {
+.install hr.hr20 {
   height: 20px;
   border: none;
   margin: 0px;
