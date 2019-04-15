@@ -27,15 +27,6 @@ public class SystemController {
 	private static Logger logger = Logger.getLogger(SystemController.class);
 	
 	/**
-	 * 首页
-	 * @return
-	 */
-	@RequestMapping("/")
-	public String index() {
-		return "index";
-	}
-	
-	/**
 	 * 登录页
 	 * @return
 	 */
