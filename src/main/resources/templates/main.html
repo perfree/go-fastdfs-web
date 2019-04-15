@@ -24,9 +24,25 @@
 	<div class="layui-row">
 		<div class="layui-col-md3" style="padding:5px;">
 			<div class="layui-card">
+				<div class="layui-card-header">文件总数<i class="fa fa-calculator" style="font-size: 16px;position: absolute;right: 15px;top: 10px;"></i></div>
+				<div class="layui-card-body">
+					<p class="page-view-totla" th:text="${count}"></p>
+				</div>
+			</div>
+		</div>
+		<div class="layui-col-md3" style="padding:5px;">
+			<div class="layui-card">
+				<div class="layui-card-header">文件总大小<i class="fa fa-file-archive-o" style="font-size: 16px;position: absolute;right: 15px;top: 10px;"></i></div>
+				<div class="layui-card-body">
+					<p class="page-view-totla" th:text="${size}"></p>
+				</div>
+			</div>
+		</div>
+		<div class="layui-col-md3" style="padding:5px;">
+			<div class="layui-card">
 				<div class="layui-card-header">文件总数(30天)<i class="fa fa-calculator" style="font-size: 16px;position: absolute;right: 15px;top: 10px;"></i></div>
 				<div class="layui-card-body">
-					<p class="page-view-totla">76</p>
+					<p class="page-view-totla" th:text="${latelyCount}"></p>
 				</div>
 			</div>
 		</div>
@@ -34,23 +50,7 @@
 			<div class="layui-card">
 				<div class="layui-card-header">文件大小(30天)<i class="fa fa-file-archive-o" style="font-size: 16px;position: absolute;right: 15px;top: 10px;"></i></div>
 				<div class="layui-card-body">
-					<p class="page-view-totla">150M</p>
-				</div>
-			</div>
-		</div>
-		<div class="layui-col-md3" style="padding:5px;">
-			<div class="layui-card">
-				<div class="layui-card-header">设备数量<i class="fa fa-desktop" style="font-size: 16px;position: absolute;right: 15px;top: 10px;"></i></div>
-				<div class="layui-card-body">
-					<p class="page-view-totla">10台</p>
-				</div>
-			</div>
-		</div>
-		<div class="layui-col-md3" style="padding:5px;">
-			<div class="layui-card">
-				<div class="layui-card-header">预留<i class="fa fa-fire" style="font-size: 16px;position: absolute;right: 15px;top: 10px;"></i></div>
-				<div class="layui-card-body">
-					<p class="page-view-totla">10</p>
+					<p class="page-view-totla" th:text="${latelySize}"></p>
 				</div>
 			</div>
 		</div>
