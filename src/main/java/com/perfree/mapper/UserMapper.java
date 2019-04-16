@@ -1,9 +1,8 @@
 package com.perfree.mapper;
 
+import com.perfree.entity.User;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
-
-import com.perfree.entity.User;
 
 /**
  * UserMapper接口,因数据表不多,故采用注解方式开发

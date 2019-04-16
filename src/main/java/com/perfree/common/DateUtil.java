@@ -103,8 +103,8 @@ public class DateUtil {
 
 	/**
 	 * 两个时间比较大小
-	 * @param date1 入参1
-	 * @param date2 入参2 
+	 * @param dateStr1 入参1
+	 * @param dateStr2 入参2
 	 * @return 1：date1晚于date2，-1：date1早于date2，0：传入时间等于当前时间
 	 */
 	public static int compareDate(String dateStr1,String dateStr2,String format){

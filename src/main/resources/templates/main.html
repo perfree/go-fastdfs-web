@@ -5,6 +5,7 @@
 <title>控制台</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <link rel="stylesheet" th:href="@{/plugins/layui/css/layui.css}" media="all">
+<link rel="stylesheet" th:href="@{/plugins/layer/theme/default/layer.css}" media="all">
 <link rel="stylesheet" th:href="@{/plugins/font-awesome/css/font-awesome.min.css}" media="all">
 <style type="text/css">
 	.page-view-totla {
@@ -26,7 +27,7 @@
 			<div class="layui-card">
 				<div class="layui-card-header">文件总数<i class="fa fa-calculator" style="font-size: 16px;position: absolute;right: 15px;top: 10px;"></i></div>
 				<div class="layui-card-body">
-					<p class="page-view-totla" th:text="${count}"></p>
+					<p class="page-view-totla" id="totalFileCount"></p>
 				</div>
 			</div>
 		</div>
@@ -34,7 +35,7 @@
 			<div class="layui-card">
 				<div class="layui-card-header">文件总大小<i class="fa fa-file-archive-o" style="font-size: 16px;position: absolute;right: 15px;top: 10px;"></i></div>
 				<div class="layui-card-body">
-					<p class="page-view-totla" th:text="${size}"></p>
+					<p class="page-view-totla" id="totalFileSize"></p>
 				</div>
 			</div>
 		</div>
@@ -42,7 +43,7 @@
 			<div class="layui-card">
 				<div class="layui-card-header">文件总数(30天)<i class="fa fa-calculator" style="font-size: 16px;position: absolute;right: 15px;top: 10px;"></i></div>
 				<div class="layui-card-body">
-					<p class="page-view-totla" th:text="${latelyCount}"></p>
+					<p class="page-view-totla" id="dayFileCount"></p>
 				</div>
 			</div>
 		</div>
@@ -50,12 +51,23 @@
 			<div class="layui-card">
 				<div class="layui-card-header">文件大小(30天)<i class="fa fa-file-archive-o" style="font-size: 16px;position: absolute;right: 15px;top: 10px;"></i></div>
 				<div class="layui-card-body">
-					<p class="page-view-totla" th:text="${latelySize}"></p>
+					<p class="page-view-totla" id="dayFileSize"></p>
+				</div>
+			</div>
+		</div>
+		<div class="layui-col-md6" style="padding:5px;">
+			<div class="layui-card" style="overflow: auto;">
+				<div class="layui-card-body">
+					<div id="main" style="height:500px;"></div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+<script th:src="@{/js/jquery.min.js}"></script>
 <script th:src="@{/plugins/layui/layui.js}"></script>
+<script th:src="@{/plugins/layer/layer.js}"></script>
+<script th:src="@{/plugins/echarts/echarts.common.min.js}"></script>
+<script th:src="@{/js/main.js}"></script>
 </body>
 </html>

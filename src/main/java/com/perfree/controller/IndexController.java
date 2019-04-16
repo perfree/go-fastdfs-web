@@ -1,5 +1,7 @@
 package com.perfree.controller;
 
+import com.perfree.common.AjaxResult;
+import com.perfree.service.IndexService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +15,9 @@ import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.Map;
 
 /**
  * 首页
@@ -24,6 +29,10 @@ public class IndexController {
 
 	@Autowired
 	private PropertiesUtil propertiesUtil;
+
+	@Autowired
+	private IndexService indexService;
+
 	/**
 	 * 首页
 	 * @return
@@ -39,31 +48,26 @@ public class IndexController {
 	 */
 	@RequestMapping("/main")
 	public String main(Model model) {
+		return "main";
+	}
+
+	@RequestMapping("/main/getStat")
+	@ResponseBody
+	public AjaxResult getStat(){
 		String serverAddress = propertiesUtil.getProperty("go.fastdfs.server.address");
 		try {
 			//获取文件信息,这一部分有待优化
 			String string = HttpUtil.get(serverAddress+GoFastDfsApi.STAT);
 			JSONObject parseObj = JSONUtil.parseObj(string);
 			if(parseObj.get("status").equals("ok")) {
-				JSONArray parseArray = JSONUtil.parseArray(parseObj.get("data"));
-				long fileSize = 0;
-				long fileCount = 0;
-				for (int i = 0;i < parseArray.size();i++) {
-					JSONObject fileStats = JSONUtil.parseObj(parseArray.getStr(i));
-					if(fileStats.get("date").equals("all")) {
-						model.addAttribute("size", FileSizeUtil.GetLength(Long.valueOf(fileStats.getStr("totalSize"))));
-						model.addAttribute("count", fileStats.getStr("fileCount"));
-					}else {
-						fileSize += Long.valueOf(fileStats.getStr("totalSize"));
-						fileCount += Long.valueOf(fileStats.getStr("fileCount"));
-					}
-				}
-				model.addAttribute("latelySize",FileSizeUtil.GetLength(fileSize));
-				model.addAttribute("latelyCount",fileCount);
+				Map<String, Object> result = indexService.getfileStat(parseObj.get("data"));
+				return new AjaxResult(AjaxResult.AJAX_SUCCESS,result);
+			}else{
+				return new AjaxResult(AjaxResult.AJAX_ERROR,"调取go-fastdfs接口失败");
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		}
-		return "main";
+		return new AjaxResult(AjaxResult.AJAX_ERROR,"系统异常");
 	}
 }

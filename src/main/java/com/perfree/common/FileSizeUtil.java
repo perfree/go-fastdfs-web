@@ -30,4 +30,13 @@ public class FileSizeUtil {
         }
         return strFileSize;
     }
+
+    /**
+     * @param filesize 文件的大小（long型）
+     * @return 返回 转换后不带单位的字符串
+     */
+    public static String GetMBLength(long filesize){
+        DecimalFormat df = new DecimalFormat("######0.00");
+        return df.format(((double)filesize)/(1024*1024));
+    }
 }
