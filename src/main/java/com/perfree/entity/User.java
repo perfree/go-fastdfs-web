@@ -4,6 +4,10 @@ import java.io.Serializable;
 
 import lombok.Data;
 
+/**
+ * User实体类
+ * @author Perfree
+ */
 @Data
 public class User implements Serializable{
 	private static final long serialVersionUID = 1L;

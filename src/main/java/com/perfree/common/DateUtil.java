@@ -9,6 +9,11 @@ import java.util.GregorianCalendar;
 
 import com.perfree.common.StringUtil;
 
+/**
+ * 日期操作工具类
+ * @author Perfree
+ *
+ */
 public class DateUtil {
 	/**
 	 * 日期格式化
@@ -157,7 +162,7 @@ public class DateUtil {
     
 	/**
 	 * 日期向后或者向前推移
-	 * @param dateStr 日期字符串，如："2017-11-11"
+	 * @param dateStr 日期字符串，如："2019-11-11"
 	 * @param intervalDay 日期推移值；如：1，传入日期参数向后推一天；-1，传入日期参数向前推一天
 	 * @return 返回推移后的日期字符串
 	 */

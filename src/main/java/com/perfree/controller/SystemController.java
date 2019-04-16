@@ -28,7 +28,7 @@ public class SystemController {
 	
 	/**
 	 * 登录页
-	 * @return
+	 * @return String
 	 */
 	@RequestMapping("/login")
 	public String login() {
@@ -38,7 +38,7 @@ public class SystemController {
 	/**
 	 * 登录操作
 	 * @param user
-	 * @return
+	 * @return AjaxResult
 	 */
 	@ResponseBody
 	@RequestMapping(method=RequestMethod.POST,path="/doLogin")
@@ -68,7 +68,7 @@ public class SystemController {
 	
 	/**
 	 * 登出
-	 * @return
+	 * @return String
 	 */
 	@RequestMapping(path="/logout",method=RequestMethod.GET)
 	public String logout() {

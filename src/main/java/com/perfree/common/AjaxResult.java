@@ -2,6 +2,10 @@ package com.perfree.common;
 
 import lombok.Data;
 
+/**
+ * Ajax结果集
+ * @author Perfree
+ */
 @Data
 public class AjaxResult {
 

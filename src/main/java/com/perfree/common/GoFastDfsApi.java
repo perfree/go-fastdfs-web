@@ -1,5 +1,10 @@
 package com.perfree.common;
 
+/**
+ * Go-FasTdFS API管理类
+ * @author Perfree
+ *
+ */
 public class GoFastDfsApi {
 
 	public static final String STATUS = "/status";

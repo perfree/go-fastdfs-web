@@ -8,14 +8,13 @@ import java.util.Properties;
 
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.perfree.common.AjaxResult;
 import com.perfree.common.DateUtil;
+import com.perfree.common.PropertiesUtil;
 import com.perfree.common.StringUtil;
 import com.perfree.entity.User;
 import com.perfree.service.InstallService;
@@ -29,6 +28,9 @@ public class InstallController {
 
 	@Autowired
 	private InstallService installService;
+	
+	@Autowired
+	private PropertiesUtil propertiesUtil;
 	
 	/**
 	 * 安装页
@@ -55,14 +57,13 @@ public class InstallController {
 		user.setCreateTime(DateUtil.getFormatDate(new Date()));
 		installService.saveUser(user);
 		Properties properties = new Properties();
-		Resource resource = new ClassPathResource("server.properties");
 		FileInputStream fileInputStream = null;
 		FileOutputStream fileOutputStream = null;
 		try {
-			fileInputStream = new FileInputStream(resource.getFile());
-			fileOutputStream = new FileOutputStream(resource.getFile());
+			//动态更新配置文件,将server地址写入
+			fileInputStream = new FileInputStream(propertiesUtil.getProperties());
+			fileOutputStream = new FileOutputStream(propertiesUtil.getProperties());
 			properties.load(fileInputStream);
-			System.out.println(server);
 			properties.setProperty("go.fastdfs.server.address", server);
 			properties.store(fileOutputStream, "Update go.fastdfs.server.address");
 			return new AjaxResult(AjaxResult.AJAX_SUCCESS);
@@ -73,7 +74,6 @@ public class InstallController {
 				try {
 					fileInputStream.close();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -81,7 +81,6 @@ public class InstallController {
 				try {
 					fileOutputStream.close();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}

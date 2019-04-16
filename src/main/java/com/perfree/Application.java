@@ -9,8 +9,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author Perfree
  *
  */
-@SpringBootApplication
 @MapperScan("com.perfree.mapper")
+@SpringBootApplication
 public class Application{
 
 	public static void main(String[] args) {

@@ -2,6 +2,11 @@ package com.perfree.common;
 
 import java.text.DecimalFormat;
 
+/**
+ * 文件大小转换工具类
+ * @author Perfree
+ *
+ */
 public class FileSizeUtil {
 
 	/**
@@ -10,18 +15,17 @@ public class FileSizeUtil {
      * @return 返回 转换后带有单位的字符串
      */
     public static String GetLength(long filesize){
-        
         String strFileSize = null;
         if(filesize < 1024){
             strFileSize = filesize+"B";
             return strFileSize;
         }
         DecimalFormat df = new DecimalFormat("######0.00");
-        if ((filesize >= 1024) && (filesize < 1024*1024)){//KB
+        if ((filesize >= 1024) && (filesize < 1024*1024)){
             strFileSize = df.format(((double)filesize)/1024)+"KB";
-        }else if((filesize >= 1024*1024)&&(filesize < 1024*1024*1024)){//MB
+        }else if((filesize >= 1024*1024)&&(filesize < 1024*1024*1024)){
             strFileSize = df.format(((double)filesize)/(1024*1024))+"MB";
-        }else{//GB
+        }else{
             strFileSize = df.format(((double)filesize)/(1024*1024*1024))+"GB";
         }
         return strFileSize;

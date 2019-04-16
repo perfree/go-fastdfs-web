@@ -1,5 +1,6 @@
 package com.perfree.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +22,8 @@ import cn.hutool.json.JSONUtil;
 @Controller
 public class IndexController {
 
+	@Autowired
+	private PropertiesUtil propertiesUtil;
 	/**
 	 * 首页
 	 * @return
@@ -36,10 +39,11 @@ public class IndexController {
 	 */
 	@RequestMapping("/main")
 	public String main(Model model) {
-		String serverAddress = new PropertiesUtil().getProperty("go.fastdfs.server.address");
+		String serverAddress = propertiesUtil.getProperty("go.fastdfs.server.address");
 		try {
-			//获取文件信息
+			//获取文件信息,这一部分有待优化
 			String string = HttpUtil.get(serverAddress+GoFastDfsApi.STAT);
+			System.out.println(string);
 			JSONObject parseObj = JSONUtil.parseObj(string);
 			if(parseObj.get("status").equals("ok")) {
 				JSONArray parseArray = JSONUtil.parseArray(parseObj.get("data"));
@@ -57,6 +61,8 @@ public class IndexController {
 				}
 				model.addAttribute("latelySize",FileSizeUtil.GetLength(fileSize));
 				model.addAttribute("latelyCount",fileCount);
+				System.out.println(FileSizeUtil.GetLength(fileSize));
+				System.out.println(fileCount);
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
