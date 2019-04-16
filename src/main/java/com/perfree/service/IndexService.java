@@ -49,7 +49,7 @@ public class IndexService {
                         dayFileCount += Long.valueOf(fileStats.getStr("fileCount"));
                         dayFileSizeList.add(FileSizeUtil.GetMBLength(Long.valueOf(fileStats.getStr("totalSize"))));
                         dayFileCountList.add(fileStats.getStr("fileCount"));
-                        dayNumList.add(fileStats.getStr("date").substring(6));
+                        dayNumList.add(fileStats.getStr("date").substring(6)+"日");
                     }
                 } catch (ParseException e) {
                     e.printStackTrace();
