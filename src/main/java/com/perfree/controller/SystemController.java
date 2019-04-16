@@ -9,6 +9,7 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -33,6 +34,11 @@ public class SystemController {
 	@RequestMapping("/login")
 	public String login() {
 		return "login";
+	}
+	
+	@RequestMapping("/error/{status}")
+	public String error(@PathVariable String status) {
+		return status;
 	}
 	
 	/**

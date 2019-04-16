@@ -1,4 +1,4 @@
-package com.perfree.config;
+package com.perfree.interceptor;
 
 import java.io.FileInputStream;
 import java.util.Properties;

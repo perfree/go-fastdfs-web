@@ -21,11 +21,17 @@ import com.perfree.service.InstallService;
 
 /**
  * 安装
- * @author yinpengfei
+ * @author Perfree
  */
 @Controller
 public class InstallController {
 
+	private static String PROPERTY_NAME = "go.fastdfs.server.address";
+	
+	private static String SERVER_DEFAULT = "default";
+	
+	private static String DEFAULT_URL = "http://127.0.0.1";
+	
 	@Autowired
 	private InstallService installService;
 	
@@ -34,10 +40,14 @@ public class InstallController {
 	
 	/**
 	 * 安装页
-	 * @return
+	 * @return String
 	 */
 	@RequestMapping("/install")
 	public String index() {
+		String serverAddress = propertiesUtil.getProperty("go.fastdfs.server.address");
+		if(StringUtil.isBlank(serverAddress) || !serverAddress.equals(SERVER_DEFAULT)) {
+			return "redirect:/";
+		}
 		return "install";
 	}
 	
@@ -45,11 +55,15 @@ public class InstallController {
 	 * 执行安装操作
 	 * @param user
 	 * @param server
-	 * @return
+	 * @return AjaxResult
 	 */
 	@RequestMapping("/doInstall")
 	@ResponseBody
-	public AjaxResult doInstall(User user,String server) {
+	public AjaxResult doInstall(User user,String port) {
+		String serverAddress = propertiesUtil.getProperty("go.fastdfs.server.address");
+		if(StringUtil.isBlank(serverAddress) || !serverAddress.equals(SERVER_DEFAULT)) {
+			return new AjaxResult(AjaxResult.AJAX_ERROR,"您已安装!");
+		}
 		String uuid = StringUtil.getUUID();
 		Md5Hash md5Hash = new Md5Hash(user.getPassword(),uuid);
 		user.setPassword(md5Hash.toString());
@@ -64,8 +78,8 @@ public class InstallController {
 			fileInputStream = new FileInputStream(propertiesUtil.getProperties());
 			fileOutputStream = new FileOutputStream(propertiesUtil.getProperties());
 			properties.load(fileInputStream);
-			properties.setProperty("go.fastdfs.server.address", server);
-			properties.store(fileOutputStream, "Update go.fastdfs.server.address");
+			properties.setProperty(PROPERTY_NAME, DEFAULT_URL+":"+port);
+			properties.store(fileOutputStream, "Update "+PROPERTY_NAME);
 			return new AjaxResult(AjaxResult.AJAX_SUCCESS);
 		} catch (Exception e) {
 			return new AjaxResult(AjaxResult.AJAX_ERROR,"安装失败");

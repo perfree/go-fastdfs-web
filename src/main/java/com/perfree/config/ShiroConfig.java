@@ -82,10 +82,7 @@ public class ShiroConfig {
 		filterChainDefinitionMap.put("/login", "anon");
 		filterChainDefinitionMap.put("/doLogin", "anon");
 		filterChainDefinitionMap.put("/logout", "anon");
-		filterChainDefinitionMap.put("/403", "anon");
-		filterChainDefinitionMap.put("/404", "anon");
-		filterChainDefinitionMap.put("/500", "anon");
-        filterChainDefinitionMap.put("/error", "anon");
+        filterChainDefinitionMap.put("/error/**", "anon");
 		//配置静态文件不拦截
 		filterChainDefinitionMap.put("/css/**", "anon");
 		filterChainDefinitionMap.put("/js/**", "anon");

@@ -6,6 +6,8 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import com.perfree.interceptor.InstallInterceptor;
+
 /**
  * 拦截配置
  * @author Perfree
@@ -24,7 +26,7 @@ public class WebConfigurer implements WebMvcConfigurer{
 	
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(installInterceptor()).excludePathPatterns("/install","/doInstall","/css/**","/images/**","/plugins/**","/fonts/**","/js/**").addPathPatterns("/**");
+		registry.addInterceptor(installInterceptor()).excludePathPatterns("/install","/doInstall","/css/**","/images/**","/plugins/**","/fonts/**","/js/**","/error/**").addPathPatterns("/**");
 	}
 
 	@Override
