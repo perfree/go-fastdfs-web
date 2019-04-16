@@ -43,7 +43,6 @@ public class IndexController {
 		try {
 			//获取文件信息,这一部分有待优化
 			String string = HttpUtil.get(serverAddress+GoFastDfsApi.STAT);
-			System.out.println(string);
 			JSONObject parseObj = JSONUtil.parseObj(string);
 			if(parseObj.get("status").equals("ok")) {
 				JSONArray parseArray = JSONUtil.parseArray(parseObj.get("data"));
@@ -61,8 +60,6 @@ public class IndexController {
 				}
 				model.addAttribute("latelySize",FileSizeUtil.GetLength(fileSize));
 				model.addAttribute("latelyCount",fileCount);
-				System.out.println(FileSizeUtil.GetLength(fileSize));
-				System.out.println(fileCount);
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
