@@ -11,11 +11,131 @@
 <body>
 <div class="layui-container" style="width: 100%;">
 	<div class="layui-row">
-        文件上传
+		<div class="layui-col-md12" style="padding:5px;">
+			<!-- 上传配置start -->
+			<div class="layui-card">
+				<div class="layui-card-header">上传配置</div>
+				<div class="layui-card-body">
+					<div class="layui-form-item">
+						<label class="layui-form-label">场景</label>
+						<div class="layui-input-block">
+							<input id="scene" type="text" name="scene" value="default" placeholder="请输入场景" autocomplete="off" class="layui-input">
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">路径</label>
+						<div class="layui-input-block">
+							<input id="path" type="text" name="path" value="" autocomplete="off" class="layui-input" placeholder="请输入上传路径,默认不填为default">
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">回显url前缀</label>
+						<div class="layui-input-block">
+							<input id="showUrl" type="text" name="showUrl" value="" autocomplete="off" class="layui-input" placeholder="默认为服务地址">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="layui-col-md12" style="padding:5px;">
+			<div class="layui-card">
+				<div class="layui-card-body">
+					<div class="layui-upload">
+						<button type="button" class="layui-btn layui-btn-normal" id="fileList">选择文件</button>
+						<button type="button" class="layui-btn" id="fileListAction">开始上传</button>
+						<div class="layui-upload-list" style="overflow: auto;">
+							<table class="layui-table">
+								<thead>
+								<tr>
+									<th style="min-width: 100px">文件名</th>
+									<th style="min-width: 60px">大小</th>
+									<th style="min-width: 100px">状态</th>
+									<th style="min-width: 300px">url</th>
+									<th style="min-width: 100px">操作</th>
+								</tr>
+								</thead>
+								<tbody id="moreFileList">
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
 <script th:src="@{/js/jquery.min.js}"></script>
 <script th:src="@{/plugins/layer/layer.js}"></script>
 <script th:src="@{/plugins/layui/layui.js}"></script>
+<script>
+	layui.use(['upload','element'], function() {
+		var $ = layui.jquery, upload = layui.upload, element = layui.element;
+		//多文件上传
+		var demoListView = $('#moreFileList'),uploadListIns = upload.render({
+			elem: '#fileList',
+			url: '/upload/moreFileUpload',
+			accept: 'file',
+			multiple: true,
+			auto: false,
+			bindAction: '#fileListAction',
+			choose: function(obj){
+				//将每次选择的文件追加到文件队列
+				var files = this.files = obj.pushFile();
+				//读取本地文件
+				obj.preview(function(index, file, result){
+					var tr = $(['<tr id="upload-'+ index +'">',
+						'<td>'+ file.name +'</td>',
+						'<td>'+ (file.size/1014).toFixed(1) +'kb</td>',
+						'<td>等待上传</td>',
+						'<td></td>',
+						'<td>',
+						'<button class="layui-btn layui-btn-xs more-file-reload layui-hide">重传</button>',
+						'<button class="layui-btn layui-btn-xs layui-btn-danger more-file-delete">删除</button>',
+						'</td>',
+						'</tr>'].join(''));
+					//单个重传
+					tr.find('.more-file-reload').on('click', function(){
+						obj.upload(index, file);
+					});
+					//删除
+					tr.find('.more-file-delete').on('click', function(){
+						delete files[index];
+						tr.remove();
+						uploadListIns.config.elem.next()[0].value = '';
+					});
+					demoListView.append(tr);
+				});
+			},before: function(obj){
+				var scene = $("#scene").val();
+				var path = $("#path").val();
+				var showUrl = $("#showUrl").val();
+				this.data={'scene': scene,'path':path,'showUrl':showUrl};
+			},done: function(res, index, upload){
+				//上传成功
+				if(res.state == 200){
+					var tr = demoListView.find('tr#upload-'+ index),tds = tr.children();
+					tds.eq(2).html('<span style="color: #5FB878;">上传成功</span>');
+					tds.eq(3).html('<span>'+res.data.url+'</span>');
+					//清空操作
+					tds.eq(4).html('');
+					tds.eq(4).html('<a class="layui-btn layui-btn-xs" target="_blank" href="'+res.data.url+'">查看</a>');
+					//删除文件队列已经上传成功的文件
+					return delete this.files[index];
+				}else{
+					var tr = demoListView.find('tr#upload-'+ index),tds = tr.children();
+					tds.eq(2).html('<span style="color: #FF5722;">上传失败</span>');
+					//显示重传
+					tds.eq(4).find('.more-file-reload').removeClass('layui-hide');
+				}
+				this.error(index, upload);
+			},error: function(index, upload){
+				var tr = demoListView.find('tr#upload-'+ index),tds = tr.children();
+				tds.eq(2).html('<span style="color: #FF5722;">上传失败</span>');
+				//显示重传
+				tds.eq(4).find('.more-file-reload').removeClass('layui-hide');
+			}
+		});
+	})
+</script>
 </body>
 </html>
