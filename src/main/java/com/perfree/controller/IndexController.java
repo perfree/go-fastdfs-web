@@ -1,15 +1,12 @@
 package com.perfree.controller;
 
-import com.perfree.common.AjaxResult;
+import com.perfree.common.*;
 import com.perfree.service.IndexService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import com.perfree.common.FileSizeUtil;
-import com.perfree.common.GoFastDfsApi;
-import com.perfree.common.PropertiesUtil;
 
 import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONArray;
@@ -18,6 +15,7 @@ import cn.hutool.json.JSONUtil;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Map;
+import java.util.Properties;
 
 /**
  * 首页
@@ -32,6 +30,12 @@ public class IndexController {
 
 	@Autowired
 	private IndexService indexService;
+
+	@Value("${version}")
+	private String version;
+
+	@Value("${version.date}")
+	private String versionDate;
 
 	/**
 	 * 首页
@@ -48,6 +52,11 @@ public class IndexController {
 	 */
 	@RequestMapping("/main")
 	public String main(Model model) {
+		Properties props=System.getProperties();
+		model.addAttribute("osName",props.getProperty("os.name"));
+		model.addAttribute("osArch",props.getProperty("os.arch"));
+		model.addAttribute("version",version);
+		model.addAttribute("versionDate", DateUtil.getFormatDate(DateUtil.StrToDate(versionDate,"yyyy-MM-dd"),"yyyy年MM月dd日"));
 		return "main";
 	}
 

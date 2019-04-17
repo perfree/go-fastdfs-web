@@ -16,6 +16,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class PropertiesUtil {
 
+	/** jar环境下server.properties文件的路径 */
+	private static final String JAR_SERVER_PROPERTIES_PATH = "config/server.properties";
+	/** 开发环境下server.properties文件的路径(自由配置) */
+	private static final String DEV_SERVER_PROPERTIES_PATH = "D:\\fastdfs\\server.properties";
+
 	@Value("${project.is.jar}")
 	private Boolean isJar;
 	
@@ -25,9 +30,11 @@ public class PropertiesUtil {
 	 */
 	public File getProperties() {
 		if(isJar) {
-			return new File("config/server.properties");
+			return new File(JAR_SERVER_PROPERTIES_PATH);
 		}else {
-			return new File(getClass().getClassLoader().getResource("server.properties").getFile());
+			//return new File(getClass().getClassLoader().getResource("server.properties").getFile());
+			//开发用
+			return new File(DEV_SERVER_PROPERTIES_PATH);
 		}
 		
 	}

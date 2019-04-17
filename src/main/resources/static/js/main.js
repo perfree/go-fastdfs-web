@@ -1,5 +1,9 @@
 getStat();
 
+$('#fileUpload').click(function () {
+    window.parent.document.getElementById("fileUpload").click();
+})
+
 //获取文件统计信息
 function getStat() {
     $.post('/main/getStat', function (data) {

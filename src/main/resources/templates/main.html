@@ -7,18 +7,7 @@
 <link rel="stylesheet" th:href="@{/plugins/layui/css/layui.css}" media="all">
 <link rel="stylesheet" th:href="@{/plugins/layer/theme/default/layer.css}" media="all">
 <link rel="stylesheet" th:href="@{/plugins/font-awesome/css/font-awesome.min.css}" media="all">
-<style type="text/css">
-	.page-view-totla {
-		font-size: 36px;
-		color: #666;
-		line-height: 36px;
-		padding: 5px 0 10px;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		word-break: break-all;
-		white-space: nowrap;
-	}
-</style>
+<link rel="stylesheet" th:href="@{/css/main.css}" media="all">
 </head>
 <body>
 <div class="layui-container" style="width: 100%;">
@@ -55,18 +44,88 @@
 				</div>
 			</div>
 		</div>
-		<div class="layui-col-md6" style="padding:5px;">
+        <div class="layui-col-md6" style="padding:5px;">
+            <div class="layui-card" style="overflow: auto;">
+                <div class="layui-card-header">快捷操作<i class="layui-icon" style="float: right;font-size: 20px;">&#xe614;</i></div>
+                <div class="layui-card-body" style="float: left;padding: 5px 10px 5px 5px;height: 200px;">
+                    <a class="shortcut-button" href="javascript:;" id="fileUpload">
+                        <span class="shortcut-button-icon"><i class="layui-icon" style="font-size: 25px">&#xe681;</i></span>
+                        <span>文件上传</span>
+                    </a>
+                    <a class="shortcut-button">
+                        <span class="shortcut-button-icon"><i class="layui-icon" style="font-size: 25px">&#xe674;</i></span>
+                        <span>切换集群</span>
+                    </a>
+                    <a class="shortcut-button">
+                        <span class="shortcut-button-icon"><i class="layui-icon" style="font-size: 25px">&#xe62c;</i></span>
+                        <span>修正统计信息</span>
+                    </a>
+                    <a class="shortcut-button">
+                        <span class="shortcut-button-icon"><i class="layui-icon" style="font-size: 25px">&#xe640;</i></span>
+                        <span>删除空目录</span>
+                    </a>
+                    <a class="shortcut-button">
+                        <span class="shortcut-button-icon"><i class="layui-icon" style="font-size: 25px">&#xe656;</i></span>
+                        <span>备份元数据</span>
+                    </a>
+                    <a class="shortcut-button">
+                        <span class="shortcut-button-icon"><i class="layui-icon" style="font-size: 25px">&#xe631;</i></span>
+                        <span>同步失败修复</span>
+                    </a>
+                    <a class="shortcut-button">
+                        <span class="shortcut-button-icon"><i class="layui-icon" style="font-size: 25px">&#xe628;</i></span>
+                        <span>修复元数据</span>
+                    </a>
+                    <a class="shortcut-button">
+                        <span class="shortcut-button-icon"><i class="layui-icon" style="font-size: 25px">&#xe642;</i></span>
+                        <span>配置文件修改</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md6" style="padding:5px;">
+            <div class="layui-card" style="overflow: auto;">
+                <div class="layui-card-header">版本信息<i class="layui-icon" style="float: right;font-size: 20px;">&#xe60b;</i></div>
+                <div class="layui-card-body" style="height: 200px;padding: 5px 10px 5px 5px;">
+                    <table class="layui-table">
+                        <colgroup>
+                            <col width="200">
+                            <col>
+                        </colgroup>
+                        <tbody>
+                        <tr>
+                            <td>当前版本</td>
+                            <td><span th:text="${version}"></span>&nbsp;&nbsp;&nbsp;<a href="#" style="color: #009688">更新日志</a></td>
+                        </tr>
+                        <tr>
+                            <td>发布日期</td>
+                            <td th:text="${versionDate}"></td>
+                        </tr>
+                        <tr>
+                            <td>操作系统</td>
+                            <td th:text="${osName}"></td>
+                        </tr>
+                        <tr>
+                            <td>系统架构</td>
+                            <td th:text="${osArch}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+		<div class="layui-col-md12" style="padding:5px;">
 			<div class="layui-card" style="overflow: auto;">
 				<div class="layui-card-body">
-					<div id="main" style="height:500px;"></div>
+					<div id="main" style="height:600px;"></div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
 <script th:src="@{/js/jquery.min.js}"></script>
-<script th:src="@{/plugins/layui/layui.js}"></script>
 <script th:src="@{/plugins/layer/layer.js}"></script>
+<script th:src="@{/plugins/layui/layui.js}"></script>
 <script th:src="@{/plugins/echarts/echarts.common.min.js}"></script>
 <script th:src="@{/js/main.js}"></script>
 </body>

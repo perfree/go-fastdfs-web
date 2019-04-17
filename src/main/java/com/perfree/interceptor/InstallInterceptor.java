@@ -1,16 +1,12 @@
 package com.perfree.interceptor;
 
-import java.io.FileInputStream;
-import java.util.Properties;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.perfree.common.PropertiesUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.perfree.common.PropertiesUtil;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * 安装拦截器,如用户未安装,则执行安装操作
@@ -20,13 +16,11 @@ public class InstallInterceptor implements HandlerInterceptor{
 
 	@Autowired
 	private PropertiesUtil propertiesUtil;
-	
+
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		Properties properties = new Properties();
-		properties.load(new FileInputStream(propertiesUtil.getProperties()));
-		String serverAddress = properties.getProperty("go.fastdfs.server.address");
+		String serverAddress = propertiesUtil.getProperty("go.fastdfs.server.address");
 		if(serverAddress == null || serverAddress == "" || serverAddress.equals("default")) {
 			//用户未安装,重定向至安装页
 			response.sendRedirect("/install");
