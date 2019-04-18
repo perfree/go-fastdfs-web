@@ -1,6 +1,11 @@
 ## Go-Fastdfs web管理平台(开发中...)
 [前往 Go-Fastdfs](https://github.com/sjqzhang/go-fastdfs)
 
+## 简单预览图(开发中)
+![控制台](./screen/screen-01.jpg)
+
+![文件上传](./screen/screen-02.jpg)
+
 ## 开发说明
 项目使用SpringBoot,Mybatis,Shiro进行开发,为方便后期用户安装,数据库采用Sqlite,为了代码的简洁,使用了lombok插件,请在开发前提前安装.
 
