@@ -68,7 +68,7 @@ public class UploadUtils {
         String filePath = tempPath;
         File file = new File(filePath + fileName);
         try {
-            multipartFile.transferTo(file);
+            multipartFile.transferTo(file.getAbsoluteFile());
         } catch (IOException e) {
             e.printStackTrace();
         }
