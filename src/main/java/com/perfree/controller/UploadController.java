@@ -16,7 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
  * 文件上传Controller
  */
 @Controller
-public class UploadController extends BaseController{
+public class UploadController extends BaseController {
 
     @Value("${upload.temp.path}")
     private String tempPath;

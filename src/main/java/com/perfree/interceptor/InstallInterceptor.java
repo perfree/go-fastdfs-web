@@ -1,6 +1,5 @@
 package com.perfree.interceptor;
 
-import com.perfree.common.PropertiesUtil;
 import com.perfree.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;

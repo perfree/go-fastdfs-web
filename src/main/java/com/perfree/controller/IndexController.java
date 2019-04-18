@@ -23,7 +23,7 @@ import java.util.Properties;
  *
  */
 @Controller
-public class IndexController extends BaseController{
+public class IndexController extends BaseController {
 
 	@Autowired
 	private IndexService indexService;
