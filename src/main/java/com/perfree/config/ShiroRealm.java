@@ -1,12 +1,10 @@
 package com.perfree.config;
 
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.AuthenticationInfo;
-import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.authc.IncorrectCredentialsException;
-import org.apache.shiro.authc.SimpleAuthenticationInfo;
-import org.apache.shiro.authc.UnknownAccountException;
-import org.apache.shiro.authc.UsernamePasswordToken;
+import com.perfree.entity.Peers;
+import com.perfree.entity.User;
+import com.perfree.mapper.PeersMapper;
+import com.perfree.service.UserService;
+import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.crypto.hash.Md5Hash;
@@ -14,10 +12,10 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
-import com.perfree.common.StringUtil;
-import com.perfree.entity.User;
-import com.perfree.service.UserService;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * ShiroRealm
@@ -27,7 +25,7 @@ public class ShiroRealm extends AuthorizingRealm{
 	
     @Autowired
     private UserService userService;
-    
+
     /**
      * 自定义授权
      */
@@ -85,14 +83,4 @@ public class ShiroRealm extends AuthorizingRealm{
 		return simpleAuthenticationInfo;
 	}
 	
-	
-	/**
-	 * 测试得到盐和加密后的密码
-	 */
-	public static void main(String[] args) {
-		String uuid = StringUtil.getUUID();
-		System.out.println("盐值: "+uuid);
-		Md5Hash md5Hash = new Md5Hash("123456",uuid);
-		System.out.println("加密后的密码: "+md5Hash.toString());
-	}
 }

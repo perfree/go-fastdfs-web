@@ -32,5 +32,9 @@ public class User implements Serializable{
 	@Email
 	private String email;
 
+	private Integer peersId;
+
 	private String createTime;
+
+	private Peers peers;
 }

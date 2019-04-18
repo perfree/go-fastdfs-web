@@ -1,8 +1,10 @@
 package com.perfree.controller;
 
 import cn.hutool.core.util.StrUtil;
-import com.perfree.common.*;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.perfree.common.AjaxResult;
+import com.perfree.common.GoFastDfsApi;
+import com.perfree.common.StringUtil;
+import com.perfree.common.UploadUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,12 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
  * 文件上传Controller
  */
 @Controller
-public class UploadController {
-    /** server地址配置key */
-    private static String PROPERTY_NAME = "go.fastdfs.server.address";
-
-    @Autowired
-    private PropertiesUtil propertiesUtil;
+public class UploadController extends BaseController{
 
     @Value("${upload.temp.path}")
     private String tempPath;
@@ -38,10 +35,9 @@ public class UploadController {
         if(StringUtil.isBlank(scene)){
             return new AjaxResult(AjaxResult.AJAX_ERROR,"请填写上传场景");
         }
-        String serverAddress = propertiesUtil.getProperty(PROPERTY_NAME);
         if(StrUtil.isBlank(showUrl)){
-            showUrl = serverAddress;
+            showUrl = getPeers().getServerAddress();
         }
-        return UploadUtils.upload(tempPath,serverAddress + GoFastDfsApi.UPLOAD, path, scene, file,showUrl);
+        return UploadUtils.upload(tempPath,getPeers().getServerAddress() + GoFastDfsApi.UPLOAD, path, scene, file,showUrl);
     }
 }

@@ -1,10 +1,12 @@
 package com.perfree.controller;
 
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.perfree.common.*;
 import com.perfree.entity.User;
+import com.perfree.mapper.UserMapper;
 import com.perfree.service.InstallService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,16 +23,12 @@ import javax.validation.Valid;
  */
 @Controller
 public class InstallController {
-	/** server地址配置key */
-	private static String PROPERTY_NAME = "go.fastdfs.server.address";
-	/** server地址默认value */
-	private static String SERVER_DEFAULT = "default";
 
 	@Autowired
 	private InstallService installService;
 	
 	@Autowired
-	private PropertiesUtil propertiesUtil;
+	private UserMapper userMapper;
 
 	/**
 	 * 安装页
@@ -38,8 +36,7 @@ public class InstallController {
 	 */
 	@RequestMapping("/install")
 	public String index() {
-		String serverAddress = propertiesUtil.getProperty(PROPERTY_NAME);
-		if(StringUtil.isBlank(serverAddress) || !serverAddress.equals(SERVER_DEFAULT)) {
+		if(userMapper.getUserCount() >= 1) {
 			return "redirect:/";
 		}
 		return "install";
@@ -54,9 +51,18 @@ public class InstallController {
 	@RequestMapping("/doInstall")
 	@ResponseBody
 	@Validated
-	public AjaxResult doInstall(@Valid User user,BindingResult bindingResult,String server) {
+	public AjaxResult doInstall(@Valid User user,BindingResult bindingResult,String serverName,String server) {
 		if(bindingResult.hasErrors()){
 			return new AjaxResult(AjaxResult.AJAX_ERROR,bindingResult.getFieldError().getDefaultMessage());
+		}
+		if(userMapper.getUserCount() >= 1){
+			return new AjaxResult(AjaxResult.AJAX_ERROR,"您已安装!请直接登录!");
+		}
+		if(StrUtil.isBlank(serverName) || serverName.length() > 100){
+			return new AjaxResult(AjaxResult.AJAX_ERROR,"请正确填写集群名称(100字符以内)");
+		}
+		if(StrUtil.isBlank(server) || server.length() > 100){
+			return new AjaxResult(AjaxResult.AJAX_ERROR,"请正确填写服务地址(100字符以内)");
 		}
 		//校验服务地址
 		if(!RegexUtill.verifyUrl(server)){
@@ -71,10 +77,6 @@ public class InstallController {
 		}catch(Exception e){
 			return new AjaxResult(AjaxResult.AJAX_ERROR,"连接go-fastdfs服务失败!请检查服务地址是否正确!");
 		}
-		String serverAddress = propertiesUtil.getProperty(PROPERTY_NAME);
-		if(StringUtil.isBlank(serverAddress) || !serverAddress.equals(SERVER_DEFAULT)) {
-			return new AjaxResult(AjaxResult.AJAX_ERROR,"您已安装!");
-		}
-		return installService.install(user, server);
+		return installService.install(user,serverName,server);
 	}
 }

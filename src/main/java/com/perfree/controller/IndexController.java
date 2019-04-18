@@ -1,17 +1,17 @@
 package com.perfree.controller;
 
-import com.perfree.common.*;
+import cn.hutool.http.HttpUtil;
+import cn.hutool.json.JSONObject;
+import cn.hutool.json.JSONUtil;
+import com.perfree.common.AjaxResult;
+import com.perfree.common.DateUtil;
+import com.perfree.common.GoFastDfsApi;
 import com.perfree.service.IndexService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import cn.hutool.http.HttpUtil;
-import cn.hutool.json.JSONArray;
-import cn.hutool.json.JSONObject;
-import cn.hutool.json.JSONUtil;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Map;
@@ -23,10 +23,7 @@ import java.util.Properties;
  *
  */
 @Controller
-public class IndexController {
-
-	@Autowired
-	private PropertiesUtil propertiesUtil;
+public class IndexController extends BaseController{
 
 	@Autowired
 	private IndexService indexService;
@@ -63,10 +60,9 @@ public class IndexController {
 	@RequestMapping("/main/getStat")
 	@ResponseBody
 	public AjaxResult getStat(){
-		String serverAddress = propertiesUtil.getProperty("go.fastdfs.server.address");
 		try {
 			//获取文件信息,这一部分有待优化
-			String string = HttpUtil.get(serverAddress+GoFastDfsApi.STAT);
+			String string = HttpUtil.get(getPeers().getServerAddress()+GoFastDfsApi.STAT);
 			JSONObject parseObj = JSONUtil.parseObj(string);
 			if(parseObj.get("status").equals("ok")) {
 				Map<String, Object> result = indexService.getfileStat(parseObj.get("data"));

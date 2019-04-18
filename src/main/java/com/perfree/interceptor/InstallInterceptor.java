@@ -1,6 +1,7 @@
 package com.perfree.interceptor;
 
 import com.perfree.common.PropertiesUtil;
+import com.perfree.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -15,14 +16,13 @@ import javax.servlet.http.HttpServletResponse;
 public class InstallInterceptor implements HandlerInterceptor{
 
 	@Autowired
-	private PropertiesUtil propertiesUtil;
+	private UserMapper userMapper;
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		String serverAddress = propertiesUtil.getProperty("go.fastdfs.server.address");
-		if(serverAddress == null || serverAddress == "" || serverAddress.equals("default")) {
-			//用户未安装,重定向至安装页
+		if(userMapper.getUserCount() < 1) {
+			//不存在用户,重定向至安装页
 			response.sendRedirect("/install");
 			return false;
 		}
