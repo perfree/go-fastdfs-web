@@ -52,6 +52,7 @@ public class InstallService {
 		user.setPassword(md5Hash.toString());
 		user.setCredentialsSalt(uuid);
 		user.setCreateTime(date);
+		user.setUpdateTime(date);
 		user.setPeersId(peers.getId());
 		userMapper.saveUser(user);
 		return new AjaxResult(AjaxResult.AJAX_SUCCESS);

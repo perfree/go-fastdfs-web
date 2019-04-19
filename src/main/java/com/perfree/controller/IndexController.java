@@ -3,10 +3,19 @@ package com.perfree.controller;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
+import cn.hutool.system.UserInfo;
 import com.perfree.common.AjaxResult;
 import com.perfree.common.DateUtil;
 import com.perfree.common.GoFastDfsApi;
+import com.perfree.entity.Peers;
+import com.perfree.entity.User;
+import com.perfree.mapper.PeersMapper;
+import com.perfree.mapper.UserMapper;
 import com.perfree.service.IndexService;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.subject.SimplePrincipalCollection;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -14,8 +23,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 
 /**
  * 首页
@@ -33,6 +41,12 @@ public class IndexController extends BaseController {
 
 	@Value("${version.date}")
 	private String versionDate;
+
+	@Autowired
+	private PeersMapper peersMapper;
+
+	@Autowired
+	private UserMapper userMapper;
 
 	/**
 	 * 首页
@@ -74,5 +88,113 @@ public class IndexController extends BaseController {
 			e.printStackTrace();
 		}
 		return new AjaxResult(AjaxResult.AJAX_ERROR,"系统异常");
+	}
+
+	/**
+	 * 修正统计信息(30天)
+	 * @return AjaxResult
+	 */
+	@RequestMapping("/main/repair_stat")
+	@ResponseBody
+	public AjaxResult repair_stat(){
+		int count = 0;
+		for (int i = 0; i > -30; i--){
+			String subDateStr = DateUtil.dayAddOrCut(DateUtil.getFormatDate("yyyy-MM-dd"), i);
+			String dateStr = DateUtil.getFormatDate(DateUtil.StrToDate(subDateStr, "yyyy-MM-dd"), "yyyyMMdd");
+			Map<String, Object> map = new HashMap<>(16);
+			map.put("date", dateStr);
+			String result = HttpUtil.post(getPeers().getServerAddress() + GoFastDfsApi.REPAIR_STAT, map);
+			JSONObject parseObj = JSONUtil.parseObj(result);
+			if(parseObj.get("status").equals("ok")) {
+				count ++;
+			}
+		}
+		return new AjaxResult(AjaxResult.AJAX_SUCCESS,"成功修正"+count+"天数据");
+	}
+
+	/**
+	 * 删除空目录
+	 * @return AjaxResult
+	 */
+	@RequestMapping("/main/remove_empty_dir")
+	@ResponseBody
+	public AjaxResult remove_empty_dir(){
+		String result = HttpUtil.post(getPeers().getServerAddress()+GoFastDfsApi.REMOVE_EMPTY_DIR, new HashMap<>());
+		JSONObject parseObj = JSONUtil.parseObj(result);
+		if(parseObj.get("status").equals("ok")) {
+			return new AjaxResult(AjaxResult.AJAX_ERROR,"操作成功,正在后台操作,请勿重复使用此功能");
+		}else{
+			return new AjaxResult(AjaxResult.AJAX_ERROR,"操作失败,请稍后再试");
+		}
+	}
+
+	/**
+	 * 备份元数据,30天
+	 * @return
+	 */
+	@RequestMapping("/main/backup")
+	@ResponseBody
+	public AjaxResult backup(){
+		int count = 0;
+		for (int i = 0; i > -30; i--){
+			String subDateStr = DateUtil.dayAddOrCut(DateUtil.getFormatDate("yyyy-MM-dd"), i);
+			String dateStr = DateUtil.getFormatDate(DateUtil.StrToDate(subDateStr, "yyyy-MM-dd"), "yyyyMMdd");
+			Map<String, Object> map = new HashMap<>(16);
+			map.put("date", dateStr);
+			String result = HttpUtil.post(getPeers().getServerAddress() + GoFastDfsApi.BACKUP, map);
+			JSONObject parseObj = JSONUtil.parseObj(result);
+			if(parseObj.get("status").equals("ok")) {
+				count ++;
+			}
+		}
+		return new AjaxResult(AjaxResult.AJAX_SUCCESS,"成功备份"+count+"天数据");
+	}
+
+	/**
+	 * 同步失败修复
+	 * @return AjaxResult
+	 */
+	@RequestMapping("/main/repair")
+	@ResponseBody
+	public AjaxResult repair(){
+		String result = HttpUtil.post(getPeers().getServerAddress()+GoFastDfsApi.REPAIR+"?force=1", new HashMap<>());
+		JSONObject parseObj = JSONUtil.parseObj(result);
+		if(parseObj.get("status").equals("ok")) {
+			return new AjaxResult(AjaxResult.AJAX_ERROR,"操作成功,正在后台操作,请勿重复使用此功能");
+		}else{
+			return new AjaxResult(AjaxResult.AJAX_ERROR,"操作失败,请稍后再试");
+		}
+	}
+
+	/**
+	 * 获取所有集群
+	 * @return AjaxResult
+	 */
+	@RequestMapping("/main/getAllPeers")
+	@ResponseBody
+	public AjaxResult getAllPeers(){
+		List<Peers> peers = peersMapper.getAllPeers();
+		return new AjaxResult(AjaxResult.AJAX_SUCCESS,peers);
+	}
+
+	/**
+	 * 切换集群
+	 * @param id
+	 * @return AjaxResult
+	 */
+	@RequestMapping("/main/switchPeers")
+	@ResponseBody
+	public AjaxResult switchPeers(int id){
+		if(id == getPeers().getId()){
+			return new AjaxResult(AjaxResult.AJAX_ERROR,"当前正在使用此集群");
+		}
+		User user = new User();
+		user.setPeersId(id);
+		user.setId(getUser().getId());
+		user.setUpdateTime(DateUtil.getFormatDate(new Date()));
+		if(userMapper.switchPeers(user) > 0){
+			return new AjaxResult(AjaxResult.AJAX_SUCCESS);
+		}
+		return new AjaxResult(AjaxResult.AJAX_ERROR,"切换失败");
 	}
 }

@@ -7,22 +7,98 @@
 <link rel="stylesheet" th:href="@{/plugins/layui/css/layui.css}" media="all">
 <link rel="stylesheet" th:href="@{/plugins/layer/theme/default/layer.css}" media="all">
 <link rel="stylesheet" th:href="@{/plugins/font-awesome/css/font-awesome.min.css}" media="all">
-<style>
-	.showUrl-href{color: #2F4056;font-size: 13px;text-decoration: underline;}
-	.showUrl-href:hover{color:#01AAED;}
-</style>
 </head>
 <body>
 <div class="layui-container" style="width: 100%;">
 	<div class="layui-row">
 		<div class="layui-col-md12" style="padding:5px;">
-			
+			<div class="layui-card">
+				<div class="layui-card-body">
+					<table class="layui-table" lay-data="{url:'/peers/page', page:true, id:'peersList',toolbar:'#toolbar'}" lay-filter="peersList">
+						<thead>
+						<tr>
+							<th lay-data="{field:'id', sort: true,align:'center'}">ID</th>
+							<th lay-data="{field:'name',align:'center'}">名称</th>
+							<th lay-data="{field:'serverAddress',align:'center'}">管理地址</th>
+							<th lay-data="{field:'createTime',align:'center'}">添加时间</th>
+							<th lay-data="{field:'right',toolbar: '#rightBar',width:150,align:'center'}">操作</th>
+						</tr>
+						</thead>
+					</table>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
+<script type="text/html" id="toolbar">
+	<div class="layui-btn-container">
+		<button class="layui-btn layui-btn-sm" lay-event="addPeers">添加集群</button>
+	</div>
+</script>
+<script type="text/html" id="rightBar">
+	<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+	<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
 <script th:src="@{/js/jquery.min.js}"></script>
 <script th:src="@{/plugins/layer/layer.js}"></script>
 <script th:src="@{/plugins/layui/layui.js}"></script>
-<script th:src="@{/js/upload.js}"></script>
+<script>
+	layui.use('table', function() {
+		var table = layui.table;
+		table.init('peersList', {
+			limit: 15,
+			response: {
+				statusName: 'state',
+				statusCode: 200,
+				msgName: 'msg',
+				countName: 'total',
+				dataName: 'data'
+			}
+		});
+
+		//监听行工具事件
+		table.on('tool(peersList)', function(obj){
+			var data = obj.data;
+			if(obj.event === 'del'){
+				layer.confirm('确定要删除该集群吗?', function(index){
+					$.post("/peers/del",{"id":obj.data.id},function (data) {
+						if(data.state == 200){
+							obj.del();
+							layer.msg("删除成功");
+						}else{
+							layer.msg(data.msg);
+						}
+					})
+					layer.close(index);
+				});
+			} else if(obj.event === 'edit'){
+				layer.open({
+					type: 2,
+					area: ['550px','260px'],
+					title :'编辑集群',
+					shadeClose: true,
+					maxmin: true,
+					content: '/peers/edit?id='+obj.data.id
+				});
+			}
+		});
+
+		//头工具栏事件
+		table.on('toolbar(peersList)', function(obj){
+			switch(obj.event){
+				case 'addPeers':
+					layer.open({
+						type: 2,
+						area: ['550px','260px'],
+						title :'添加集群',
+						shadeClose: true,
+						maxmin: true,
+						content: '/peers/add'
+					});
+					break;
+			};
+		});
+	})
+</script>
 </body>
 </html>

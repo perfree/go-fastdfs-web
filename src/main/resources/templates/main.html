@@ -8,6 +8,11 @@
 <link rel="stylesheet" th:href="@{/plugins/layer/theme/default/layer.css}" media="all">
 <link rel="stylesheet" th:href="@{/plugins/font-awesome/css/font-awesome.min.css}" media="all">
 <link rel="stylesheet" th:href="@{/css/main.css}" media="all">
+<style>
+    .layui-layer-page .layui-layer-content{
+        overflow: initial!important;
+    }
+</style>
 </head>
 <body>
 <div class="layui-container" style="width: 100%;">
@@ -52,29 +57,25 @@
                         <span class="shortcut-button-icon"><i class="layui-icon" style="font-size: 25px">&#xe681;</i></span>
                         <span>文件上传</span>
                     </a>
-                    <a class="shortcut-button">
+                    <a class="shortcut-button" href="javascript:;" id="switchPeers">
                         <span class="shortcut-button-icon"><i class="layui-icon" style="font-size: 25px">&#xe674;</i></span>
                         <span>切换集群</span>
                     </a>
-                    <a class="shortcut-button">
+                    <a class="shortcut-button" href="javascript:;" id="repair_stat">
                         <span class="shortcut-button-icon"><i class="layui-icon" style="font-size: 25px">&#xe62c;</i></span>
                         <span>修正统计信息</span>
                     </a>
-                    <a class="shortcut-button">
+                    <a class="shortcut-button" href="javascript:;" id="remove_empty_dir">
                         <span class="shortcut-button-icon"><i class="layui-icon" style="font-size: 25px">&#xe640;</i></span>
                         <span>删除空目录</span>
                     </a>
-                    <a class="shortcut-button">
+                    <a class="shortcut-button" href="javascript:;" id="backup">
                         <span class="shortcut-button-icon"><i class="layui-icon" style="font-size: 25px">&#xe656;</i></span>
                         <span>备份元数据</span>
                     </a>
-                    <a class="shortcut-button">
+                    <a class="shortcut-button" href="javascript:;" id="repair">
                         <span class="shortcut-button-icon"><i class="layui-icon" style="font-size: 25px">&#xe631;</i></span>
                         <span>同步失败修复</span>
-                    </a>
-                    <a class="shortcut-button">
-                        <span class="shortcut-button-icon"><i class="layui-icon" style="font-size: 25px">&#xe628;</i></span>
-                        <span>修复元数据</span>
                     </a>
                     <a class="shortcut-button">
                         <span class="shortcut-button-icon"><i class="layui-icon" style="font-size: 25px">&#xe642;</i></span>

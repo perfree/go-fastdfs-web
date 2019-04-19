@@ -36,5 +36,7 @@ public class User implements Serializable{
 
 	private String createTime;
 
+	private String updateTime;
+
 	private Peers peers;
 }

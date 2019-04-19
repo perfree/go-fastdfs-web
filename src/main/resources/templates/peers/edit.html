@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>添加集群</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link rel="stylesheet" th:href="@{/plugins/layui/css/layui.css}" media="all">
+<link rel="stylesheet" th:href="@{/plugins/layer/theme/default/layer.css}" media="all">
+</head>
+<body>
+<div style="padding: 15px;">
+	<form class="layui-form" action="">
+		<div class="layui-form-item">
+			<label class="layui-form-label">集群名称</label>
+			<div class="layui-input-block">
+				<input type="text" name="name" lay-verify="required" autocomplete="off" placeholder="请输入集群名称" class="layui-input" th:value="${peers.name}">
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">管理地址</label>
+			<div class="layui-input-block">
+				<input type="text" name="serverAddress" lay-verify="required" autocomplete="off" placeholder="请输入集群管理地址" class="layui-input" th:value="${peers.serverAddress}">
+				<input type="hidden" name="id" th:value="${peers.id}">
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<div class="layui-input-block">
+				<button class="layui-btn" lay-submit="" lay-filter="addPeers">立即提交</button>
+				<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+			</div>
+		</div>
+	</form>
+</div>
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/plugins/layer/layer.js}"></script>
+<script th:src="@{/plugins/layui/layui.js}"></script>
+<script>
+	layui.use(['form'], function() {
+		var form = layui.form;
+		form.on('submit(addPeers)', function(data){
+			$.post("/peers/doEdit",data.field,function (data) {
+				if(data.state == 200){
+					layer.msg("更新成功", {icon: 6});
+					setTimeout(function(){
+						window.parent.location.reload();
+					}, 1000);
+				}else{
+					layer.msg(data.msg);
+				}
+			})
+			return false;
+		});
+	})
+</script>
+</body>
+</html>

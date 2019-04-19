@@ -1,7 +1,106 @@
 getStat();
-
+//文件上传
 $('#fileUpload').click(function () {
     window.parent.document.getElementById("fileUpload").click();
+})
+
+var form;
+var switchPeersId = 0;
+layui.use('form', function() {
+    form = layui.form;
+    form.on('select(peers)', function(data){
+        switchPeersId = data.value;
+    });
+})
+
+//切换集群
+$('#switchPeers').click(function () {
+    $.post('/main/getAllPeers', function(result){
+        var html = '<form class="layui-form" action="">'+
+                    '<div class="layui-form-item">'+
+                    '<div class="layui-input-block" style="margin: 0;padding: 15px;">'+
+                    '<select name="peers" lay-filter="peers">'+
+                    '<option value="0"></option>';
+        for(var i=0;i<result.data.length;i++){
+            html+='<option value="'+result.data[i].id+'">'+result.data[i].name+'</option>';
+        }
+        html+='</select></div></div></form>';
+        layer.open({
+            type: 1,
+            content: html,
+            btn: ['确定', '取消'],
+            title: '选择集群',
+            area: ['400px', '160px'],
+            shadeClose: true,
+            maxmin: true,
+            yes: function(index, layero){
+                if(switchPeersId == 0){
+                    layer.msg("请选择要切换的集群");
+                }else{
+                    $.post('/main/switchPeers',{"id":switchPeersId}, function(result){
+                        if(result.state == 200){
+                            layer.close(index);
+                            layer.msg("切换成功", {icon: 6});
+                            setTimeout(function(){
+                                window.location.reload();
+                            }, 1000);
+                        }else{
+                            layer.msg(result.msg);
+                        }
+                    })
+                }
+            }
+        });
+        form.render();
+    });
+})
+
+//修正统计信息
+$('#repair_stat').click(function () {
+    layer.confirm('确定要修正统计信息吗?该操作会修正最近30天的统计数据(耗时较长)', {icon: 3, title:'提示'}, function(index){
+        layer.close(index);
+        index = layer.load();
+        $.post("/main/repair_stat",function (data) {
+            layer.close(index);
+            layer.msg(data.msg);
+        })
+    });
+})
+
+//删除空目录
+$('#remove_empty_dir').click(function () {
+    layer.confirm('确定要删除空目录吗?该操作耗时较长,请勿重复操作', {icon: 3, title:'提示'}, function(index){
+        layer.close(index);
+        index = layer.load();
+        $.post("/main/remove_empty_dir",function (data) {
+            layer.close(index);
+            layer.msg(data.msg);
+        })
+    });
+})
+
+//备份元数据
+$('#backup').click(function () {
+    layer.confirm('确定要备份元数据吗?该操作将会备份最近30天的数据,耗时较长', {icon: 3, title:'提示'}, function(index){
+        layer.close(index);
+        index = layer.load();
+        $.post("/main/backup",function (data) {
+            layer.close(index);
+            layer.msg(data.msg);
+        })
+    });
+})
+
+//同步失败修复
+$('#repair').click(function () {
+    layer.confirm('确定进行同步失败修复吗?该操作将会修复同步失败数据,耗时较长', {icon: 3, title:'提示'}, function(index){
+        layer.close(index);
+        index = layer.load();
+        $.post("/main/repair",function (data) {
+            layer.close(index);
+            layer.msg(data.msg);
+        })
+    });
 })
 
 //获取文件统计信息
@@ -59,6 +158,8 @@ function getStat() {
                         textStyle: {
                             color: '#8392A5'
                         },
+                        start: 75,
+                        end: 100,
                         handleSize: '80%',
                         dataBackground: {
                             areaStyle: {

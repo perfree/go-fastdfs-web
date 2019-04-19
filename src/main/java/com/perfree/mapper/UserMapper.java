@@ -42,7 +42,7 @@ public interface UserMapper{
 	 * 新增用户
 	 * @param user
 	 */
-	@Insert("insert into t_user(account, password, name, credentialsSalt, email,createTime,peersId) values(#{account},#{password},#{name},#{credentialsSalt},#{email},#{createTime},#{peersId})")
+	@Insert("insert into t_user(account, password, name, credentialsSalt, email,createTime,updateTime,peersId) values(#{account},#{password},#{name},#{credentialsSalt},#{email},#{createTime},#{updateTime},#{peersId})")
 	void saveUser(User user);
 
 	/**
@@ -52,4 +52,6 @@ public interface UserMapper{
 	@Select("select count(1) from t_user")
 	Long getUserCount();
 
+	@Update("UPDATE t_user SET peersId=#{peersId},updateTime=#{updateTime} WHERE id=#{id}")
+    long switchPeers(User user);
 }
