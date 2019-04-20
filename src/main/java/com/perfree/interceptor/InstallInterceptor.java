@@ -7,6 +7,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * 安装拦截器,如用户未安装,则执行安装操作
@@ -20,10 +21,16 @@ public class InstallInterceptor implements HandlerInterceptor{
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		if(userMapper.getUserCount() < 1) {
-			//不存在用户,重定向至安装页
-			response.sendRedirect("/install");
-			return false;
+        HttpSession session = request.getSession();
+        Boolean isInstall = (Boolean) session.getAttribute("isInstall");
+        if(isInstall == null) {
+            if(userMapper.getUserCount() < 1){
+                //不存在用户,重定向至安装页
+                response.sendRedirect("/install");
+                return false;
+            }else{
+                session.setAttribute("isInstall",true);
+            }
 		}
 		return true;
 	}
