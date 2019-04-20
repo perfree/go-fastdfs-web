@@ -21,9 +21,6 @@ import java.util.Date;
 @Service
 public class InstallService {
 
-	/** server地址配置key */
-	private static String PROPERTY_NAME = "go.fastdfs.server.address";
-
 	@Autowired
 	private UserMapper userMapper;
 
@@ -45,7 +42,6 @@ public class InstallService {
 		peers.setServerAddress(server);
 		peers.setCreateTime(date);
 		peersMapper.add(peers);
-		System.out.println(peers.getId());
 		//存储用户信息
 		String uuid = StringUtil.getUUID();
 		Md5Hash md5Hash = new Md5Hash(user.getPassword(),uuid);

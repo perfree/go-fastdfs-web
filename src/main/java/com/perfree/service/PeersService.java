@@ -2,7 +2,6 @@ package com.perfree.service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.perfree.common.AjaxResult;
 import com.perfree.common.DateUtil;
 import com.perfree.common.PageResult;
 import com.perfree.entity.Peers;
