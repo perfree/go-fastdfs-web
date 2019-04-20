@@ -24,8 +24,7 @@ public interface UserMapper{
 	 * @param account
 	 * @return User
 	 */
-	@Select("select * from t_user WHERE account = #{account}")
-	@Results({
+	/*@Results({
 			@Result(id=true,column="id",property="id"),
 			@Result(column="account",property="account"),
 			@Result(column="password",property="password"),
@@ -35,7 +34,8 @@ public interface UserMapper{
 			@Result(column="createTime",property="createTime"),
 			@Result(column="peersId",property="peers",
 				one=@One(select="com.perfree.mapper.PeersMapper.getPeersById",fetchType= FetchType.EAGER))
-	})
+	})*/
+	@Select("select * from t_user WHERE account = #{account}")
 	User getUserByAccount(String account);
 
 	/**

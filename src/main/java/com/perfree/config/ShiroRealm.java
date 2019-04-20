@@ -1,6 +1,5 @@
 package com.perfree.config;
 
-import com.perfree.entity.Peers;
 import com.perfree.entity.User;
 import com.perfree.mapper.PeersMapper;
 import com.perfree.service.UserService;
@@ -25,6 +24,9 @@ public class ShiroRealm extends AuthorizingRealm{
 	
     @Autowired
     private UserService userService;
+
+	@Autowired
+	private PeersMapper peersMapper;
 
     /**
      * 自定义授权
@@ -79,6 +81,8 @@ public class ShiroRealm extends AuthorizingRealm{
 		}
 		String password = user.getPassword();
 		user.setPassword(null);
+        HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
+        request.getSession().setAttribute("peers",peersMapper.getPeersById(user.getPeersId()));
 		SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(user,password,getName());
 		return simpleAuthenticationInfo;
 	}

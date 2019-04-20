@@ -3,7 +3,6 @@ package com.perfree.controller;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
-import cn.hutool.system.UserInfo;
 import com.perfree.common.AjaxResult;
 import com.perfree.common.DateUtil;
 import com.perfree.common.GoFastDfsApi;
@@ -12,10 +11,6 @@ import com.perfree.entity.User;
 import com.perfree.mapper.PeersMapper;
 import com.perfree.mapper.UserMapper;
 import com.perfree.service.IndexService;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.subject.PrincipalCollection;
-import org.apache.shiro.subject.SimplePrincipalCollection;
-import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -23,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
 import java.util.*;
 
 /**
@@ -184,7 +180,7 @@ public class IndexController extends BaseController {
 	 */
 	@RequestMapping("/main/switchPeers")
 	@ResponseBody
-	public AjaxResult switchPeers(int id){
+	public AjaxResult switchPeers(int id, HttpSession session){
 		if(id == getPeers().getId()){
 			return new AjaxResult(AjaxResult.AJAX_ERROR,"当前正在使用此集群");
 		}
@@ -193,6 +189,8 @@ public class IndexController extends BaseController {
 		user.setId(getUser().getId());
 		user.setUpdateTime(DateUtil.getFormatDate(new Date()));
 		if(userMapper.switchPeers(user) > 0){
+			Peers peers = peersMapper.getPeersById(id);
+			session.setAttribute("peers",peers);
 			return new AjaxResult(AjaxResult.AJAX_SUCCESS);
 		}
 		return new AjaxResult(AjaxResult.AJAX_ERROR,"切换失败");

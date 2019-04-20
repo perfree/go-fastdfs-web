@@ -1,5 +1,6 @@
 package com.perfree.config;
 
+import com.perfree.interceptor.UserInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -23,10 +24,16 @@ public class WebConfigurer implements WebMvcConfigurer{
 	public InstallInterceptor installInterceptor() {
 		return new InstallInterceptor();
 	}
+
+	@Bean
+	public UserInterceptor userInterceptor() {
+		return new UserInterceptor();
+	}
 	
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(installInterceptor()).excludePathPatterns("/install","/doInstall","/css/**","/images/**","/plugins/**","/fonts/**","/js/**","/error/**").addPathPatterns("/**");
+		registry.addInterceptor(userInterceptor()).excludePathPatterns("/install","/doInstall","/css/**","/images/**","/plugins/**","/fonts/**","/js/**","/error/**").addPathPatterns("/**");
 	}
 
 	@Override

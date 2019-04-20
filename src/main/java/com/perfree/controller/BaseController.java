@@ -6,6 +6,10 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class BaseController {
@@ -22,13 +26,11 @@ public class BaseController {
     }
 
     /**
-     * 获取集群信息
+     * 获取当前用户使用的集群信息
      * @return Peers
      */
     public Peers getPeers(){
-        Subject subject = SecurityUtils.getSubject();
-        User user=new User();
-        BeanUtils.copyProperties(subject.getPrincipals().getPrimaryPrincipal(), user);
-        return user.getPeers();
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        return (Peers) request.getSession().getAttribute("peers");
     }
 }

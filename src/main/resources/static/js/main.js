@@ -63,6 +63,9 @@ $('#repair_stat').click(function () {
         $.post("/main/repair_stat",function (data) {
             layer.close(index);
             layer.msg(data.msg);
+            setTimeout(function(){
+                window.location.reload();
+            }, 1000);
         })
     });
 })
