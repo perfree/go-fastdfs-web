@@ -20,7 +20,7 @@ layui.use(['upload','element'], function() {
     //多文件上传
     var demoListView = $('#moreFileList'),uploadListIns = upload.render({
         elem: '#fileList',
-        url: '/upload/moreFileUpload',
+        url: '/file/upload/moreFileUpload',
         accept: 'file',
         multiple: true,
         auto: false,

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>控制台</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link rel="stylesheet" th:href="@{/plugins/layui/css/layui.css}" media="all">
+<link rel="stylesheet" th:href="@{/plugins/layer/theme/default/layer.css}" media="all">
+<link rel="stylesheet" th:href="@{/plugins/font-awesome/css/font-awesome.min.css}" media="all">
+<script th:src="@{/plugins/iconfont/iconfont.js}"></script>
+</head>
+<style>
+    html,body,.layui-container,.layui-row,.layui-col-md12,.layui-card{
+        height:100%;
+    }
+    .icon {
+        width: 1.8em;
+        height: 1.8em;
+        vertical-align: -0.5em;
+        fill: currentColor;
+        overflow: hidden;
+    }
+    .file-list-header-ul{
+        display: table;
+        width: 100%;
+        line-height: 30px;
+        border-bottom: 1px solid #eee;
+    }
+    .file-list-header-li{
+        display: table-cell;
+    }
+    .file-list-name{
+        width: 70%;
+    }
+    .file-list-size{
+        width: 15%;
+    }
+    .file-list-date{
+        width: 15%;
+    }
+    .file-list-file{
+        float: left;
+    }
+    .file-list-file-box{
+        border-bottom: 1px solid #eee;
+        line-height: 50px;
+    }
+    .file-list-file-box:hover{
+        background: #eeeeee;
+    }
+    .file-list-file-name{
+        width: 70%;
+    }
+    .file-list-file-size{
+        width: 15%;
+    }
+    .file-list-file-date{
+        width: 15%;
+    }
+    .clear{ clear:both}
+</style>
+<body>
+<div class="layui-container" style="width: 100%;">
+	<div class="layui-row">
+		<div class="layui-col-md12" style="padding:5px;">
+			<div class="layui-card">
+				<div class="layui-card-header" style="padding: 5px;">
+					<button class="layui-btn">
+						<i class="fa fa-cloud-upload"></i>&nbsp;上传
+					</button>
+				</div>
+				<div class="layui-card-body">
+					<div class="file-list-side">
+						<span class="layui-breadcrumb">
+                          <a><cite>全部文件</cite></a>
+                        </span>
+					</div>
+                    <hr class="layui-bg-gray">
+					<div class="file-list">
+                        <div class="file-list-header">
+                            <ul class="file-list-header-ul">
+                                <li class="file-list-header-li file-list-name">文件名</li>
+                                <li class="file-list-header-li file-list-size">大小</li>
+                                <li class="file-list-header-li file-list-date">修改日期</li>
+                            </ul>
+                        </div>
+                        <div class="file-list-result">
+                            <div class="file-list-file-box">
+                                <a class="file-list-file file-list-file-name" href="#">
+                                    <svg class="icon" aria-hidden="true">
+                                        <use xlink:href="#icon-file-b-2"></use>
+                                    </svg>
+                                    <span>文件名</span>
+                                </a>
+                                <div class="file-list-file file-list-file-size">
+                                    -
+                                </div>
+                                <div class="file-list-file file-list-file-date">
+                                    2019-01-08
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                        </div>
+                    </div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/plugins/layer/layer.js}"></script>
+<script th:src="@{/plugins/layui/layui.js}"></script>
+<script>
+    layui.use(['element','table'], function(){
+        var element = layui.element;
+    });
+</script>
+</body>
+</html>

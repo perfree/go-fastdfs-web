@@ -2,6 +2,7 @@ package com.perfree.interceptor;
 
 import com.perfree.entity.User;
 import com.perfree.mapper.PeersMapper;
+import com.perfree.mapper.UserMapper;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,8 @@ public class UserInterceptor implements HandlerInterceptor {
 
     @Autowired
     private PeersMapper peersMapper;
+    @Autowired
+    private UserMapper userMapper;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -26,7 +29,8 @@ public class UserInterceptor implements HandlerInterceptor {
         Subject currentUser = SecurityUtils.getSubject();
         //判断当前用户是否为记住我登录且未存在集群信息session,将集群信息存入session
         if(!currentUser.isAuthenticated() && currentUser.isRemembered() && session.getAttribute("peers") == null){
-            User user = (User) currentUser.getPrincipals().getPrimaryPrincipal();
+            User shiroUser = (User) currentUser.getPrincipals().getPrimaryPrincipal();
+            User user = userMapper.getUserById(shiroUser.getId());
             session.setAttribute("peers",peersMapper.getPeersById(user.getPeersId()));
         }
         return true;

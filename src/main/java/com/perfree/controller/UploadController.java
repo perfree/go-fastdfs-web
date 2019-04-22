@@ -21,12 +21,12 @@ public class UploadController extends BaseController {
     @Value("${upload.temp.path}")
     private String tempPath;
 
-    @RequestMapping("/upload")
+    @RequestMapping("/file/upload")
     public String index(){
-        return "upload";
+        return "file/upload";
     }
 
-    @RequestMapping("/upload/moreFileUpload")
+    @RequestMapping("/file/upload/moreFileUpload")
     @ResponseBody
     public AjaxResult moreFileUpload(@RequestParam("file") MultipartFile file, String scene, String path,String showUrl){
         if(file.isEmpty()) {

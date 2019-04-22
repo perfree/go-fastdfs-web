@@ -47,7 +47,11 @@ html, body {
 	border-bottom: 1px solid #181a1f;
 }
 .layui-layout-admin .layui-logo .logo-text{
-	color: #009688;
+	color: white;
+	font-weight: 700;
+}
+.logo-text i{
+	display: none;
 }
 .layui-nav{
 	padding: 0;

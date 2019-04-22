@@ -68,6 +68,7 @@ function hideNav(){
 		$(".logo-text > .logo-text-value").fadeOut(0);
 		$(".layui-body,.layui-footer,.navbar-header").animate({left:0}, 200);
 		$(".nav-header-right").animate({right:"0px"}, 200);
+		$(".logo-text> i").css("display","inherit");
 		$(".child-menu").css("display","none");
 	}
 	if(util.getWidth() >= 640){
@@ -76,6 +77,7 @@ function hideNav(){
 		$(".logo-text > .logo-text-value").fadeOut(0);
 		$(".layui-body,.layui-footer,.navbar-header").animate({left:60}, 200);
 		$(".nav-header-right").animate({right:"70px"}, 200);
+		$(".logo-text> i").css("display","inherit");
 		$(".child-menu").css("display","none");
 	}
 }
@@ -88,6 +90,7 @@ function showNav(){
 		$(".logo-text > .logo-text-value,.nav-menu-a > .menu-text").delay(200).fadeIn(200);
 		$(".layui-logo,.left-navbar-menu").animate({width:200}, 200 );
 		$(".nav-menu-a > .layui-nav-more").delay(200).fadeIn(0);
+		$(".logo-text> i").css("display","none");
 		$(".child-menu").css("display","block");
 	}
 	if(util.getWidth() >= 640){
@@ -97,6 +100,7 @@ function showNav(){
 		$(".logo-text > .logo-text-value,.nav-menu-a > .menu-text").delay(200).fadeIn(200);
 		$(".layui-logo,.left-navbar-menu").animate({width:200}, 200 );
 		$(".nav-menu-a > .layui-nav-more").delay(200).fadeIn(0);
+		$(".logo-text> i").css("display","none");
 		$(".child-menu").css("display","block");
 	}
 }
