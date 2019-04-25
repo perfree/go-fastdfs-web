@@ -1,0 +1,60 @@
+.icon {
+    width: 1.8em;
+    height: 1.8em;
+    vertical-align: -0.5em;
+    fill: currentColor;
+    overflow: hidden;
+}
+.file-list-header-ul{
+    display: table;
+    width: 100%;
+    line-height: 30px;
+    border-bottom: 1px solid #eee;
+}
+.layui-card-body{
+    overflow: auto;
+}
+.file-list{
+    min-width: 950px;
+}
+.file-list-header-li{
+    display: table-cell;
+}
+.file-list-name{
+    width: 60%;
+}
+.file-list-size{
+    width: 15%;
+}
+.file-list-date{
+    width: 15%;
+}
+.file-list-handle{
+    width: 10%;
+}
+.file-list-file{
+    float: left;
+}
+.file-list-file-box{
+    border-bottom: 1px solid #eee;
+    line-height: 50px;
+}
+.file-list-file-box:hover{
+    background: #eeeeee;
+}
+.file-list-file-name{
+    width: 60%;
+}
+.file-list-file-size{
+    width: 15%;
+}
+.file-list-file-date{
+    width: 15%;
+}
+.file-list-file-handle{
+    width: 10%;
+}
+.path-side-btn{
+    cursor: pointer;
+}
+.clear{ clear:both}
