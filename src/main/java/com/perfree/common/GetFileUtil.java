@@ -29,7 +29,6 @@ public class GetFileUtil {
         }
         String result = HttpUtil.post(serverAddress + GoFastDfsApi.LIST_DIR, param);
         JSONObject parseObj = JSONUtil.parseObj(result);
-        System.out.println(parseObj.get("message"));
         List<FileResult> files = new ArrayList<>();
         if(parseObj.getStr("message").equals("")) {
             JSONArray parseArray = JSONUtil.parseArray(parseObj.get("data"));
