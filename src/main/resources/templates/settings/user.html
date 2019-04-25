@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>个人资料</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link rel="stylesheet" th:href="@{/plugins/layui/css/layui.css}" media="all">
+<link rel="stylesheet" th:href="@{/plugins/layer/theme/default/layer.css}" media="all">
+<link rel="stylesheet" th:href="@{/plugins/font-awesome/css/font-awesome.min.css}" media="all">
+<style>
+	.layui-form-label{
+		width: 120px;
+		color: #657180;
+	}
+</style>
+</head>
+<body>
+<div class="layui-container" style="width: 100%;">
+	<div class="layui-row">
+		<div class="layui-col-md12" style="padding:5px;">
+			<div class="layui-card">
+				<div class="layui-card-header">个人资料</div>
+				<div class="layui-card-body">
+					<form class="layui-form" action="">
+						<div class="layui-form-item">
+							<label class="layui-form-label">账户:</label>
+							<div class="layui-input-inline">
+								<input type="text" name="password" lay-verify="pass" placeholder="请输入账户" autocomplete="off" class="layui-input" th:value="${user.account}" readonly>
+							</div>
+							<div class="layui-form-mid layui-word-aux">不可修改。用于登入名</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label">昵称:</label>
+							<div class="layui-input-inline">
+								<input type="text" name="password" lay-verify="pass" placeholder="请输入昵称" autocomplete="off" class="layui-input" th:value="${user.name}">
+							</div>
+							<div class="layui-form-mid layui-word-aux">16位字符以内</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label">邮箱:</label>
+							<div class="layui-input-inline">
+								<input type="text" name="password" lay-verify="pass" placeholder="请输入邮箱" autocomplete="off" class="layui-input" th:value="${user.email}">
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label">原密码:</label>
+							<div class="layui-input-inline">
+								<input type="password" name="password" lay-verify="pass" placeholder="请输入原密码" autocomplete="off" class="layui-input">
+							</div>
+							<div class="layui-form-mid layui-word-aux">6-16位,不可包含特殊字符</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label">新密码:</label>
+							<div class="layui-input-inline">
+								<input type="password" name="password" lay-verify="pass" placeholder="请输入新密码" autocomplete="off" class="layui-input">
+							</div>
+							<div class="layui-form-mid layui-word-aux">6-16位,不可包含特殊字符</div>
+						</div>
+						<div class="layui-form-item">
+							<div class="layui-input-block">
+								<button class="layui-btn" lay-submit="" lay-filter="">立即提交</button>
+								<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/plugins/layer/layer.js}"></script>
+<script th:src="@{/plugins/layui/layui.js}"></script>
+<script>
+	layui.use('form', function() {
+		var form = layui.form;
+	})
+</script>
+</body>
+</html>

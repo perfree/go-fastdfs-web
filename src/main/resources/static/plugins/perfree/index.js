@@ -165,5 +165,11 @@ $('.theme-box-body').delegate('.theme-box','click',function () {
 		cssArr = url;
 		util.dynamicLoadCss(url);
 	}
-	
 });
+
+$('#userCenter').click(function () {
+	window.document.getElementById("settingsUser").click();
+})
+$('#setting').click(function () {
+	window.document.getElementById("settingsSetting").click();
+})

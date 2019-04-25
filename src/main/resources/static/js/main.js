@@ -3,6 +3,10 @@ getStat();
 $('#fileUpload').click(function () {
     window.parent.document.getElementById("fileUpload").click();
 })
+//文件列表
+$('#fileList').click(function () {
+    window.parent.document.getElementById("file").click();
+})
 
 var form;
 var switchPeersId = 0;

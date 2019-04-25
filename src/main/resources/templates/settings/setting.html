@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>基础设置</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link rel="stylesheet" th:href="@{/plugins/layui/css/layui.css}" media="all">
+<link rel="stylesheet" th:href="@{/plugins/layer/theme/default/layer.css}" media="all">
+<link rel="stylesheet" th:href="@{/plugins/font-awesome/css/font-awesome.min.css}" media="all">
+<style>
+	.layui-form-label{
+		width: 120px;
+		color: #657180;
+	}
+</style>
+</head>
+<body>
+<div class="layui-container" style="width: 100%;">
+	<div class="layui-row">
+		<div class="layui-col-md12" style="padding:5px;">
+			<div class="layui-card">
+				<div class="layui-card-header">基础设置</div>
+				<div class="layui-card-body">
+					<form class="layui-form" action="">
+						<div class="layui-form-item">
+							<label class="layui-form-label">上传文件大小限制</label>
+							<div class="layui-input-inline">
+								<input type="text" name="password" lay-verify="pass" placeholder="请输入数值" autocomplete="off" class="layui-input">
+							</div>
+							<div class="layui-form-mid layui-word-aux"><span style="color: #657180;">MB</span> 提示：1 M = 1024 KB</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/plugins/layer/layer.js}"></script>
+<script th:src="@{/plugins/layui/layui.js}"></script>
+<script>
+	layui.use('form', function() {
+		var form = layui.form;
+	})
+</script>
+</body>
+</html>
