@@ -22,43 +22,44 @@
 				<div class="layui-card-header">个人资料</div>
 				<div class="layui-card-body">
 					<form class="layui-form" action="">
+						<input type="hidden" name="id" th:value="${user.id}">
 						<div class="layui-form-item">
 							<label class="layui-form-label">账户:</label>
 							<div class="layui-input-inline">
-								<input type="text" name="password" lay-verify="pass" placeholder="请输入账户" autocomplete="off" class="layui-input" th:value="${user.account}" readonly>
+								<input type="text" name="account" lay-verify="pass" placeholder="请输入账户" autocomplete="off" class="layui-input" th:value="${user.account}" readonly>
 							</div>
 							<div class="layui-form-mid layui-word-aux">不可修改。用于登入名</div>
 						</div>
 						<div class="layui-form-item">
 							<label class="layui-form-label">昵称:</label>
 							<div class="layui-input-inline">
-								<input type="text" name="password" lay-verify="pass" placeholder="请输入昵称" autocomplete="off" class="layui-input" th:value="${user.name}">
+								<input type="text" name="name" lay-verify="pass" placeholder="请输入昵称" autocomplete="off" class="layui-input" th:value="${user.name}">
 							</div>
 							<div class="layui-form-mid layui-word-aux">16位字符以内</div>
 						</div>
 						<div class="layui-form-item">
 							<label class="layui-form-label">邮箱:</label>
 							<div class="layui-input-inline">
-								<input type="text" name="password" lay-verify="pass" placeholder="请输入邮箱" autocomplete="off" class="layui-input" th:value="${user.email}">
+								<input type="text" name="email" lay-verify="pass" placeholder="请输入邮箱" autocomplete="off" class="layui-input" th:value="${user.email}">
 							</div>
 						</div>
 						<div class="layui-form-item">
 							<label class="layui-form-label">原密码:</label>
 							<div class="layui-input-inline">
-								<input type="password" name="password" lay-verify="pass" placeholder="请输入原密码" autocomplete="off" class="layui-input">
+								<input type="password" name="oldPassword" lay-verify="pass" placeholder="请输入原密码" autocomplete="off" class="layui-input">
 							</div>
 							<div class="layui-form-mid layui-word-aux">6-16位,不可包含特殊字符</div>
 						</div>
 						<div class="layui-form-item">
 							<label class="layui-form-label">新密码:</label>
 							<div class="layui-input-inline">
-								<input type="password" name="password" lay-verify="pass" placeholder="请输入新密码" autocomplete="off" class="layui-input">
+								<input type="password" name="newPassword" lay-verify="pass" placeholder="请输入新密码" autocomplete="off" class="layui-input">
 							</div>
 							<div class="layui-form-mid layui-word-aux">6-16位,不可包含特殊字符</div>
 						</div>
 						<div class="layui-form-item">
 							<div class="layui-input-block">
-								<button class="layui-btn" lay-submit="" lay-filter="">立即提交</button>
+								<button class="layui-btn" lay-submit="" lay-filter="editUser">立即提交</button>
 								<button type="reset" class="layui-btn layui-btn-primary">重置</button>
 							</div>
 						</div>
@@ -74,6 +75,19 @@
 <script>
 	layui.use('form', function() {
 		var form = layui.form;
+		form.on('submit(editUser)', function(data){
+			$.post("/settings/editUser",data.field,function (data) {
+				if(data.state == 200){
+					layer.msg("修改成功", {icon: 6});
+					setTimeout(function(){
+						window.location.reload();
+					}, 1000);
+				}else{
+					layer.msg(data.msg);
+				}
+			})
+			return false;
+		});
 	})
 </script>
 </body>

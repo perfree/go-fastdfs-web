@@ -54,4 +54,12 @@ public interface UserMapper{
 
 	@Update("UPDATE t_user SET peersId=#{peersId},updateTime=#{updateTime} WHERE id=#{id}")
     long switchPeers(User user);
+
+	@Update("<script>UPDATE t_user SET" +
+			"<if test='name != null'> name = #{name},</if>" +
+			"<if test='email != null'> email = #{email},</if>" +
+			"<if test='password != null'> password = #{password},</if>" +
+			" id = #{id} WHERE id=#{id}" +
+			"</script>")
+    long updateUser(User user);
 }

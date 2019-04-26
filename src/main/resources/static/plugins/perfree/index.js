@@ -170,6 +170,3 @@ $('.theme-box-body').delegate('.theme-box','click',function () {
 $('#userCenter').click(function () {
 	window.document.getElementById("settingsUser").click();
 })
-$('#setting').click(function () {
-	window.document.getElementById("settingsSetting").click();
-})
