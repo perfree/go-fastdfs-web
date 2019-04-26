@@ -1,5 +1,6 @@
 package com.perfree.controller;
 
+import cn.hutool.core.util.StrUtil;
 import com.perfree.entity.Peers;
 import com.perfree.entity.User;
 import org.apache.shiro.SecurityUtils;
@@ -42,7 +43,7 @@ public class BaseController {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         Peers peers = (Peers) request.getSession().getAttribute("peers");
         String peersUrl = peers.getServerAddress();
-        if(peers.getGroupName() != null && peers.getGroupName() != ""){
+        if(StrUtil.isNotBlank(peers.getGroupName())){
             peersUrl += "/" + peers.getGroupName();
         }
         return peersUrl;
