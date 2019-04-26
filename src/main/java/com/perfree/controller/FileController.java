@@ -69,7 +69,7 @@ public class FileController extends BaseController {
     @RequestMapping("/file/deleteFile")
     @ResponseBody
     public AjaxResult deleteFile(String path) {
-        if (fileService.deleteFile(getPeers().getServerAddress(), getPeersGroupName(), path)) {
+        if (fileService.deleteFile(getPeersUrl(), getPeersGroupName(), path)) {
             return new AjaxResult(AjaxResult.AJAX_SUCCESS);
         }
         return new AjaxResult(AjaxResult.AJAX_ERROR, "删除失败");
@@ -99,17 +99,7 @@ public class FileController extends BaseController {
             in = new BufferedInputStream(url.openStream());
             response.reset();
             response.setContentType("application/octet-stream");
-            String os = System.getProperty("os.name");
-            if(os.toLowerCase().indexOf("windows") != -1){
-                name = new String(name.getBytes("GBK"), "ISO-8859-1");
-            }else{
-                //判断浏览器
-                String userAgent = request.getHeader("User-Agent").toLowerCase();
-                if(userAgent.indexOf("msie") > 0){
-                    name = URLEncoder.encode(name, "ISO-8859-1");
-                }
-            }
-            response.setHeader("Content-Disposition","attachment;filename=" + name);
+            response.setHeader("Content-Disposition","attachment;filename=" + URLEncoder.encode(name, "UTF-8"));
             // 将网络输入流转换为输出流
             int i;
             while ((i = in.read()) != -1) {
