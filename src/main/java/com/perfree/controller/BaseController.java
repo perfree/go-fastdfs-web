@@ -33,4 +33,18 @@ public class BaseController {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         return (Peers) request.getSession().getAttribute("peers");
     }
+
+    /**
+     * 获取url前缀,(地址+组名)
+     * @return String
+     */
+    public String getPeersUrl(){
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        Peers peers = (Peers) request.getSession().getAttribute("peers");
+        String peersUrl = peers.getServerAddress();
+        if(peers.getGroupName() != null && peers.getGroupName() != ""){
+            peersUrl += "/" + peers.getGroupName();
+        }
+        return peersUrl;
+    }
 }

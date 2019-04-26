@@ -8,7 +8,7 @@
 <link rel="stylesheet" th:href="@{/plugins/layer/theme/default/layer.css}" media="all">
 <link rel="stylesheet" th:href="@{/plugins/font-awesome/css/font-awesome.min.css}" media="all">
 <link rel="stylesheet" th:href="@{/css/file.css}" media="all">
-<script th:src="@{/plugins/iconfont/iconfont.js}"></script>
+<script src="//at.alicdn.com/t/font_1155890_g49ak8s94b4.js"></script>
 </head>
 <body>
 <div class="layui-container" style="width: 100%;">
@@ -76,8 +76,10 @@
                 {{value.mtime}}
             </div>
             <div class="file-list-file file-list-file-handle">
-                <button class="layui-btn layui-btn-xs show-md5-btn" data-md5="{{value.md5}}" title="查看md5值">MD5</button>
-                <button class="layui-btn layui-btn-xs layui-btn-danger" data-md5="{{value.md5}}">删除</button>
+                <button class="layui-btn layui-btn-xs download-btn" data-path="{{value.path}}" data-name="{{value.name}}" title="下载文件">下载</button>
+                {{if value.is_dir == false}}
+                    <button class="layui-btn layui-btn-xs layui-btn-danger" data-md5="{{value.md5}}">删除</button>
+                {{/if}}
             </div>
             <div class="clear"></div>
         </div>

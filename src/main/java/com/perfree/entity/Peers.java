@@ -18,6 +18,8 @@ public class Peers implements Serializable {
     @NotBlank(message = "集群名称不能为空且在100字符以内")
     @Size(max = 100)
     private String name;
+    @Size(max =30)
+    private String groupName;
     @NotBlank(message = "集群管理地址不能为空且在100字符以内")
     @Size(max = 100)
     private String serverAddress;

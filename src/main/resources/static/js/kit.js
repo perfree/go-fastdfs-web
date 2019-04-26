@@ -66,6 +66,32 @@
                     iconName = "file-b-9";break;
                 case "flv":
                     iconName = "file-b-9";break;
+                //exe
+                case "exe":
+                    iconName = "Exe";break;
+                //脚本文件
+                case "sh":
+                    iconName = "jiaobenguanli";break;
+                case "bat":
+                    iconName = "jiaobenguanli";break;
+                //java
+                case "java":
+                    iconName = "java";break;
+                //go
+                case "go":
+                    iconName = "gopher";break;
+                //css
+                case "css":
+                    iconName = "css";break;
+                //html
+                case "html":
+                    iconName = "file_html";break;
+                //js
+                case "js":
+                    iconName = "JS";break;
+                //python
+                case "py":
+                    iconName = "python";break;
                 //其他
                 default:
                     iconName = "file-b-8";break;

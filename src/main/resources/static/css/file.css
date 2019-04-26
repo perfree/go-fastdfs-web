@@ -38,6 +38,7 @@
 .file-list-file-box{
     border-bottom: 1px solid #eee;
     line-height: 50px;
+    padding-left: 8px;
 }
 .file-list-file-box:hover{
     background: #eeeeee;

@@ -38,6 +38,6 @@ public class UploadController extends BaseController {
         if(StrUtil.isBlank(showUrl)){
             showUrl = getPeers().getServerAddress();
         }
-        return UploadUtils.upload(tempPath,getPeers().getServerAddress() + GoFastDfsApi.UPLOAD, path, scene, file,showUrl);
+        return UploadUtils.upload(tempPath,getPeersUrl() + GoFastDfsApi.UPLOAD, path, scene, file,showUrl);
     }
 }

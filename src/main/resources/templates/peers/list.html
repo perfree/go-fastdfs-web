@@ -19,6 +19,7 @@
 						<tr>
 							<th lay-data="{field:'id', sort: true,align:'center'}">ID</th>
 							<th lay-data="{field:'name',align:'center'}">名称</th>
+							<th lay-data="{field:'groupName',align:'center'}">组名</th>
 							<th lay-data="{field:'serverAddress',align:'center'}">管理地址</th>
 							<th lay-data="{field:'createTime',align:'center'}">添加时间</th>
 							<th lay-data="{field:'right',toolbar: '#rightBar',width:150,align:'center'}">操作</th>
@@ -74,7 +75,7 @@
 			} else if(obj.event === 'edit'){
 				layer.open({
 					type: 2,
-					area: ['550px','260px'],
+					area: ['650px','300px'],
 					title :'编辑集群',
 					shadeClose: true,
 					maxmin: true,
@@ -89,7 +90,7 @@
 				case 'addPeers':
 					layer.open({
 						type: 2,
-						area: ['550px','260px'],
+						area: ['650px','300px'],
 						title :'添加集群',
 						shadeClose: true,
 						maxmin: true,

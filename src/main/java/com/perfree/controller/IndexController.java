@@ -72,7 +72,7 @@ public class IndexController extends BaseController {
 	public AjaxResult getStat(){
 		try {
 			//获取文件信息,这一部分有待优化
-			String string = HttpUtil.get(getPeers().getServerAddress()+GoFastDfsApi.STAT);
+			String string = HttpUtil.get(getPeersUrl()+GoFastDfsApi.STAT);
 			JSONObject parseObj = JSONUtil.parseObj(string);
 			if(parseObj.get("status").equals("ok")) {
 				Map<String, Object> result = indexService.getfileStat(parseObj.get("data"));
@@ -99,7 +99,7 @@ public class IndexController extends BaseController {
 			String dateStr = DateUtil.getFormatDate(DateUtil.StrToDate(subDateStr, "yyyy-MM-dd"), "yyyyMMdd");
 			Map<String, Object> map = new HashMap<>(16);
 			map.put("date", dateStr);
-			String result = HttpUtil.post(getPeers().getServerAddress() + GoFastDfsApi.REPAIR_STAT, map);
+			String result = HttpUtil.post(getPeersUrl() + GoFastDfsApi.REPAIR_STAT, map);
 			JSONObject parseObj = JSONUtil.parseObj(result);
 			if(parseObj.get("status").equals("ok")) {
 				count ++;
@@ -115,7 +115,7 @@ public class IndexController extends BaseController {
 	@RequestMapping("/main/remove_empty_dir")
 	@ResponseBody
 	public AjaxResult remove_empty_dir(){
-		String result = HttpUtil.post(getPeers().getServerAddress()+GoFastDfsApi.REMOVE_EMPTY_DIR, new HashMap<>());
+		String result = HttpUtil.post(getPeersUrl()+GoFastDfsApi.REMOVE_EMPTY_DIR, new HashMap<>());
 		JSONObject parseObj = JSONUtil.parseObj(result);
 		if(parseObj.get("status").equals("ok")) {
 			return new AjaxResult(AjaxResult.AJAX_ERROR,"操作成功,正在后台操作,请勿重复使用此功能");
@@ -137,7 +137,7 @@ public class IndexController extends BaseController {
 			String dateStr = DateUtil.getFormatDate(DateUtil.StrToDate(subDateStr, "yyyy-MM-dd"), "yyyyMMdd");
 			Map<String, Object> map = new HashMap<>(16);
 			map.put("date", dateStr);
-			String result = HttpUtil.post(getPeers().getServerAddress() + GoFastDfsApi.BACKUP, map);
+			String result = HttpUtil.post(getPeersUrl() + GoFastDfsApi.BACKUP, map);
 			JSONObject parseObj = JSONUtil.parseObj(result);
 			if(parseObj.get("status").equals("ok")) {
 				count ++;
@@ -153,7 +153,7 @@ public class IndexController extends BaseController {
 	@RequestMapping("/main/repair")
 	@ResponseBody
 	public AjaxResult repair(){
-		String result = HttpUtil.post(getPeers().getServerAddress()+GoFastDfsApi.REPAIR+"?force=1", new HashMap<>());
+		String result = HttpUtil.post(getPeersUrl()+GoFastDfsApi.REPAIR+"?force=1", new HashMap<>());
 		JSONObject parseObj = JSONUtil.parseObj(result);
 		if(parseObj.get("status").equals("ok")) {
 			return new AjaxResult(AjaxResult.AJAX_ERROR,"操作成功,正在后台操作,请勿重复使用此功能");

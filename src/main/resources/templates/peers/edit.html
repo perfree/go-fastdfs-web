@@ -17,6 +17,13 @@
 			</div>
 		</div>
 		<div class="layui-form-item">
+			<label class="layui-form-label">所属组名</label>
+			<div class="layui-input-inline">
+				<input type="text" name="groupName" placeholder="请输入组名" autocomplete="off" class="layui-input" th:value="${peers.groupName}">
+			</div>
+			<div class="layui-form-mid layui-word-aux">如未在GoFastDfs开启按组管理,请不要填写</div>
+		</div>
+		<div class="layui-form-item">
 			<label class="layui-form-label">管理地址</label>
 			<div class="layui-input-block">
 				<input type="text" name="serverAddress" lay-verify="required" autocomplete="off" placeholder="请输入集群管理地址" class="layui-input" th:value="${peers.serverAddress}">

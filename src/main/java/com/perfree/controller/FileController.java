@@ -32,7 +32,7 @@ public class FileController extends BaseController {
     @RequestMapping("/file/getParentFile")
     @ResponseBody
     public AjaxResult getParentFile(){
-       return new AjaxResult(AjaxResult.AJAX_SUCCESS,fileService.getParentFile(getPeers().getServerAddress()));
+       return new AjaxResult(AjaxResult.AJAX_SUCCESS,fileService.getParentFile(getPeersUrl()));
     }
 
     /**
@@ -43,8 +43,8 @@ public class FileController extends BaseController {
     @RequestMapping("/file/getDirFile")
     @ResponseBody
     public AjaxResult getDirFile(String dir){
-        fileService.getDirFile(getPeers().getServerAddress(),dir);
-        return new AjaxResult(AjaxResult.AJAX_SUCCESS,fileService.getDirFile(getPeers().getServerAddress(),dir));
+        fileService.getDirFile(getPeersUrl(),dir);
+        return new AjaxResult(AjaxResult.AJAX_SUCCESS,fileService.getDirFile(getPeersUrl(),dir));
     }
 
 }

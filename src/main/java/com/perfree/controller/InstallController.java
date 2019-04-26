@@ -51,7 +51,7 @@ public class InstallController {
 	@RequestMapping("/doInstall")
 	@ResponseBody
 	@Validated
-	public AjaxResult doInstall(@Valid User user,BindingResult bindingResult,String serverName,String server) {
+	public AjaxResult doInstall(@Valid User user,BindingResult bindingResult,String serverName,String groupName,String server) {
 		if(bindingResult.hasErrors()){
 			return new AjaxResult(AjaxResult.AJAX_ERROR,bindingResult.getFieldError().getDefaultMessage());
 		}
@@ -69,7 +69,11 @@ public class InstallController {
 			return new AjaxResult(AjaxResult.AJAX_ERROR,"go-fastdfs服务地址填写错误!");
 		}
 		try{
-			String string = HttpUtil.get(server+GoFastDfsApi.STAT);
+			String urlPath = server;
+			if(StrUtil.isNotBlank(groupName)){
+				urlPath+="/"+groupName;
+			}
+			String string = HttpUtil.get(urlPath+GoFastDfsApi.STAT);
 			JSONObject parseObj = JSONUtil.parseObj(string);
 			if(!parseObj.get("status").equals("ok")) {
 				return new AjaxResult(AjaxResult.AJAX_ERROR,"连接go-fastdfs服务失败!请检查服务地址是否已配置白名单!");
@@ -77,6 +81,6 @@ public class InstallController {
 		}catch(Exception e){
 			return new AjaxResult(AjaxResult.AJAX_ERROR,"连接go-fastdfs服务失败!请检查服务地址是否正确!");
 		}
-		return installService.install(user,serverName,server);
+		return installService.install(user,serverName,groupName,server);
 	}
 }

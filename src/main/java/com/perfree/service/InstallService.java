@@ -31,7 +31,7 @@ public class InstallService {
 	 * 保存新增用户信息
 	 * @param user
 	 */
-	public AjaxResult install(User user,String name,String server) {
+	public AjaxResult install(User user,String name,String groupName,String server) {
 		if(userMapper.getUserByAccount(user.getAccount()) != null){
 			return new AjaxResult(AjaxResult.AJAX_ERROR,"用户已存在!");
 		}
@@ -39,6 +39,7 @@ public class InstallService {
 		//存储peers信息
 		Peers peers = new Peers();
 		peers.setName(name);
+		peers.setGroupName(groupName);
 		peers.setServerAddress(server);
 		peers.setCreateTime(date);
 		peersMapper.add(peers);

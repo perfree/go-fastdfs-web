@@ -10,6 +10,7 @@ $('#fileUpload').click(function () {
 })
 /*获取所有一级目录及文件*/
 function getParentFile() {
+    var index = layer.load();
     $.post('/file/getParentFile', function(result){
         if(result.state==200){
             var data = result;
@@ -28,7 +29,9 @@ function getParentFile() {
             var html = template('file-list',data);
             $("#file-result").html(html);
             $("#path-side").html('<a class="path-side-btn" data-path=""><cite>全部文件</cite></a>');
+            layer.close(index);
         }else{
+            layer.close(index);
             layer.msg("系统异常");
         }
     });
@@ -48,6 +51,7 @@ $("#path-side").on("click",".path-side-btn",function(){
 })
 //打开文件夹
 function openDir(dir) {
+    var index = layer.load();
     $.post('/file/getDirFile',{"dir":dir}, function(result){
         if(result.state==200){
             var data = result;
@@ -66,7 +70,9 @@ function openDir(dir) {
             var html = template('file-list',data);
             $("#file-result").html(html);
             setPathSide(dir);
+            layer.close(index);
         }else{
+            layer.close(index);
             layer.msg("系统异常");
         }
     });
@@ -89,8 +95,11 @@ function setPathSide(dir) {
     element.init();
 }
 
-/*监听MD5查看按钮*/
-$("#file-result").on("click",".show-md5-btn",function(){
-    var md5 = $(this).data("md5");
-    layer.alert(md5, {title: "MD5值"});
+/*监听下载按钮*/
+$("#file-result").on("click",".download-btn",function(){
+    var name = $(this).data("name");
+    var path = $(this).data("path");
+    $.post('/file/downloadFile',{"path":path+"/"+name}, function(result){
+
+    })
 })

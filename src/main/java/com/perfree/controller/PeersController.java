@@ -17,6 +17,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 /**
@@ -73,7 +74,11 @@ public class PeersController extends BaseController{
             return new AjaxResult(AjaxResult.AJAX_ERROR,"go-fastdfs服务地址填写错误!");
         }
         try{
-            String string = HttpUtil.get(peers.getServerAddress()+ GoFastDfsApi.STAT);
+            String urlPath = peers.getServerAddress();
+            if(StrUtil.isNotBlank(peers.getGroupName())){
+                urlPath+="/"+peers.getGroupName();
+            }
+            String string = HttpUtil.get(urlPath+ GoFastDfsApi.STAT);
             JSONObject parseObj = JSONUtil.parseObj(string);
             if(!parseObj.get("status").equals("ok")) {
                 return new AjaxResult(AjaxResult.AJAX_ERROR,"测试连接go-fastdfs服务失败!请检查该服务地址是否已配置白名单!");
@@ -128,7 +133,7 @@ public class PeersController extends BaseController{
      */
     @RequestMapping("/peers/doEdit")
     @ResponseBody
-    public AjaxResult doEdit(@Valid Peers peers, BindingResult bindingResult){
+    public AjaxResult doEdit(@Valid Peers peers, BindingResult bindingResult,HttpSession session){
         if(bindingResult.hasErrors()){
             return new AjaxResult(AjaxResult.AJAX_ERROR,bindingResult.getFieldError().getDefaultMessage());
         }
@@ -137,7 +142,11 @@ public class PeersController extends BaseController{
             return new AjaxResult(AjaxResult.AJAX_ERROR,"go-fastdfs服务地址填写错误!");
         }
         try{
-            String string = HttpUtil.get(peers.getServerAddress()+ GoFastDfsApi.STAT);
+            String urlPath = peers.getServerAddress();
+            if(StrUtil.isNotBlank(peers.getGroupName())){
+                urlPath+="/"+peers.getGroupName();
+            }
+            String string = HttpUtil.get(urlPath+ GoFastDfsApi.STAT);
             JSONObject parseObj = JSONUtil.parseObj(string);
             if(!parseObj.get("status").equals("ok")) {
                 return new AjaxResult(AjaxResult.AJAX_ERROR,"测试连接go-fastdfs服务失败!请检查该服务地址是否已配置白名单!");
@@ -146,11 +155,15 @@ public class PeersController extends BaseController{
             return new AjaxResult(AjaxResult.AJAX_ERROR,"测试连接go-fastdfs服务失败!请检查该服务地址是否正确!");
         }
         //校验集群是否已经添加
-        if(peersService.checkPeers(peers.getServerAddress())){
+        if(!peersService.getPeersById(peers.getId()).getServerAddress().equals(peers.getServerAddress())
+                && peersService.checkPeers(peers.getServerAddress())){
             return new AjaxResult(AjaxResult.AJAX_ERROR,"该集群已存在!");
         }
         //更新
         if(peersService.updatePeers(peers)){
+            if(peers.getId() == getPeers().getId()){
+                session.setAttribute("peers",peersService.getPeersById(peers.getId()));
+            }
             return new AjaxResult(AjaxResult.AJAX_SUCCESS);
         }
         return new AjaxResult(AjaxResult.AJAX_ERROR,"系统异常");
