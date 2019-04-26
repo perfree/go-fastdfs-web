@@ -36,6 +36,16 @@ public class BaseController {
     }
 
     /**
+     * 获取组名
+     * @return String
+     */
+    public String getPeersGroupName(){
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        Peers peers = (Peers) request.getSession().getAttribute("peers");
+        return peers.getGroupName();
+    }
+
+    /**
      * 获取url前缀,(地址+组名)
      * @return String
      */

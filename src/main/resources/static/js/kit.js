@@ -31,6 +31,9 @@
                     iconName = "file-b-";break;
                 case "pptx":
                     iconName = "file-b-";break;
+                //pdf
+                case "pdf":
+                    iconName = "file-s-6";break;
                 //word
                 case "doc":
                     iconName = "file-b-1";break;

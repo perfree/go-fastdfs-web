@@ -99,7 +99,31 @@ function setPathSide(dir) {
 $("#file-result").on("click",".download-btn",function(){
     var name = $(this).data("name");
     var path = $(this).data("path");
-    $.post('/file/downloadFile',{"path":path+"/"+name}, function(result){
+    var url = "/file/downloadFile";
+    var form = $("<form></form>").attr("action", url).attr("method", "post");
+    form.append($("<input></input>").attr("type", "hidden").attr("name", "path").attr("value", path));
+    form.append($("<input></input>").attr("type", "hidden").attr("name", "name").attr("value", name));
+    form.appendTo('body').submit().remove();
+})
 
-    })
+/*监听删除按钮*/
+$("#file-result").on("click",".delete-file-btn",function(){
+    var name = $(this).data("name");
+    var path = $(this).data("path");
+    var $this = $(this);
+    layer.confirm('确定要删除该文件吗?',{icon: 3, title:'提示'}, function(index){
+        $.post('/file/deleteFile',{"path":path+"/"+name}, function(result){
+            if(result.state==200){
+                $this.parent().parent().remove();
+                var len = $(".file-list-file-box").length;
+                if(len == 0){
+                    $("#file-result").html('<div class="file-list-file-box"><div class="no-file-tip">暂无文件</div></div>');
+                }
+                layer.msg("删除成功");
+            }else{
+                layer.msg(result.msg);
+            }
+        })
+        layer.close(index);
+    });
 })
