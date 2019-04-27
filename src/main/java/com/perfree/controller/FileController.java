@@ -1,9 +1,7 @@
 package com.perfree.controller;
 
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.http.HttpUtil;
 import com.perfree.common.AjaxResult;
-import com.perfree.entity.FileResult;
 import com.perfree.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,7 +14,6 @@ import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.List;
 
 /**
  * 文件列表controller
@@ -63,13 +60,13 @@ public class FileController extends BaseController {
     /**
      * 删除文件
      *
-     * @param path
+     * @param md5
      * @return AjaxResult
      */
     @RequestMapping("/file/deleteFile")
     @ResponseBody
-    public AjaxResult deleteFile(String path) {
-        if (fileService.deleteFile(getPeersUrl(), getPeersGroupName(), path)) {
+    public AjaxResult deleteFile(String md5) {
+        if (fileService.deleteFile(getPeersUrl(),md5)) {
             return new AjaxResult(AjaxResult.AJAX_SUCCESS);
         }
         return new AjaxResult(AjaxResult.AJAX_ERROR, "删除失败");
@@ -95,7 +92,7 @@ public class FileController extends BaseController {
         }
         BufferedInputStream in = null;
         try {
-            URL url = new URL(peersUrl+path+"/"+name);
+            URL url = new URL(peersUrl+"/"+path+"/"+name);
             in = new BufferedInputStream(url.openStream());
             response.reset();
             response.setContentType("application/octet-stream");

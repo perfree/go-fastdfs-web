@@ -41,17 +41,21 @@ function getParentFile() {
 $("#file-result").on("click",".resultDir",function(){
     var dirName = $(this).data("name");
     var dirPath = $(this).data("path");
-    openDir(dirPath+"/"+dirName)
+    openDir(dirPath+"/"+dirName);
 });
 
 /*监听文件导航*/
 $("#path-side").on("click",".path-side-btn",function(){
     var dir = $(this).data("path");
-    openDir(dir)
+    openDir(dir);
 })
 //打开文件夹
 function openDir(dir) {
     var index = layer.load();
+    var suff = dir.substring(0,1);
+    if(suff == "/"){
+        dir = dir.substring(1);
+    }
     $.post('/file/getDirFile',{"dir":dir}, function(result){
         if(result.state==200){
             var data = result;
@@ -69,7 +73,7 @@ function openDir(dir) {
             });
             var html = template('file-list',data);
             $("#file-result").html(html);
-            setPathSide(dir);
+            setPathSide("/"+dir);
             layer.close(index);
         }else{
             layer.close(index);
@@ -80,13 +84,10 @@ function openDir(dir) {
 //设置文件导航
 function setPathSide(dir) {
     var arr = dir.split('/');
-    var html;
-    var path;
+    var html = '<a class="path-side-btn" data-path="">全部文件</a>';
+    var path = "";
     for(var i=0;i<arr.length;i++){
-        if (arr[i]==""){
-            html += '<a class="path-side-btn" data-path="">全部文件</a>';
-            path = "";
-        }else{
+        if(arr[i] != ""){
             html += '<a class="path-side-btn" data-path="'+(path+"/"+arr[i])+'">'+arr[i]+'</a>';
             path += "/"+arr[i];
         }
@@ -109,10 +110,10 @@ $("#file-result").on("click",".download-btn",function(){
 /*监听删除按钮*/
 $("#file-result").on("click",".delete-file-btn",function(){
     var name = $(this).data("name");
-    var path = $(this).data("path");
+    var md5 = $(this).data("md5");
     var $this = $(this);
-    layer.confirm('确定要删除该文件吗?',{icon: 3, title:'提示'}, function(index){
-        $.post('/file/deleteFile',{"path":path+"/"+name}, function(result){
+    layer.confirm('确定要删除'+name+'吗?',{icon: 3, title:'提示'}, function(index){
+        $.post('/file/deleteFile',{"md5":md5}, function(result){
             if(result.state==200){
                 $this.parent().parent().remove();
                 var len = $(".file-list-file-box").length;

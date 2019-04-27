@@ -1,6 +1,5 @@
 package com.perfree.service;
 
-import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
@@ -40,18 +39,12 @@ public class FileService {
     /**
      * 删除文件
      * @param peersUrl 服务地址
-     * @param groupName 组名
-     * @param path 路径
+     * @param md5 md5
      * @return boolean
      */
-    public boolean deleteFile(String peersUrl, String groupName, String path) {
-        if (StrUtil.isNotBlank(groupName)){
-            path = "/"+groupName+path;
-        }else{
-            path = "/group1" + path;
-        }
+    public boolean deleteFile(String peersUrl, String md5) {
         HashMap<String, Object> param = new HashMap<>(10);
-        param.put("path",path);
+        param.put("md5",md5);
         String result = HttpUtil.post(peersUrl + GoFastDfsApi.DELETE, param);
         JSONObject parseObj = JSONUtil.parseObj(result);
         if(parseObj.getStr("status").equals("ok")) {

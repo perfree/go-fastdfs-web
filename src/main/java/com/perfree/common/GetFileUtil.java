@@ -1,6 +1,8 @@
 package com.perfree.common;
 
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.http.Header;
+import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
