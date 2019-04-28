@@ -1,5 +1,5 @@
 ## Go-Fastdfs web管理平台
-> go-fastdfs 是一个简单的分布式文件存储，具有高性能，高可靠，免维护等优点，支持断点续传，分块上传，小文件合并，自动同步，自动修复。
+> go-fastdfs 是一个简单的分布式文件存储，具有高性能，高可靠，免维护等优点，支持断点续传，分块上传，小文件合并，自动同步，自动修复。本项目为go-fastdfs的web管理端
 
 [前往 Go-Fastdfs](https://github.com/sjqzhang/go-fastdfs)
 
