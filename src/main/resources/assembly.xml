@@ -12,6 +12,13 @@
             <fileMode>0755</fileMode>
         </fileSet>
         <fileSet>
+            <directory>${basedir}</directory>
+            <includes>
+                <include>README.md</include>
+            </includes>
+            <outputDirectory></outputDirectory>
+        </fileSet>
+        <fileSet>
             <directory>${basedir}/src/main/resources/db</directory>
             <includes>
                 <include>*.db</include>
