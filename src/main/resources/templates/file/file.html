@@ -1,33 +1,33 @@
 <!DOCTYPE html>
 <html lang="zh_CN" xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>控制台</title>
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<link rel="stylesheet" th:href="@{/plugins/layui/css/layui.css}" media="all">
-<link rel="stylesheet" th:href="@{/plugins/layer/theme/default/layer.css}" media="all">
-<link rel="stylesheet" th:href="@{/plugins/font-awesome/css/font-awesome.min.css}" media="all">
-<link rel="stylesheet" th:href="@{/css/file.css}" media="all">
-<script src="//at.alicdn.com/t/font_1155890_g49ak8s94b4.js"></script>
+    <meta charset="UTF-8">
+    <title>控制台</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" th:href="@{/plugins/layui/css/layui.css}" media="all">
+    <link rel="stylesheet" th:href="@{/plugins/layer/theme/default/layer.css}" media="all">
+    <link rel="stylesheet" th:href="@{/plugins/font-awesome/css/font-awesome.min.css}" media="all">
+    <link rel="stylesheet" th:href="@{/css/file.css}" media="all">
+    <script src="//at.alicdn.com/t/font_1155890_g49ak8s94b4.js"></script>
 </head>
 <body>
 <div class="layui-container" style="width: 100%;">
-	<div class="layui-row">
-		<div class="layui-col-md12" style="padding:5px;">
-			<div class="layui-card">
-				<div class="layui-card-header" style="padding: 5px;">
-					<button class="layui-btn" id="fileUpload">
-						<i class="fa fa-cloud-upload"></i>&nbsp;上传
-					</button>
-				</div>
-				<div class="layui-card-body">
-					<div class="file-list-side">
+    <div class="layui-row">
+        <div class="layui-col-md12" style="padding:5px;">
+            <div class="layui-card">
+                <div class="layui-card-header" style="padding: 5px;">
+                    <button class="layui-btn" id="fileUpload">
+                        <i class="fa fa-cloud-upload"></i>&nbsp;上传
+                    </button>
+                </div>
+                <div class="layui-card-body">
+                    <div class="file-list-side">
 						<span class="layui-breadcrumb" id="path-side">
 
                         </span>
-					</div>
+                    </div>
                     <hr class="layui-bg-gray">
-					<div class="file-list">
+                    <div class="file-list">
                         <div class="file-list-header">
                             <ul class="file-list-header-ul">
                                 <li class="file-list-header-li file-list-name">文件名</li>
@@ -40,55 +40,62 @@
 
                         </div>
                     </div>
-				</div>
-			</div>
-		</div>
-	</div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <script id="file-list" type="text/html">
     {{if data.length > 0}}
-        {{each data as value i}}
-            <div class="file-list-file-box">
-                {{if value.is_dir}}
-                    <a class="file-list-file file-list-file-name resultDir" href="javascript:;" data-path="{{value.path}}"
-                       data-name="{{value.name}}" data-md5="{{value.md5}}">
-                        <svg class="icon" aria-hidden="true">
-                            <use xlink:href="#icon-{{value.name | iconHandler:value.is_dir}}"></use>
-                        </svg>
-                        <span>{{value.name}}</span>
-                    </a>
-                {{else}}
-                    <a class="file-list-file file-list-file-name resultFile" href="javascript:;" data-path="{{value.path}}"
-                       data-name="{{value.name}}" data-md5="{{value.md5}}">
-                        <svg class="icon" aria-hidden="true">
-                            <use xlink:href="#icon-{{value.name | iconHandler:value.is_dir}}"></use>
-                        </svg>
-                        <span>{{value.name}}</span>
-                    </a>
-                {{/if}}
-                <div class="file-list-file file-list-file-size">
-                    {{if value.is_dir}}
-                        -
-                    {{else}}
-                        {{value.size}}
-                    {{/if}}
-                </div>
-                <div class="file-list-file file-list-file-date">
-                    {{value.mtime}}
-                </div>
-                <div class="file-list-file file-list-file-handle">
-                    {{if value.is_dir == false}}
-                        <button class="layui-btn layui-btn-xs download-btn" data-path="{{value.path}}" data-name="{{value.name}}" title="下载文件">下载</button>
-                        <button class="layui-btn layui-btn-xs layui-btn-danger delete-file-btn" data-md5="{{value.md5}}" data-name="{{value.name}}">删除</button>
-                    {{/if}}
-                </div>
-                <div class="clear"></div>
-            </div>
-        {{/each}}
-    {{else}}
-        <div class="file-list-file-box">
-            <div class="no-file-tip">暂无文件</div>
+    {{each data as value i}}
+    <div class="file-list-file-box">
+        {{if value.is_dir}}
+        <a class="file-list-file file-list-file-name resultDir" href="javascript:;" data-path="{{value.path}}"
+           data-name="{{value.name}}" data-md5="{{value.md5}}">
+            <svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-{{value.name | iconHandler:value.is_dir}}"></use>
+            </svg>
+            <span>{{value.name}}</span>
+        </a>
+        {{else}}
+        <a class="file-list-file file-list-file-name resultFile" href="javascript:;" data-path="{{value.path}}"
+           data-name="{{value.name}}" data-md5="{{value.md5}}">
+            <svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-{{value.name | iconHandler:value.is_dir}}"></use>
+            </svg>
+            <span>{{value.name}}</span>
+        </a>
+        {{/if}}
+        <div class="file-list-file file-list-file-size">
+            {{if value.is_dir}}
+            -
+            {{else}}
+            {{value.size}}
+            {{/if}}
         </div>
+        <div class="file-list-file file-list-file-date">
+            {{value.mtime}}
+        </div>
+        <div class="file-list-file file-list-file-handle">
+            {{if value.is_dir == false}}
+            <button class="layui-btn layui-btn-xs details-btn" data-md5="{{value.md5}}" data-name="{{value.name}}"
+                    title="下载文件">详情
+            </button>
+            <button class="layui-btn layui-btn-xs layui-btn-normal download-btn" data-path="{{value.path}}" data-name="{{value.name}}"
+                    title="下载文件">下载
+            </button>
+            <button class="layui-btn layui-btn-xs layui-btn-danger delete-file-btn" data-md5="{{value.md5}}"
+                    data-name="{{value.name}}">删除
+            </button>
+            {{/if}}
+        </div>
+        <div class="clear"></div>
+    </div>
+    {{/each}}
+    {{else}}
+    <div class="file-list-file-box">
+        <div class="no-file-tip">暂无文件</div>
+    </div>
     {{/if}}
 </script>
 <script th:src="@{/js/jquery.min.js}"></script>

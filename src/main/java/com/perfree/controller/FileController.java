@@ -16,6 +16,8 @@ import java.net.URL;
 import java.net.URLEncoder;
 
 /**
+ * @Author Perfree
+ * @Date 10:58 2019/5/11
  * 文件列表controller
  */
 @Controller
@@ -70,6 +72,18 @@ public class FileController extends BaseController {
             return new AjaxResult(AjaxResult.AJAX_SUCCESS);
         }
         return new AjaxResult(AjaxResult.AJAX_ERROR, "删除失败");
+    }
+
+    /**
+     * 文件信息
+     *
+     * @param md5
+     * @return AjaxResult
+     */
+    @RequestMapping("/file/details")
+    @ResponseBody
+    public AjaxResult details(String md5) {
+        return fileService.details(getPeersUrl(),md5);
     }
 
     /**

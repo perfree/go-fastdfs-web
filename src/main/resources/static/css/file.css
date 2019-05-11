@@ -21,7 +21,7 @@
     display: table-cell;
 }
 .file-list-name{
-    width: 60%;
+    width: 55%;
 }
 .file-list-size{
     width: 15%;
@@ -30,7 +30,7 @@
     width: 15%;
 }
 .file-list-handle{
-    width: 10%;
+    width: 15%;
 }
 .file-list-file{
     float: left;
@@ -44,7 +44,7 @@
     background: #eeeeee;
 }
 .file-list-file-name{
-    width: 60%;
+    width: 55%;
 }
 .file-list-file-size{
     width: 15%;
@@ -53,9 +53,22 @@
     width: 15%;
 }
 .file-list-file-handle{
-    width: 10%;
+    width: 15%;
 }
 .path-side-btn{
     cursor: pointer;
 }
 .clear{ clear:both}
+.file-details-box{
+    padding: 15px;
+}
+.file-details-box li{
+    line-height: 40px;
+    font-size: 1.1em;
+    border-bottom: 1px solid #f3f3f3;
+    word-wrap: break-word;
+}
+.file-details-box li span{
+    float: left;
+    font-weight: 600;
+}

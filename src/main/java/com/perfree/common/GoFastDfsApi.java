@@ -1,7 +1,5 @@
 package com.perfree.common;
 
-import com.perfree.entity.User;
-
 /**
  * Go-FasTdFS API管理类
  * @author Perfree
@@ -27,4 +25,6 @@ public class GoFastDfsApi {
 	public static final String REPAIR = "/repair";
 	/** 文件列表api */
 	public static final String LIST_DIR = "/list_dir";
+	/** 文件信息api */
+	public static final String GET_FILE_INFO = "/get_file_info";
 }

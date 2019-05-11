@@ -107,6 +107,31 @@ $("#file-result").on("click",".download-btn",function(){
     form.appendTo('body').submit().remove();
 })
 
+/*监听详情按钮*/
+$("#file-result").on("click",".details-btn",function(){
+    var md5 = $(this).data("md5");
+    $.post('/file/details',{"md5":md5}, function(result){
+        var html = '<div class="file-details-box">' +
+            '<ul>' +
+            '<li><span>名称:&nbsp;</span>'+result.data.name+'</li>'+
+            '<li><span>路径:&nbsp;</span>'+result.data.path+'</li>'+
+            '<li><span>MD5:&nbsp;</span>'+result.data.md5+'</li>'+
+            '<li><span>场景:&nbsp;</span>'+result.data.scene+'</li>'+
+            '<li><span>大小:&nbsp;</span>'+result.data.size+'</li>'+
+            '<li><span>日期:&nbsp;</span>'+result.data.timeStamp+'</li>'+
+            '</ul>'+
+            '</div>';
+        layer.open({
+            type: 1,
+            title: '文件信息',
+            shade: 0.7,
+            shadeClose: true,
+            content: html
+        });
+        console.log(html)
+    })
+})
+
 /*监听删除按钮*/
 $("#file-result").on("click",".delete-file-btn",function(){
     var name = $(this).data("name");
