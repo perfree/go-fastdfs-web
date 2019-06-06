@@ -12,6 +12,11 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * Controller基类
+ * @Author Perfree
+ * @Date 8:41 2019/6/6
+ **/
 @Controller
 public class BaseController {
 

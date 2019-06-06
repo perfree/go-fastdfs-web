@@ -8,7 +8,7 @@
     <link rel="stylesheet" th:href="@{/plugins/layer/theme/default/layer.css}" media="all">
     <link rel="stylesheet" th:href="@{/plugins/font-awesome/css/font-awesome.min.css}" media="all">
     <link rel="stylesheet" th:href="@{/css/file.css}" media="all">
-    <script src="//at.alicdn.com/t/font_1155890_g49ak8s94b4.js"></script>
+    <script type="text/javascript" th:src="@{/plugins/iconfont/iconfont.js}"></script>
 </head>
 <body>
 <div class="layui-container" style="width: 100%;">
@@ -59,7 +59,7 @@
         </a>
         {{else}}
         <a class="file-list-file file-list-file-name resultFile" href="javascript:;" data-path="{{value.path}}"
-           data-name="{{value.name}}" data-md5="{{value.md5}}">
+           data-name="{{value.name}}" data-md5="{{value.md5}}" data-peer="{{value.peerAddr}}">
             <svg class="icon" aria-hidden="true">
                 <use xlink:href="#icon-{{value.name | iconHandler:value.is_dir}}"></use>
             </svg>

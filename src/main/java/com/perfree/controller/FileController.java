@@ -44,7 +44,7 @@ public class FileController extends BaseController {
     @RequestMapping("/file/getParentFile")
     @ResponseBody
     public AjaxResult getParentFile() {
-        return new AjaxResult(AjaxResult.AJAX_SUCCESS, fileService.getParentFile(getPeersUrl()));
+        return new AjaxResult(AjaxResult.AJAX_SUCCESS, fileService.getParentFile(getPeersGroupName(),getPeersUrl()));
     }
 
     /**
@@ -56,7 +56,7 @@ public class FileController extends BaseController {
     @RequestMapping("/file/getDirFile")
     @ResponseBody
     public AjaxResult getDirFile(String dir) {
-        return new AjaxResult(AjaxResult.AJAX_SUCCESS, fileService.getDirFile(getPeersUrl(), dir));
+        return new AjaxResult(AjaxResult.AJAX_SUCCESS, fileService.getDirFile(getPeersGroupName(),getPeersUrl(), dir));
     }
 
     /**

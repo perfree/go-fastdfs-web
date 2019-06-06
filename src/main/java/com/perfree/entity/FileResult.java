@@ -12,4 +12,5 @@ public class FileResult {
     private String name;
     private String path;
     private String size;
+    private String peerAddr;
 }

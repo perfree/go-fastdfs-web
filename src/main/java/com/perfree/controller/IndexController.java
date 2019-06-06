@@ -95,8 +95,7 @@ public class IndexController extends BaseController {
 	public AjaxResult repair_stat(){
 		int count = 0;
 		for (int i = 0; i > -30; i--){
-			String subDateStr = DateUtil.dayAddOrCut(DateUtil.getFormatDate("yyyy-MM-dd"), i);
-			String dateStr = DateUtil.getFormatDate(DateUtil.StrToDate(subDateStr, "yyyy-MM-dd"), "yyyyMMdd");
+			String dateStr = DateUtil.getFormatDate(DateUtil.StrToDate( DateUtil.dayAddOrCut(DateUtil.getFormatDate("yyyy-MM-dd"), i), "yyyy-MM-dd"), "yyyyMMdd");
 			Map<String, Object> map = new HashMap<>(16);
 			map.put("date", dateStr);
 			String result = HttpUtil.post(getPeersUrl() + GoFastDfsApi.REPAIR_STAT, map);

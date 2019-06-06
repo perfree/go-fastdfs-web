@@ -25,21 +25,25 @@ public class FileService {
     private final String STATUS_OK = "ok";
     /**
      * 获取一级目录
+     *
+     * @param peersGroupName
      * @param serverAddress
      * @return List<FileResult>
      */
-    public List<FileResult> getParentFile(String serverAddress) {
-        return GetFileUtil.getDirOrFileList(serverAddress,null);
+    public List<FileResult> getParentFile(String peersGroupName, String serverAddress) {
+        return GetFileUtil.getDirOrFileList(peersGroupName,serverAddress,null);
     }
 
     /**
      * 获取指定目录
+     *
+     * @param peersGroupName
      * @param serverAddress
      * @param dir
      * @return List<FileResult>
      */
-    public List<FileResult> getDirFile(String serverAddress, String dir) {
-        return GetFileUtil.getDirOrFileList(serverAddress,dir);
+    public List<FileResult> getDirFile(String peersGroupName, String serverAddress, String dir) {
+        return GetFileUtil.getDirOrFileList(peersGroupName,serverAddress,dir);
     }
 
     /**

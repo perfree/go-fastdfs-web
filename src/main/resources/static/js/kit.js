@@ -57,7 +57,7 @@
                     iconName = "file-b-3";break;
                 //文本
                 case "txt":
-                    iconName = "file-b-3";break;
+                    iconName = "file-b-7";break;
                 //视频
                 case "avi":
                     iconName = "file-b-9";break;

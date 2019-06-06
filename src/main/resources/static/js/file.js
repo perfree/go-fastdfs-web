@@ -128,7 +128,6 @@ $("#file-result").on("click",".details-btn",function(){
             shadeClose: true,
             content: html
         });
-        console.log(html)
     })
 })
 
@@ -153,3 +152,76 @@ $("#file-result").on("click",".delete-file-btn",function(){
         layer.close(index);
     });
 })
+
+$("#file-result").on("click",".resultFile",function(){
+    var name = $(this).data("name");
+    var path = $(this).data("path");
+    var peer = $(this).data("peer");
+    var source = peer+"/"+path+"/"+name;
+    var index = name.lastIndexOf(".");
+    var length = name.length;
+    var suffix=name.substring(index+1,length).toLowerCase();
+    //图片
+    if(kit.getFileType(suffix) == "image"){
+        var img = {
+            "data": [
+                {
+                    "alt": name,
+                    "src": source,
+                }
+            ]
+        }
+        layer.photos({
+            photos: img
+            ,anim: 5
+        });
+    }else if(kit.getFileType(suffix) == "song"){
+        //音乐
+        layer.open({
+            type: 1,
+            shadeClose:true,
+            area: ['400px', '120px'],
+            title: name,
+            content: '<audio src="'+source+'" autoplay controls style="width: 350px;display: block;margin: 10px auto auto;">您的浏览器不支持 audio 标签。</audio>'
+        });
+    }else if(kit.getFileType(suffix) == "video"){
+        //视频
+        layer.open({
+            type: 1,
+            shadeClose:true,
+            area: ['400px','271x'],
+            title: name,
+            content: '<video src="'+source+'" autoplay controls style="width: 400px;height: 226px">您的浏览器不支持 video 标签。</video>'
+        });
+    }else if(kit.getFileType(suffix) == "txt"){
+        window.open(source+"?download=0");
+    }
+
+})
+
+//图片弹出鼠标滚动缩放
+$(document).on("mousewheel DOMMouseScroll", ".layui-layer-phimg img", function(e) {
+    var delta = (e.originalEvent.wheelDelta && (e.originalEvent.wheelDelta > 0 ? 1 : -1)) || // chrome & ie
+        (e.originalEvent.detail && (e.originalEvent.detail > 0 ? -1 : 1)); // firefox
+    var imagep = $(".layui-layer-phimg").parent().parent();
+    var image = $(".layui-layer-phimg").parent();
+    var h = image.height();
+    var w = image.width();
+    if(delta > 0) {
+        if(h < (window.innerHeight)) {
+            h = h * 1.05;
+            w = w * 1.05;
+        }
+    } else if(delta < 0) {
+        if(h > 100) {
+            h = h * 0.95;
+            w = w * 0.95;
+        }
+    }
+    imagep.css("top", (window.innerHeight - h) / 2);
+    imagep.css("left", (window.innerWidth - w) / 2);
+    image.height(h);
+    image.width(w);
+    imagep.height(h);
+    imagep.width(w);
+});

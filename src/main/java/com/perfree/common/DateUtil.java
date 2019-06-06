@@ -170,14 +170,14 @@ public class DateUtil {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = null;
 		try{
-			date = sdf.parse(dateStr);//String 转 Date
+			date = sdf.parse(dateStr);
 		}catch(ParseException e){
 			e.printStackTrace();
 		}
 		Calendar calendar = new GregorianCalendar(); 
 		calendar.setTime(date); 
-		calendar.add(Calendar.DATE, intervalDay);//把日期往后增加一天.整数往后推,负数往前移动 
-		date = calendar.getTime();//这个时间就是日期往后推一天的结果
+		calendar.add(Calendar.DATE, intervalDay);
+		date = calendar.getTime();
 		return dateStr = sdf.format(date);
 	}
 }

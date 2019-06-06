@@ -22,7 +22,7 @@ public class StringUtil {
 	 * @return Boolean
 	 */
 	public static Boolean isBlank(String str) {
-		if(str == null || str == "") {
+		if(str == null || str.length() == 0) {
 			return true;
 		}
 		return false;
