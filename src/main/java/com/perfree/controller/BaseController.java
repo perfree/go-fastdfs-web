@@ -1,6 +1,7 @@
 package com.perfree.controller;
 
 import cn.hutool.core.util.StrUtil;
+import com.perfree.common.StringUtil;
 import com.perfree.entity.Peers;
 import com.perfree.entity.User;
 import org.apache.shiro.SecurityUtils;
@@ -62,5 +63,30 @@ public class BaseController {
             peersUrl += "/" + peers.getGroupName();
         }
         return peersUrl;
+    }
+
+    /**
+     * 获取访问域名
+     * @Author Perfree
+     * @Date 11:37 2019/6/6
+     **/
+    public String getShowUrl(){
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        Peers peers = (Peers) request.getSession().getAttribute("peers");
+        String showAddress = "";
+        if(StringUtil.isBlank(peers.getShowAddress())){
+            if(StringUtil.isBlank(peers.getGroupName())){
+                showAddress += peers.getServerAddress()+"/group1";
+            }else{
+                showAddress += peers.getShowAddress()+"/"+peers.getGroupName();
+            }
+        }else{
+            if(StringUtil.isBlank(peers.getGroupName())) {
+                showAddress += peers.getShowAddress()+"/group1";
+            }else{
+                showAddress += peers.getShowAddress()+"/"+peers.getGroupName();
+            }
+        }
+        return showAddress;
     }
 }

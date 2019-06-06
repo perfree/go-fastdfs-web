@@ -7,6 +7,7 @@ import com.perfree.common.StringUtil;
 import com.perfree.common.UploadUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -22,7 +23,8 @@ public class UploadController extends BaseController {
     private String tempPath;
 
     @RequestMapping("/file/upload")
-    public String index(){
+    public String index(Model model){
+        model.addAttribute("showAddress",getShowUrl());
         return "file/upload";
     }
 

@@ -31,6 +31,12 @@
 			</div>
 		</div>
 		<div class="layui-form-item">
+			<label class="layui-form-label">访问域名</label>
+			<div class="layui-input-block">
+				<input type="text" name="showAddress" autocomplete="off" placeholder="请输入访问域名" class="layui-input" th:value="${peers.showAddress}">
+			</div>
+		</div>
+		<div class="layui-form-item">
 			<div class="layui-input-block">
 				<button class="layui-btn" lay-submit="" lay-filter="addPeers">立即提交</button>
 				<button type="reset" class="layui-btn layui-btn-primary">重置</button>

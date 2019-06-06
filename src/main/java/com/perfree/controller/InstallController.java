@@ -51,7 +51,7 @@ public class InstallController {
 	@RequestMapping("/doInstall")
 	@ResponseBody
 	@Validated
-	public AjaxResult doInstall(@Valid User user,BindingResult bindingResult,String serverName,String groupName,String server) {
+	public AjaxResult doInstall(@Valid User user,BindingResult bindingResult,String serverName,String groupName,String server,String showAddress) {
 		if(bindingResult.hasErrors()){
 			return new AjaxResult(AjaxResult.AJAX_ERROR,bindingResult.getFieldError().getDefaultMessage());
 		}
@@ -81,6 +81,6 @@ public class InstallController {
 		}catch(Exception e){
 			return new AjaxResult(AjaxResult.AJAX_ERROR,"连接go-fastdfs服务失败!请检查服务地址是否正确!");
 		}
-		return installService.install(user,serverName,groupName,server);
+		return installService.install(user,serverName,groupName,server,showAddress);
 	}
 }

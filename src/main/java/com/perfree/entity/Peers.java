@@ -24,4 +24,5 @@ public class Peers implements Serializable {
     @Size(max = 100)
     private String serverAddress;
     private String createTime;
+    private String showAddress;
 }

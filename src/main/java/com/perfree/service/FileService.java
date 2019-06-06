@@ -37,13 +37,13 @@ public class FileService {
     /**
      * 获取指定目录
      *
-     * @param peersGroupName
+     * @param showUrl
      * @param serverAddress
      * @param dir
      * @return List<FileResult>
      */
-    public List<FileResult> getDirFile(String peersGroupName, String serverAddress, String dir) {
-        return GetFileUtil.getDirOrFileList(peersGroupName,serverAddress,dir);
+    public List<FileResult> getDirFile(String showUrl, String serverAddress, String dir) {
+        return GetFileUtil.getDirOrFileList(showUrl,serverAddress,dir);
     }
 
     /**

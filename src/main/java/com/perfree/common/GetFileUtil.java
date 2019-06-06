@@ -24,7 +24,7 @@ public class GetFileUtil {
      * @param dir 要获取的目录(根目录为null)
      * @return List<FileResult>
      */
-    public static List<FileResult> getDirOrFileList(String peersGroupName,String serverAddress,String dir){
+    public static List<FileResult> getDirOrFileList(String showUrl,String serverAddress,String dir){
         HashMap<String, Object> param = new HashMap<>(10);
         if(StrUtil.isNotBlank(dir)){
            param.put("dir",dir);
@@ -44,13 +44,7 @@ public class GetFileUtil {
                 fileResult.setPath(file.getStr("path"));
                 fileResult.setName(file.getStr("name"));
                 fileResult.setIs_dir(file.getBool("is_dir"));
-                System.out.println(peersGroupName);
-                if(StringUtil.isBlank(peersGroupName)){
-                    fileResult.setPeerAddr(serverAddress+"/group1");
-                }else{
-                    fileResult.setPeerAddr(serverAddress);
-                }
-
+                fileResult.setPeerAddr(showUrl);
                 if(file.getBool("is_dir")){
                     fileResult.setSize("0");
                 }else{

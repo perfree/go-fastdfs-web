@@ -16,7 +16,7 @@ public interface PeersMapper {
      * 新增集群地址,并返回主键
      * @param peers
      */
-    @Insert("INSERT INTO t_peers(name,groupName, serverAddress, createTime) VALUES(#{peers.name},#{peers.groupName}, #{peers.serverAddress}, #{peers.createTime})")
+    @Insert("INSERT INTO t_peers(name,groupName, serverAddress,showAddress, createTime) VALUES(#{peers.name},#{peers.groupName}, #{peers.serverAddress},#{peers.showAddress}, #{peers.createTime})")
     @Options(useGeneratedKeys = true, keyProperty = "peers.id")
     int add(@Param("peers") Peers peers);
 
@@ -56,6 +56,6 @@ public interface PeersMapper {
      * @param peers
      * @return int
      */
-    @Update("UPDATE t_peers SET name=#{name},groupName=#{groupName},serverAddress=#{serverAddress} WHERE id=#{id}")
+    @Update("UPDATE t_peers SET name=#{name},groupName=#{groupName},serverAddress=#{serverAddress},showAddress=#{showAddress} WHERE id=#{id}")
     int updatePeers(Peers peers);
 }
