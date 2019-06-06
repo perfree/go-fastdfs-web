@@ -195,6 +195,8 @@ $("#file-result").on("click",".resultFile",function(){
         });
     }else if(kit.getFileType(suffix) == "txt"){
         window.open(source+"?download=0");
+    }else{
+        layer.msg("该文件格式暂不支持预览");
     }
 
 })
