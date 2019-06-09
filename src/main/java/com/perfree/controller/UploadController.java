@@ -24,7 +24,7 @@ public class UploadController extends BaseController {
 
     @RequestMapping("/file/upload")
     public String index(Model model){
-        model.addAttribute("showAddress",getShowUrl());
+        model.addAttribute("showAddress",getUploadShowUrl());
         return "file/upload";
     }
 
@@ -38,7 +38,7 @@ public class UploadController extends BaseController {
             return new AjaxResult(AjaxResult.AJAX_ERROR,"请填写上传场景");
         }
         if(StrUtil.isBlank(showUrl)){
-            showUrl = getPeers().getServerAddress();
+            showUrl = getUploadShowUrl();
         }
         return UploadUtils.upload(tempPath,getPeersUrl() + GoFastDfsApi.UPLOAD, path, scene, file,showUrl);
     }

@@ -66,7 +66,7 @@ public class BaseController {
     }
 
     /**
-     * 获取访问域名
+     * 获取访问域名(带组名)
      * @Author Perfree
      * @Date 11:37 2019/6/6
      **/
@@ -86,6 +86,23 @@ public class BaseController {
             }else{
                 showAddress += peers.getShowAddress()+"/"+peers.getGroupName();
             }
+        }
+        return showAddress;
+    }
+
+    /**
+     * 获取回显域名(不带url)
+     * @Author Perfree
+     * @Date 17:30 2019/6/9
+     **/
+    public String getUploadShowUrl(){
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        Peers peers = (Peers) request.getSession().getAttribute("peers");
+        String showAddress = "";
+        if(StringUtil.isBlank(peers.getShowAddress())){
+                showAddress += peers.getServerAddress();
+        }else{
+                showAddress += peers.getShowAddress();
         }
         return showAddress;
     }
