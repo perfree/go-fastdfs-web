@@ -9,6 +9,7 @@ import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.perfree.entity.FileResult;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -50,7 +51,7 @@ public class GetFileUtil {
                 }else{
                     fileResult.setSize(FileSizeUtil.GetLength(Long.valueOf(file.getStr("size"))));
                 }
-                fileResult.setMTime(DateUtil.getFormatDate(DateUtil.StrToDate(file.getStr("mtime"),"yyyy-MM-dd'T'HH:mm:ss")));
+                fileResult.setMTime(DateUtil.timeStamp2Date(file.getStr("mtime"),null));
                 files.add(fileResult);
             }
         }
