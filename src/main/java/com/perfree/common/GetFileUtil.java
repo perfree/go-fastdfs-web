@@ -1,18 +1,16 @@
 package com.perfree.common;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import com.perfree.entity.FileResult;
+
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.http.Header;
-import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
-import com.perfree.entity.FileResult;
-
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 /**
  * 获取文件列表工具类

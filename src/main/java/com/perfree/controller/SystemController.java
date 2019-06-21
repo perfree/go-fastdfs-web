@@ -1,8 +1,8 @@
 package com.perfree.controller;
 
 
-import com.perfree.entity.Peers;
-import com.perfree.mapper.PeersMapper;
+import javax.servlet.http.HttpSession;
+
 import org.apache.log4j.Logger;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -10,7 +10,6 @@ import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,8 +18,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.perfree.common.AjaxResult;
 import com.perfree.entity.User;
-
-import javax.servlet.http.HttpSession;
 
 /**
  * 系统处理controller,主要处理登录等系统级别的逻辑
@@ -31,9 +28,6 @@ import javax.servlet.http.HttpSession;
 public class SystemController {
 	
 	private static Logger logger = Logger.getLogger(SystemController.class);
-
-	@Autowired
-	private PeersMapper peersMapper;
 
 	/**
 	 * 登录页
