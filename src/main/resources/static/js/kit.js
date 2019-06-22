@@ -6,98 +6,98 @@
             switch(suffix) {
                 //图片
                 case "jpg":
-                    iconName = "file-b-6";break;
+                    iconName = "img";break;
                 case "png":
-                    iconName = "file-b-6";break;
+                    iconName = "img";break;
                 case "jpeg":
-                    iconName = "file-b-6";break;
+                    iconName = "img";break;
                 case "gif":
-                    iconName = "file-b-6";break;
+                    iconName = "img";break;
                 case "psd":
-                    iconName = "file-b-6";break;
+                    iconName = "img";break;
                 //压缩包
                 case "rar":
-                    iconName = "file-b-4";break;
+                    iconName = "zip";break;
                 case "zip":
-                    iconName = "file-b-4";break;
+                    iconName = "zip";break;
                 case "7z":
-                    iconName = "file-b-4";break;
+                    iconName = "zip";break;
                 case "tar":
-                    iconName = "file-b-4";break;
+                    iconName = "zip";break;
                 case "gz":
-                    iconName = "file-b-4";break;
+                    iconName = "zip";break;
                 //ppt
                 case "ppt":
-                    iconName = "file-b-";break;
+                    iconName = "ppt";break;
                 case "pptx":
-                    iconName = "file-b-";break;
+                    iconName = "ppt";break;
                 //pdf
                 case "pdf":
-                    iconName = "file-s-6";break;
+                    iconName = "pdf";break;
                 //word
                 case "doc":
-                    iconName = "file-b-1";break;
+                    iconName = "word";break;
                 case "docx":
-                    iconName = "file-b-1";break;
+                    iconName = "word";break;
                 //excel
                 case "xls":
-                    iconName = "file-b-5";break;
+                    iconName = "excel";break;
                 case "xlsx":
-                    iconName = "file-b-5";break;
+                    iconName = "excel";break;
                 //歌曲
                 case "wave":
-                    iconName = "file-b-3";break;
+                    iconName = "music";break;
                 case "mp3":
-                    iconName = "file-b-3";break;
+                    iconName = "music";break;
                 case "mpeg-4":
-                    iconName = "file-b-3";break;
+                    iconName = "music";break;
                 case "aac":
-                    iconName = "file-b-3";break;
+                    iconName = "music";break;
                 case "mpeg":
-                    iconName = "file-b-3";break;
+                    iconName = "music";break;
                 //文本
                 case "txt":
-                    iconName = "file-b-7";break;
+                    iconName = "txt";break;
                 //视频
                 case "avi":
-                    iconName = "file-b-9";break;
+                    iconName = "video";break;
                 case "mp4":
-                    iconName = "file-b-9";break;
+                    iconName = "video";break;
                 case "3gp":
-                    iconName = "file-b-9";break;
+                    iconName = "video";break;
                 case "rmvb":
-                    iconName = "file-b-9";break;
+                    iconName = "video";break;
                 case "flv":
-                    iconName = "file-b-9";break;
+                    iconName = "video";break;
                 //exe
                 case "exe":
-                    iconName = "Exe";break;
+                    iconName = "exe";break;
                 //脚本文件
                 case "sh":
-                    iconName = "jiaobenguanli";break;
+                    iconName = "shell";break;
                 case "bat":
-                    iconName = "jiaobenguanli";break;
+                    iconName = "shell";break;
                 //java
                 case "java":
                     iconName = "java";break;
                 //go
                 case "go":
-                    iconName = "gopher";break;
+                    iconName = "go";break;
                 //css
                 case "css":
                     iconName = "css";break;
                 //html
                 case "html":
-                    iconName = "file_html";break;
+                    iconName = "html";break;
                 //js
                 case "js":
-                    iconName = "JS";break;
+                    iconName = "js";break;
                 //python
                 case "py":
                     iconName = "python";break;
                 //其他
                 default:
-                    iconName = "file-b-8";break;
+                    iconName = "other";break;
             }
             return iconName;
         },

@@ -17,7 +17,7 @@ function getParentFile() {
             template.helper('iconHandler', function (name,isDir) {
                 var icon;
                 if(isDir == true){
-                    icon = "file-b-2";
+                    icon = "file";
                 }else{
                     var index = name.lastIndexOf(".");
                     var length = name.length;
@@ -62,7 +62,7 @@ function openDir(dir) {
             template.helper('iconHandler', function (name,isDir) {
                 var icon;
                 if(isDir == true){
-                    icon = "file-b-2";
+                    icon = "file";
                 }else{
                     var index = name.lastIndexOf(".");
                     var length = name.length;

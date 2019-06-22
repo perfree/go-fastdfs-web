@@ -1,9 +1,16 @@
+html,body,.layui-container,.layui-row,.layui-col-md12{
+    height: 100%;
+}
+.layui-card{
+    min-height: 100%;
+}
 .icon {
-    width: 1.8em;
-    height: 1.8em;
+    width: 1.3em;
+    height: 1.3em;
     vertical-align: -0.5em;
     fill: currentColor;
     overflow: hidden;
+    margin-right: 5px;
 }
 .file-list-header-ul{
     display: table;
