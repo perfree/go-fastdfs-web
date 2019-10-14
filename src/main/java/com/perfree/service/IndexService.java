@@ -31,7 +31,18 @@ public class IndexService {
         List<String> dayFileCountList = new ArrayList<>();
         //声明30天内日期容器
         List<String> dayNumList = new ArrayList<>();
-        JSONArray parseArray = JSONUtil.parseArray(data);
+        JSONObject parseObj = JSONUtil.parseObj(data);
+        JSONArray parseArray = JSONUtil.parseArray(parseObj.get("Fs.FileStats"));
+        // 剩余空间
+        result.put("diskFreeSize",FileSizeUtil.GetLength(Long.valueOf(JSONUtil.parseObj(parseObj.get("Sys.DiskInfo")).getStr("free"))));
+        // 总空间
+        result.put("diskTotalSize",FileSizeUtil.GetLength(Long.valueOf(JSONUtil.parseObj(parseObj.get("Sys.DiskInfo")).getStr("total"))));
+        // 已使用空间
+        result.put("diskUsedSize",FileSizeUtil.GetLength(Long.valueOf(JSONUtil.parseObj(parseObj.get("Sys.DiskInfo")).getStr("used"))));
+        // 节点
+        result.put("inodesTotal",Long.valueOf(JSONUtil.parseObj(parseObj.get("Sys.DiskInfo")).getStr("inodesTotal")));
+        // 节点
+        result.put("inodesUsed",Long.valueOf(JSONUtil.parseObj(parseObj.get("Sys.DiskInfo")).getStr("inodesUsed")));
         long dayFileSize = 0;
         long dayFileCount = 0;
         for (int i = 0;i < parseArray.size();i++) {

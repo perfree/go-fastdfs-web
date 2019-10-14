@@ -5,6 +5,7 @@ import com.perfree.common.AjaxResult;
 import com.perfree.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -32,7 +33,7 @@ public class FileController extends BaseController {
      * @return String
      */
     @RequestMapping("/file")
-    public String index() {
+    public String index(Model model) {
         return "file/file";
     }
 
@@ -98,15 +99,9 @@ public class FileController extends BaseController {
     public void downloadFile(String path, String name, HttpServletRequest request, HttpServletResponse response) {
         response.setHeader("Content-Disposition", "attachment;filename=" + name);
         response.setContentType("application/octet-stream");
-        String peersUrl = getPeers().getServerAddress();
-        if(StrUtil.isNotBlank(getPeersGroupName())){
-            peersUrl += "/"+getPeersGroupName();
-        }else {
-            peersUrl += "/group1";
-        }
         BufferedInputStream in = null;
         try {
-            URL url = new URL(peersUrl+"/"+path+"/"+name);
+            URL url = new URL(getPeersUrl()+"/"+path+"/"+name);
             in = new BufferedInputStream(url.openStream());
             response.reset();
             response.setContentType("application/octet-stream");

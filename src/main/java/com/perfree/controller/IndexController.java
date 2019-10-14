@@ -72,7 +72,7 @@ public class IndexController extends BaseController {
 	public AjaxResult getStat(){
 		try {
 			//获取文件信息,这一部分有待优化
-			String string = HttpUtil.get(getPeersUrl()+GoFastDfsApi.STAT);
+			String string = HttpUtil.get(getPeersUrl()+GoFastDfsApi.STATUS);
 			JSONObject parseObj = JSONUtil.parseObj(string);
 			if(parseObj.get("status").equals("ok")) {
 				Map<String, Object> result = indexService.getfileStat(parseObj.get("data"));

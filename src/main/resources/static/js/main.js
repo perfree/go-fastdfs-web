@@ -119,6 +119,10 @@ function getStat() {
             $("#dayFileSize").text(data.data.dayFileSize);
             $("#dayFileCount").text(data.data.dayFileCount);
 
+            $("#diskTotalSize").text(data.data.diskTotalSize);
+            $("#diskFreeSize").text(data.data.diskFreeSize);
+            $("#inodesTotal").text(data.data.inodesTotal);
+            $("#inodesUsed").text(data.data.inodesUsed);
             var myChart = echarts.init(document.getElementById('main'));
             myChart.setOption(
                 option = {
