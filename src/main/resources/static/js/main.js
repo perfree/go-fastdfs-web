@@ -122,7 +122,7 @@ function getStat() {
             $("#diskTotalSize").text(data.data.diskTotalSize);
             $("#diskFreeSize").text(data.data.diskFreeSize);
             $("#inodesTotal").text(data.data.inodesTotal);
-            $("#inodesUsed").text(data.data.inodesUsed);
+            $("#inodesFree").text(data.data.inodesFree);
             var myChart = echarts.init(document.getElementById('main'));
             myChart.setOption(
                 option = {

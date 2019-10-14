@@ -72,20 +72,6 @@ public class BaseController {
     public String getShowUrl(){
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         Peers peers = (Peers) request.getSession().getAttribute("peers");
-        if(!StringUtil.isBlank(peers.getGroupName())){
-            return  peers.getServerAddress()+"/"+peers.getGroupName();
-        }
-        return peers.getServerAddress();
-    }
-
-    /**
-     * 获取回显域名(不带url)
-     * @Author Perfree
-     * @Date 17:30 2019/6/9
-     **/
-    public String getUploadShowUrl(){
-        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        Peers peers = (Peers) request.getSession().getAttribute("peers");
         String showAddress = "";
         if(StringUtil.isBlank(peers.getShowAddress())){
             if(StringUtil.isBlank(peers.getGroupName())){
@@ -99,6 +85,23 @@ public class BaseController {
             }else{
                 showAddress = peers.getShowAddress()+"/"+peers.getGroupName();
             }
+        }
+        return showAddress;
+    }
+
+    /**
+     * 获取回显域名(不带url)
+     * @Author Perfree
+     * @Date 17:30 2019/6/9
+     **/
+    public String getUploadShowUrl(){
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        Peers peers = (Peers) request.getSession().getAttribute("peers");
+        String showAddress = "";
+        if(StringUtil.isBlank(peers.getShowAddress())){
+            showAddress += peers.getServerAddress();
+        }else{
+            showAddress += peers.getShowAddress();
         }
         return showAddress;
     }
