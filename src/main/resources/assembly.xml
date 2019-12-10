@@ -19,7 +19,7 @@
             <outputDirectory></outputDirectory>
         </fileSet>
         <fileSet>
-            <directory>${basedir}/src/main/resources/db</directory>
+            <directory>${basedir}/db</directory>
             <includes>
                 <include>*.db</include>
             </includes>
