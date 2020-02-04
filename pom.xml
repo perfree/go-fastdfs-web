@@ -20,7 +20,7 @@
 		<log4j.version>1.3.8.RELEASE</log4j.version>
 		<sqlite.version>3.25.2</sqlite.version>
 		<!-- shiro -->
-		<shiro.version>1.4.0</shiro.version>
+		<shiro.version>1.5.0</shiro.version>
 		<!-- thymeleaf使用shiro标签 -->
 		<thymeleaf.extras.shiro.version>2.0.0</thymeleaf.extras.shiro.version>
 		<!-- springboot mybatis依赖 -->
