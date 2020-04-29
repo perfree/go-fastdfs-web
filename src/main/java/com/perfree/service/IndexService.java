@@ -40,11 +40,11 @@ public class IndexService {
         // 已使用空间
         result.put("diskUsedSize",FileSizeUtil.GetLength(Long.valueOf(JSONUtil.parseObj(parseObj.get("Sys.DiskInfo")).getStr("used"))));
         // 节点
-        result.put("inodesTotal",Long.valueOf(JSONUtil.parseObj(parseObj.get("Sys.DiskInfo")).getStr("inodesTotal")));
+        result.put("inodesTotal", JSONUtil.parseObj(parseObj.get("Sys.DiskInfo")).getStr("inodesTotal"));
         // 节点
-        result.put("inodesUsed",Long.valueOf(JSONUtil.parseObj(parseObj.get("Sys.DiskInfo")).getStr("inodesUsed")));
+        result.put("inodesUsed", JSONUtil.parseObj(parseObj.get("Sys.DiskInfo")).getStr("inodesUsed"));
         // 节点
-        result.put("inodesFree",Long.valueOf(JSONUtil.parseObj(parseObj.get("Sys.DiskInfo")).getStr("inodesFree")));
+        result.put("inodesFree", JSONUtil.parseObj(parseObj.get("Sys.DiskInfo")).getStr("inodesFree"));
         long dayFileSize = 0;
         long dayFileCount = 0;
         for (int i = 0;i < parseArray.size();i++) {
