@@ -3,10 +3,21 @@ package com.perfree.common;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONUtil;
 import com.perfree.entity.GoFastDfsUploadResult;
+import okhttp3.*;
+import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.util.EntityUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -52,6 +63,49 @@ public class UploadUtils {
             result = new AjaxResult(AjaxResult.AJAX_ERROR, "上传出错");
         } finally {
             file.delete();
+        }
+        return result;
+    }
+
+    /**
+     *  不用hutool方式，采用httpClient方式上传（hutool和okhttp上传大文件都会有内存溢出的报错）
+     * @param file
+     * @param path
+     * @param showUrl
+     * @return
+     */
+    public static AjaxResult upload(MultipartFile file, String path, String showUrl) {
+        AjaxResult result = null;
+        try {
+            CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+            CloseableHttpResponse httpResponse = null;
+            RequestConfig requestConfig = RequestConfig.custom()
+                    .setConnectTimeout(200000)
+                    .setSocketTimeout(2000000)
+                    .build();
+            HttpPost httpPost = new HttpPost(path);
+            httpPost.setConfig(requestConfig);
+            MultipartEntityBuilder multipartEntityBuilder = MultipartEntityBuilder.create()
+                    .setMode(HttpMultipartMode.BROWSER_COMPATIBLE)
+                    .setCharset(Charset.forName("UTF-8"))
+                    .addTextBody("output", "json")
+                    .addBinaryBody("file", file.getInputStream(),
+                            ContentType.DEFAULT_BINARY, file.getOriginalFilename());
+            httpPost.setEntity(multipartEntityBuilder.build());
+            httpResponse = httpClient.execute(httpPost);
+
+            if (httpResponse.getStatusLine().getStatusCode() == 200) {
+                String respStr = EntityUtils.toString(httpResponse.getEntity());
+                GoFastDfsUploadResult goFastDfsResult = JSONUtil.toBean(respStr, GoFastDfsUploadResult.class);
+                //替换url
+                goFastDfsResult.setUrl(showUrl+goFastDfsResult.getPath());
+                result = new AjaxResult(AjaxResult.AJAX_SUCCESS, goFastDfsResult);
+            }
+
+            httpClient.close();
+            httpResponse.close();
+        } catch (Exception e) {
+            result = new AjaxResult(AjaxResult.AJAX_ERROR, "上传出错");
         }
         return result;
     }

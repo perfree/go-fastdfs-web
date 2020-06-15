@@ -44,14 +44,15 @@ layui.use(['upload','element'], function() {
             //将每次选择的文件追加到文件队列
             var files = this.files = obj.pushFile();
             //读取本地文件
-            obj.preview(function(index, file, result){
+            demoListView.html(" ");
+            for (var key in files) {
                 count++;
-                var tr = $(['<tr id="upload-'+ index +'">',
-                    '<td>'+ file.name +'</td>',
-                    '<td>'+ (file.size/1014).toFixed(1) +'kb</td>',
+                var tr = $(['<tr id="upload-'+ key +'">',
+                    '<td>'+ files[key].name +'</td>',
+                    '<td>'+ (files[key].size/1014).toFixed(1) +'kb</td>',
                     '<td>等待上传</td>',
                     '<td>' +
-                    '<div file="'+file.name+'" class="layui-progress" lay-showPercent="true" lay-filter="progressBar'+count+'">'+
+                    '<div file="'+files[key].name+'" class="layui-progress" lay-showPercent="true" lay-filter="progressBar'+count+'">'+
                     '<div class="layui-progress-bar layui-bg-green" lay-percent="0%"></div>'+
                     '</div>'+
                     '</td>',
@@ -62,17 +63,17 @@ layui.use(['upload','element'], function() {
                     '</tr>'].join(''));
                 //单个重传
                 tr.find('.more-file-reload').on('click', function(){
-                    obj.upload(index, file);
+                    obj.upload(key, files[key]);
                 });
                 //删除
                 tr.find('.more-file-delete').on('click', function(){
-                    delete files[index];
+                    delete files[key];
                     tr.remove();
                     uploadListIns.config.elem.next()[0].value = '';
                 });
                 demoListView.append(tr);
                 element.render('progress');
-            });
+            };
         },before: function(obj){
             var scene = $("#scene").val();
             var path = $("#path").val();
