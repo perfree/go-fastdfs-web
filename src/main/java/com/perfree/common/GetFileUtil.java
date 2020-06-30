@@ -32,10 +32,10 @@ public class GetFileUtil {
         JSONObject parseObj = JSONUtil.parseObj(result);
         List<FileResult> files = new ArrayList<>();
         if(parseObj.getStr("message").equals("") && StrUtil.isNotBlank(parseObj.getStr("data"))) {
-            JSONArray parseArray = JSONUtil.parseArray(parseObj.getStr("data"));
+            JSONArray parseArray = parseObj.getJSONArray("data");
             for (int i = 0;i < parseArray.size();i++) {
                 FileResult fileResult = new FileResult();
-                JSONObject file = JSONUtil.parseObj(parseArray.getStr(i));
+                JSONObject file = parseArray.getJSONObject(i);
                 if(file.getStr("name").equals("_big")){
                     continue;
                 }
