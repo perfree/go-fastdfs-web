@@ -65,3 +65,7 @@ docker run --name fastdfsweb -d -p 8088:8088 perfree/fastdfsweb
 1. 将application.properties配置文件中spring.profiles.active的值改为prod
 2. maven运行mvn clean package
 3. 完成之后得到jar,zip,tar.gz三种格式文件
+## 支持
+![微信](./screen/wechat.jpg)
+
+![支付宝](./screen/alipay.jpg)
