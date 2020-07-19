@@ -20,8 +20,13 @@
 5. 遇到获取不到信息的功能,先试一下本地调用go-fastdfs接口看是否能获取到
 
 ## 运行步骤
-共提供三个版本,无环境版(需要自己安装java运行环境),Windows自带JRE环境版,Linux自带JRE环境版
+共提供四个版本，docker版,无环境版(需要自己安装java运行环境),Windows自带JRE环境版,Linux自带JRE环境版
 [下载地址](https://github.com/perfree/go-fastdfs-web/releases)
+
+### Docker安装运行
+```shell script
+docker run --name fastdfsweb -d -p 8088:8088 perfree/fastdfsweb
+```
 
 ### 无环境版(Windows运行)
 解压压缩包后,直接运行start.bat
