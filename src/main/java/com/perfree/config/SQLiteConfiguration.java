@@ -11,6 +11,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 
 import javax.sql.DataSource;
+import java.io.File;
 import java.io.IOException;
 
 /**
@@ -25,20 +26,18 @@ public class SQLiteConfiguration {
     private ResourceLoader resourceLoader;
 
     // sqlite的数据库地址
-    @Value("${sqlite.dbpath:db/go-fastdfs.db}")
+    @Value("${sqlite.dbpath:/db/go-fastdfs.db}")
     private String sqliteDbpath;
 
     @Bean
     public DataSource dataSource() throws IOException {
         logger.info("sqlite path地址 = {}", sqliteDbpath);
         DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
-        // 驱动名
         dataSourceBuilder.driverClassName("org.sqlite.JDBC");
-        // url在开发时可以从user.dir路径中找到，也可以在部署时在jar包路径下找到
-        final String url = "jdbc:sqlite:" + sqliteDbpath;
+        String projectPath = System.getProperty("user.dir");
+        final String url = "jdbc:sqlite:" + projectPath + sqliteDbpath;
         logger.info("最终配置的值spring.datasource.url = {}", url);
         dataSourceBuilder.url(url);
         return dataSourceBuilder.build();
     }
-
 }
