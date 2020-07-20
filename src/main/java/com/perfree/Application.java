@@ -14,7 +14,6 @@ import java.util.Date;
  * @author Perfree
  *
  */
-@MapperScan("com.perfree.mapper")
 @SpringBootApplication
 public class Application implements CommandLineRunner {
 	@Value("${server.port}")

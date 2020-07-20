@@ -1,16 +1,20 @@
 package com.perfree.mapper;
 
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import com.perfree.entity.User;
+import org.springframework.stereotype.Component;
 
 /**
  * UserMapper接口,因数据表不多,故采用注解方式开发
  * @author Perfree
  *
  */
+@Mapper
+@Component
 public interface UserMapper{
 
 	/**
