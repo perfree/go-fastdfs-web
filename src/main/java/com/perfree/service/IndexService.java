@@ -34,11 +34,11 @@ public class IndexService {
         JSONObject parseObj = JSONUtil.parseObj(data);
         JSONArray parseArray = JSONUtil.parseArray(parseObj.get("Fs.FileStats"));
         // 剩余空间
-        result.put("diskFreeSize",FileSizeUtil.GetLength(Long.valueOf(JSONUtil.parseObj(parseObj.get("Sys.DiskInfo")).getStr("free"))));
+        result.put("diskFreeSize",FileSizeUtil.GetLength(Long.parseLong(JSONUtil.parseObj(parseObj.get("Sys.DiskInfo")).getStr("free"))));
         // 总空间
-        result.put("diskTotalSize",FileSizeUtil.GetLength(Long.valueOf(JSONUtil.parseObj(parseObj.get("Sys.DiskInfo")).getStr("total"))));
+        result.put("diskTotalSize",FileSizeUtil.GetLength(Long.parseLong(JSONUtil.parseObj(parseObj.get("Sys.DiskInfo")).getStr("total"))));
         // 已使用空间
-        result.put("diskUsedSize",FileSizeUtil.GetLength(Long.valueOf(JSONUtil.parseObj(parseObj.get("Sys.DiskInfo")).getStr("used"))));
+        result.put("diskUsedSize",FileSizeUtil.GetLength(Long.parseLong(JSONUtil.parseObj(parseObj.get("Sys.DiskInfo")).getStr("used"))));
         // 节点
         result.put("inodesTotal", JSONUtil.parseObj(parseObj.get("Sys.DiskInfo")).getStr("inodesTotal"));
         // 节点
@@ -51,16 +51,16 @@ public class IndexService {
             JSONObject fileStats = JSONUtil.parseObj(parseArray.getStr(i));
             if(fileStats.get("date").equals("all")) {
                 //获取总文件大小,数量
-                result.put("totalFileSize",FileSizeUtil.GetLength(Long.valueOf(fileStats.getStr("totalSize"))));
+                result.put("totalFileSize",FileSizeUtil.GetLength(Long.parseLong(fileStats.getStr("totalSize"))));
                 result.put("totalFileCount",fileStats.getStr("fileCount"));
             }else {
                 try {
                     long subDay = DateUtil.daysBetween(DateUtil.StrToDate(fileStats.getStr("date"), "yyyyMMdd"), new Date(), false);
                     if (subDay <= 30){
                         //获取30天内文件大小,数量
-                        dayFileSize += Long.valueOf(fileStats.getStr("totalSize"));
-                        dayFileCount += Long.valueOf(fileStats.getStr("fileCount"));
-                        dayFileSizeList.add(FileSizeUtil.GetMBLength(Long.valueOf(fileStats.getStr("totalSize"))));
+                        dayFileSize += Long.parseLong(fileStats.getStr("totalSize"));
+                        dayFileCount += Long.parseLong(fileStats.getStr("fileCount"));
+                        dayFileSizeList.add(FileSizeUtil.GetMBLength(Long.parseLong(fileStats.getStr("totalSize"))));
                         dayFileCountList.add(fileStats.getStr("fileCount"));
                         dayNumList.add(fileStats.getStr("date").substring(6)+"日");
                     }
