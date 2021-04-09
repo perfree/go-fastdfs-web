@@ -1,6 +1,6 @@
 package com.perfree.interceptor;
 
-import com.perfree.mapper.UserMapper;
+import com.perfree.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -10,13 +10,14 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * 安装拦截器,如用户未安装,则执行安装操作
+ * @description 安装拦截器,如用户未安装,则执行安装操作
  * @author Perfree
+ * @date 2021/3/23 14:58
  */
-public class InstallInterceptor implements HandlerInterceptor{
+public class InstallInterceptor implements HandlerInterceptor {
 
 	@Autowired
-	private UserMapper userMapper;
+	private UserService userService;
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
@@ -24,8 +25,7 @@ public class InstallInterceptor implements HandlerInterceptor{
         HttpSession session = request.getSession();
         Boolean isInstall = (Boolean) session.getAttribute("isInstall");
         if(isInstall == null) {
-            if(userMapper.getUserCount() < 1){
-                //不存在用户,重定向至安装页
+            if(userService.list().size() < 1){
                 response.sendRedirect("/install");
                 return false;
             }else{
@@ -37,7 +37,7 @@ public class InstallInterceptor implements HandlerInterceptor{
 
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
-			ModelAndView modelAndView) throws Exception {
+                           ModelAndView modelAndView) throws Exception {
 		HandlerInterceptor.super.postHandle(request, response, handler, modelAndView);
 	}
 

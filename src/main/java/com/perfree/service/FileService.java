@@ -4,8 +4,8 @@ import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.perfree.common.*;
-import com.perfree.entity.FileDetails;
-import com.perfree.entity.FileResult;
+import com.perfree.form.FileDetails;
+import com.perfree.form.FileResult;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -13,71 +13,67 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * @Author Perfree
- * @Date 10:59 2019/5/11
- * 文件service
+ * @description 文件列表相关逻辑处理
+ * @author Perfree
+ * @date 2021/4/7 11:50
  */
 @Service
 public class FileService {
 
-    private final String STATUS = "status";
-
-    private final String STATUS_OK = "ok";
-    /**
-     * 获取一级目录
-     *
-     * @param peersGroupName
-     * @param serverAddress
-     * @return List<FileResult>
-     */
+   /**
+    * @description 获取一级目录
+    * @param peersGroupName peersGroupName
+    * @param serverAddress serverAddress
+    * @return java.util.List<com.perfree.form.FileResult>
+    * @author Perfree
+    */
     public List<FileResult> getParentFile(String peersGroupName, String serverAddress) {
         return GetFileUtil.getDirOrFileList(peersGroupName,serverAddress,null);
     }
 
     /**
-     * 获取指定目录
-     *
-     * @param showUrl
-     * @param serverAddress
-     * @param dir
-     * @return List<FileResult>
+     * @description 获取指定目录
+     * @param showUrl showUrl
+     * @param serverAddress serverAddress
+     * @param dir dir
+     * @return java.util.List<com.perfree.form.FileResult>
+     * @author Perfree
      */
     public List<FileResult> getDirFile(String showUrl, String serverAddress, String dir) {
         return GetFileUtil.getDirOrFileList(showUrl,serverAddress,dir);
     }
 
-    /**
-     * 删除文件
-     * @param peersUrl 服务地址
-     * @param md5 md5
-     * @return boolean
-     */
+  /**
+   * @description 删除文件
+   * @param peersUrl peersUrl
+   * @param md5 md5
+   * @return boolean
+   * @author Perfree
+   */
     public boolean deleteFile(String peersUrl, String md5) {
         HashMap<String, Object> param = new HashMap<>(10);
         param.put("md5",md5);
-        JSONObject parseObj = JSONUtil.parseObj(HttpUtil.post(peersUrl + GoFastDfsApi.DELETE, param));
-        if(parseObj.getStr(STATUS).equals(STATUS_OK)) {
-            return true;
-        }
-        return false;
+        JSONObject parseObj = JSONUtil.parseObj(HttpUtil.post(peersUrl + Constant.API_DELETE, param));
+        return parseObj.getStr("status").equals(Constant.API_STATUS_SUCCESS);
     }
 
     /**
-     * 获取文件信息
-     * @param peersUrl 服务地址
+     * @description 获取文件信息
+     * @param peersUrl peersUrl
      * @param md5 md5
-     * @return AjaxResult
-     **/
-    public AjaxResult details(String peersUrl, String md5) {
+     * @return com.perfree.common.ResponseBean
+     * @author Perfree
+     */
+    public ResponseBean details(String peersUrl, String md5) {
         HashMap<String, Object> param = new HashMap<>(10);
         param.put("md5",md5);
-        JSONObject parseObj = JSONUtil.parseObj(HttpUtil.post(peersUrl + GoFastDfsApi.GET_FILE_INFO, param));
-        if(parseObj.getStr(STATUS).equals(STATUS_OK)) {
+        JSONObject parseObj = JSONUtil.parseObj(HttpUtil.post(peersUrl + Constant.API_GET_FILE_INFO, param));
+        if(parseObj.getStr("status").equals(Constant.API_STATUS_SUCCESS)) {
             FileDetails fileDetails = JSONUtil.toBean(parseObj.getStr("data"), FileDetails.class);
-            fileDetails.setSize(FileSizeUtil.GetLength(Long.valueOf(fileDetails.getSize())));
-            fileDetails.setTimeStamp(DateUtil.getFormatDate(new Date(Long.valueOf(fileDetails.getTimeStamp())* 1000)));
-            return new AjaxResult(AjaxResult.AJAX_SUCCESS,fileDetails);
+            fileDetails.setSize(FileSizeUtil.GetLength(Long.parseLong(fileDetails.getSize())));
+            fileDetails.setTimeStamp(DateUtil.getFormatDate(new Date(Long.parseLong(fileDetails.getTimeStamp())* 1000)));
+            return ResponseBean.success(fileDetails);
         }
-        return new AjaxResult(AjaxResult.AJAX_ERROR,"获取文件信息失败");
+        return ResponseBean.fail("获取文件信息失败");
     }
 }

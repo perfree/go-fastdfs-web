@@ -1,7 +1,7 @@
 package com.perfree.service;
 
-import com.perfree.entity.User;
 import com.perfree.mapper.UserMapper;
+import com.perfree.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,9 +12,6 @@ public class SettingService {
     private UserMapper userMapper;
 
     public boolean editUser(User user) {
-        if(userMapper.updateUser(user) > 0){
-            return true;
-        }
-        return false;
+        return userMapper.updateById(user) > 0;
     }
 }

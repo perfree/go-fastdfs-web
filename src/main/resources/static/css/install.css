@@ -1,113 +1,47 @@
 html, body {
 	margin: 0;
-	height: auto;
 	min-height: 100%;
-	color: #657180;
 	line-height: 1.42857143;
 	color: #58666e;
 	font-size: 14px;
 	-webkit-font-smoothing: antialiased;
 	font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB,
 		Microsoft YaHei, Arial, sans-serif;
+	background: #f1f1f1;
+	height: 100%;
 }
-
-.install-bg {
-	background: url(/images/bg.png) no-repeat center;
-	background-size: cover;
-	background-attachment: fixed;
+.layui-fluid{
+	padding: 0;
 }
-
-.install {
-	margin: 100px auto 0 auto;
-	min-height: 420px;
-	max-width: 420px;
-	padding: 30px;
-	background-color: #ffffff;
-	margin-left: auto;
-	margin-right: auto;
-	border-radius: 4px;
-	box-sizing: border-box;
-}
-
-.install .message {
-	margin: 0px 0 0 -40px;
-	padding: 10px 10px 10px 55px;
-	background: #009688;
+.install-title{
 	position: relative;
+	height: 260px;
+	line-height: 200px;
 	color: #fff;
-	font-size: 16px;
-}
-
-.install #darkbannerwrap {
-	background: url(/images/aiwrap.png);
-	width: 10px; height : 5px; margin : 0px 0 0px -40px;
-	position: relative;
-	height: 5px;
-	margin: 0px 0 0px -40px;
-}
-
-.install input[type=text], .install input[type=file], .install input[type=password],
-	.install input[type=email], .install select {
-	border: 1px solid #DCDEE0;
-	vertical-align: middle;
-	border-radius: 3px;
-	height: 40px;
-	padding: 0px 16px;
-	font-size: 14px;
-	color: #555555;
-	outline: none;
-	width: 100%;
-	box-sizing: border-box;
-	margin-top: 10px;
-}
-
-.install input[type=text]:focus, .install input[type=file]:focus,
-	.install input[type=password]:focus, .install input[type=email]:focus,
-	.install select:focus {
-	border: 1px solid #27A9E3;
-}
-
-.install input[type=submit], .install input[type=button] {
-	display: inline-block;
-	padding: 8px 24px;
-	margin: 0px;
-	font-size: 15px;
-	line-height: 21px;
+	border-radius: 2px 2px 0 0;
+	background-color: #627aad;
 	text-align: center;
-	white-space: nowrap;
-	vertical-align: middle;
-	cursor: pointer;
-	color: #ffffff;
-	background-color: #009688;
-	border-radius: 3px;
-	border: none;
-	-webkit-appearance: none;
-	outline: none;
-	width: 100%;
-	margin-top: 10px;
+	font-weight: bold;
+	font-size: 18px;
+	padding-right: 50px;
+	padding-left: 56px;
 }
-
-.install hr {
-	background: #fff 0 0 no-repeat;
+#stepForm{
+	margin: 0 auto;
+	width: 800px!important;
+	height: 500px;
+	background-color: white!important;
+	padding-top: 50px;
+	position: absolute;
+	top: 130px;
+	left: calc(50% - 400px);
+	border-radius: 5px;
+	box-shadow: 0 1px 2px 0 rgba(0,0,0,.1);
 }
-
-.install hr.hr15 {
-	height: 15px;
-	border: none;
-	margin: 0px;
-	padding: 0px;
-	width: 100%;
+.layui-card-body{
+	padding-top: 40px;
+	background: #ddd;
 }
-
-.install hr.hr20 {
-	height: 20px;
-	border: none;
-	margin: 0px;
-	padding: 0px;
-	width: 100%;
-}
-
-span {
-	color: #757575;
-	padding-left: 4px;
+.layui-card {
+ box-shadow: none;
 }

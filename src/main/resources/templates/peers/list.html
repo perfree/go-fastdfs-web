@@ -4,12 +4,19 @@
 <meta charset="UTF-8">
 <title>控制台</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<link rel="stylesheet" th:href="@{/plugins/layui/css/layui.css}" media="all">
-<link rel="stylesheet" th:href="@{/plugins/layer/theme/default/layer.css}" media="all">
-<link rel="stylesheet" th:href="@{/plugins/font-awesome/css/font-awesome.min.css}" media="all">
+<link rel="stylesheet" th:href="@{/static/lib/layui-v2.5.6/layui/css/layui.css}">
+<link th:href="@{/static/lib/font-awesome-4.7.0/css/font-awesome.min.css}" rel="stylesheet"/>
+<style>
+	.addPeers{
+		background-color: #627aad;
+	}
+	.layui-laypage .layui-laypage-curr .layui-laypage-em {
+		background-color: #627aad;
+	}
+</style>
 </head>
 <body>
-<div class="layui-container" style="width: 100%;">
+<div class="layui-container" style="width: 100%;padding: 0">
 	<div class="layui-row">
 		<div class="layui-col-md12" style="padding:5px;">
 			<div class="layui-card">
@@ -22,7 +29,7 @@
 							<th lay-data="{field:'groupName',align:'center'}">组名</th>
 							<th lay-data="{field:'serverAddress',align:'center'}">管理地址</th>
 							<th lay-data="{field:'showAddress',align:'center'}">访问域名</th>
-							<th lay-data="{field:'createTime',align:'center'}">添加时间</th>
+							<th lay-data="{field:'createTime',align:'center',templet: '#createTimeTpl'}">添加时间</th>
 							<th lay-data="{field:'right',toolbar: '#rightBar',width:150,align:'center'}">操作</th>
 						</tr>
 						</thead>
@@ -34,16 +41,18 @@
 </div>
 <script type="text/html" id="toolbar">
 	<div class="layui-btn-container">
-		<button class="layui-btn layui-btn-sm" lay-event="addPeers">添加集群</button>
+		<button class="layui-btn layui-btn-sm addPeers" lay-event="addPeers">添加集群</button>
 	</div>
+</script>
+<script type="text/html" id="createTimeTpl">
+	<div>{{layui.util.toDateString(d.createTime, 'yyyy-MM-dd HH:mm:ss')}}</div>
 </script>
 <script type="text/html" id="rightBar">
 	<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
 	<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
-<script th:src="@{/js/jquery.min.js}"></script>
-<script th:src="@{/plugins/layer/layer.js}"></script>
-<script th:src="@{/plugins/layui/layui.js}"></script>
+<script th:src="@{/static/lib/jquery/jquery-3.5.1.min.js}"></script>
+<script th:src="@{/static/lib/layui-v2.5.6/layui/layui.js}"></script>
 <script>
 	layui.use('table', function() {
 		var table = layui.table;
@@ -64,7 +73,7 @@
 			if(obj.event === 'del'){
 				layer.confirm('确定要删除该集群吗?', function(index){
 					$.post("/peers/del",{"id":obj.data.id},function (data) {
-						if(data.state == 200){
+						if(data.code === 200){
 							obj.del();
 							layer.msg("删除成功");
 						}else{
@@ -76,7 +85,7 @@
 			} else if(obj.event === 'edit'){
 				layer.open({
 					type: 2,
-					area: ['650px','400px'],
+					area: ['650px','340px'],
 					title :'编辑集群',
 					shadeClose: true,
 					maxmin: true,
@@ -91,7 +100,7 @@
 				case 'addPeers':
 					layer.open({
 						type: 2,
-						area: ['650px','400px'],
+						area: ['650px','340px'],
 						title :'添加集群',
 						shadeClose: true,
 						maxmin: true,

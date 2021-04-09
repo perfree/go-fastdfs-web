@@ -1,13 +1,13 @@
 package com.perfree.common;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-
-import com.perfree.common.StringUtil;
 
 /**
  * 日期操作工具类
@@ -19,7 +19,7 @@ public class DateUtil {
 	 * 日期格式化
 	 */
 	public static String getFormatDate(String format){
-		if(StringUtil.isBlank(format)){
+		if(StringUtils.isBlank(format)){
 			format="yyyy-MM-dd HH:mm:ss";
 		}
 		return new SimpleDateFormat(format).format(new Date());
@@ -33,8 +33,8 @@ public class DateUtil {
 	/**
 	 * 日期格式化
 	 */
-	public static String getFormatDate(Date date,String format){
-		if(StringUtil.isBlank(format)){
+	public static String getFormatDate(Date date, String format){
+		if(StringUtils.isBlank(format)){
 			format="yyyy-MM-dd HH:mm:ss";
 		}
 		return new SimpleDateFormat(format).format(date);
@@ -57,8 +57,8 @@ public class DateUtil {
 	* @param str 格式为yyyy-MM-dd HH:mm:ss   
 	* @return date
 	*/
-	public static Date StrToDate(String str,String format){
-		if(StringUtil.isBlank(format)){
+	public static Date StrToDate(String str, String format){
+		if(StringUtils.isBlank(format)){
 			format="yyyy-MM-dd HH:mm:ss";
 		}
 		Date date = null;
@@ -74,15 +74,14 @@ public class DateUtil {
 	 * @param intervalTime 时间间隔 单位秒
 	 * @param format 时间格式 （yyyy-MM-dd HH:mm:ss）
 	 */
-	public static String getIntervalFormatDate(long intervalTime,String format){
-		if(StringUtil.isBlank(format)){
+	public static String getIntervalFormatDate(long intervalTime, String format){
+		if(StringUtils.isBlank(format)){
 			format="yyyy-MM-dd HH:mm:ss";
 		}
 		long currentTime = System.currentTimeMillis() + intervalTime;
 		Date date = new Date(currentTime);
 		DateFormat df = new SimpleDateFormat(format);
-		String nowTime=df.format(date);
-		return nowTime;
+		return df.format(date);
 	}
 
 	/**
@@ -91,14 +90,8 @@ public class DateUtil {
 	 * @param date2 入参2 
 	 * @return 1：date1晚于date2，-1：date1早于date2，0：传入时间等于当前时间
 	 */
-	public static int compareDate(Date date1,Date date2){
-		if (date1.getTime() > date2.getTime()) {
-            return 1;
-        } else if (date1.getTime() < date2.getTime()) {
-            return -1;
-        } else {//相等
-            return 0;
-        }
+	public static int compareDate(Date date1, Date date2){
+		return Long.compare(date1.getTime(), date2.getTime());
 	}
 
 	/**
@@ -107,7 +100,7 @@ public class DateUtil {
 	 * @param dateStr2 入参2
 	 * @return 1：date1晚于date2，-1：date1早于date2，0：传入时间等于当前时间
 	 */
-	public static int compareDate(String dateStr1,String dateStr2,String format){
+	public static int compareDate(String dateStr1, String dateStr2, String format){
 		Date date1 = DateUtil.StrToDate(dateStr1,format);
 		Date date2 = DateUtil.StrToDate(dateStr2,format);
 		return compareDate(date1,date2);
@@ -129,11 +122,12 @@ public class DateUtil {
      * @return 相差天数
      * @throws ParseException
      */    
-    public static int daysBetween(Date smdate,Date bdate,boolean containEndDate) throws ParseException{
+    public static int daysBetween(Date smdate, Date bdate, boolean containEndDate) throws ParseException {
     	try{
     		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
     		return daysBetween(sdf.format(smdate),sdf.format(bdate),containEndDate);
     	}catch(Exception e){
+    		e.printStackTrace();
     	}
     	return 0;
     }
@@ -141,7 +135,7 @@ public class DateUtil {
 	/**
 	 * 字符串的日期格式的计算
 	 */
-    public static int daysBetween(String smdate,String bdate,boolean containEndDate){
+    public static int daysBetween(String smdate, String bdate, boolean containEndDate){
     	try{
     		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
     		return days(sdf.parse(smdate),sdf.parse(bdate),containEndDate);
@@ -150,7 +144,7 @@ public class DateUtil {
     	return 0;
     }
     
-    private static int days(Date smdate,Date bdate,boolean containEndDate) throws Exception{
+    private static int days(Date smdate, Date bdate, boolean containEndDate) throws Exception {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(smdate);
 		long time1 = cal.getTimeInMillis();
@@ -174,7 +168,7 @@ public class DateUtil {
 		}catch(ParseException e){
 			e.printStackTrace();
 		}
-		Calendar calendar = new GregorianCalendar(); 
+		Calendar calendar = new GregorianCalendar();
 		calendar.setTime(date); 
 		calendar.add(Calendar.DATE, intervalDay);
 		date = calendar.getTime();
@@ -187,7 +181,7 @@ public class DateUtil {
 	 * @param format
 	 * @return
 	 */
-	public static String timeStamp2Date(String seconds,String format) {
+	public static String timeStamp2Date(String seconds, String format) {
 		if(seconds == null || seconds.isEmpty() || seconds.equals("null")){
 			return "";
 		}
@@ -195,6 +189,6 @@ public class DateUtil {
 			format = "yyyy-MM-dd HH:mm:ss";
 		}
 		SimpleDateFormat sdf = new SimpleDateFormat(format);
-		return sdf.format(new Date(Long.valueOf(seconds+"000")));
+		return sdf.format(new Date(Long.parseLong(seconds+"000")));
 	}
 }

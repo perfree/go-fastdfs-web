@@ -3,14 +3,16 @@ package com.perfree.controller;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
-import com.perfree.common.AjaxResult;
+import cn.hutool.system.OsInfo;
+import cn.hutool.system.SystemUtil;
+import com.perfree.common.Constant;
 import com.perfree.common.DateUtil;
-import com.perfree.common.GoFastDfsApi;
-import com.perfree.entity.Peers;
-import com.perfree.entity.User;
-import com.perfree.mapper.PeersMapper;
-import com.perfree.mapper.UserMapper;
+import com.perfree.common.ResponseBean;
+import com.perfree.model.Peers;
+import com.perfree.model.User;
 import com.perfree.service.IndexService;
+import com.perfree.service.PeersService;
+import com.perfree.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -19,179 +21,194 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
- * 首页
  * @author Perfree
- *
+ * @description 首页相关
+ * @date 2021/3/22 16:14
  */
 @Controller
 public class IndexController extends BaseController {
+    @Value("${version}")
+    private String version;
 
-	@Autowired
-	private IndexService indexService;
+    @Value("${version.date}")
+    private String versionDate;
 
-	@Value("${version}")
-	private String version;
+    @Autowired
+    private IndexService indexService;
+    @Autowired
+    private PeersService peersService;
+    @Autowired
+    private UserService userService;
 
-	@Value("${version.date}")
-	private String versionDate;
+    /**
+     * @return java.lang.String
+     * @description 首页
+     * @author Perfree
+     */
+    @RequestMapping("/")
+    public String index(Model model) {
+        model.addAttribute("user", getUser());
+        return "index";
+    }
 
-	@Autowired
-	private PeersMapper peersMapper;
+    /**
+     * @return java.lang.String
+     * @description 首页
+     * @author Perfree
+     */
+    @RequestMapping("/home")
+    public String home(Model model) {
+        OsInfo osInfo = SystemUtil.getOsInfo();
+        model.addAttribute("osName", osInfo.getName());
+        model.addAttribute("osArch", osInfo.getArch());
+        model.addAttribute("version", version);
+        model.addAttribute("versionDate", versionDate);
+        return "home";
+    }
 
-	@Autowired
-	private UserMapper userMapper;
+    /**
+     * @return com.perfree.common.ResponseBean
+     * @description 获取状态信息
+     * @author Perfree
+     */
+    @RequestMapping("/home/getStatus")
+    @ResponseBody
+    public ResponseBean getStatus() {
+        try {
+            String json = HttpUtil.get(getPeersUrl() + Constant.API_STATUS);
+            JSONObject parseObj = JSONUtil.parseObj(json);
+            if (parseObj.get("status").equals(Constant.API_STATUS_SUCCESS)) {
+                Map<String, Object> result = indexService.getStatus(parseObj.get("data"));
+                return ResponseBean.success(result);
+            } else {
+                return ResponseBean.fail("调取go-fastdfs接口失败");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ResponseBean.fail("系统异常");
+    }
 
-	/**
-	 * 首页
-	 * @return
-	 */
-	@RequestMapping("/")
-	public String index() {
-		return "index";
-	}
-	
-	/**
-	 * 控制台
-	 * @return
-	 */
-	@RequestMapping("/main")
-	public String main(Model model) {
-		Properties props=System.getProperties();
-		model.addAttribute("osName",props.getProperty("os.name"));
-		model.addAttribute("osArch",props.getProperty("os.arch"));
-		model.addAttribute("version",version);
-		model.addAttribute("versionDate", DateUtil.getFormatDate(DateUtil.StrToDate(versionDate,"yyyy-MM-dd"),"yyyy年MM月dd日"));
-		return "main";
-	}
+    /**
+     * @return com.perfree.common.ResponseBean
+     * @description 修正统计信息(30天)
+     * @author Perfree
+     */
+    @RequestMapping("/home/repair_stat")
+    @ResponseBody
+    public ResponseBean repair_stat() {
+        int count = 0;
+        for (int i = 0; i > -30; i--) {
+            String dateStr = DateUtil.getFormatDate(DateUtil.StrToDate(DateUtil.dayAddOrCut(DateUtil.getFormatDate("yyyy-MM-dd"), i), "yyyy-MM-dd"), "yyyyMMdd");
+            Map<String, Object> map = new HashMap<>(16);
+            map.put("date", dateStr);
+            String result = HttpUtil.post(getPeersUrl() + Constant.API_REPAIR_STAT, map);
+            JSONObject parseObj = JSONUtil.parseObj(result);
+            if (parseObj.get("status").equals("ok")) {
+                count++;
+            }
+        }
+        return ResponseBean.success("成功修正" + count + "天数据", null);
+    }
 
-	@RequestMapping("/main/getStat")
-	@ResponseBody
-	public AjaxResult getStat(){
-		try {
-			//获取文件信息,这一部分有待优化
-			String string = HttpUtil.get(getPeersUrl()+GoFastDfsApi.STATUS);
-			JSONObject parseObj = JSONUtil.parseObj(string);
-			if(parseObj.get("status").equals("ok")) {
-				Map<String, Object> result = indexService.getfileStat(parseObj.get("data"));
-				return new AjaxResult(AjaxResult.AJAX_SUCCESS,result);
-			}else{
-				return new AjaxResult(AjaxResult.AJAX_ERROR,"调取go-fastdfs接口失败");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return new AjaxResult(AjaxResult.AJAX_ERROR,"系统异常");
-	}
+    /**
+     * @return com.perfree.common.ResponseBean
+     * @description 删除空目录
+     * @author Perfree
+     */
+    @RequestMapping("/home/remove_empty_dir")
+    @ResponseBody
+    public ResponseBean remove_empty_dir() {
+        String result = HttpUtil.post(getPeersUrl() + Constant.API_REMOVE_EMPTY_DIR, new HashMap<>());
+        JSONObject parseObj = JSONUtil.parseObj(result);
+        if (parseObj.get("status").equals(Constant.API_STATUS_SUCCESS)) {
+            return ResponseBean.success("操作成功,正在后台操作,请勿重复使用此功能", null);
+        } else {
+            return ResponseBean.fail("操作失败,请稍后再试");
+        }
+    }
 
-	/**
-	 * 修正统计信息(30天)
-	 * @return AjaxResult
-	 */
-	@RequestMapping("/main/repair_stat")
-	@ResponseBody
-	public AjaxResult repair_stat(){
-		int count = 0;
-		for (int i = 0; i > -30; i--){
-			String dateStr = DateUtil.getFormatDate(DateUtil.StrToDate( DateUtil.dayAddOrCut(DateUtil.getFormatDate("yyyy-MM-dd"), i), "yyyy-MM-dd"), "yyyyMMdd");
-			Map<String, Object> map = new HashMap<>(16);
-			map.put("date", dateStr);
-			String result = HttpUtil.post(getPeersUrl() + GoFastDfsApi.REPAIR_STAT, map);
-			JSONObject parseObj = JSONUtil.parseObj(result);
-			if(parseObj.get("status").equals("ok")) {
-				count ++;
-			}
-		}
-		return new AjaxResult(AjaxResult.AJAX_SUCCESS,"成功修正"+count+"天数据");
-	}
+    /**
+     * @return AjaxResult
+     * @description 备份元数据, 30天
+     * @author Perfree
+     */
+    @RequestMapping("/home/backup")
+    @ResponseBody
+    public ResponseBean backup() {
+        int count = 0;
+        for (int i = 0; i > -30; i--) {
+            String subDateStr = DateUtil.dayAddOrCut(DateUtil.getFormatDate("yyyy-MM-dd"), i);
+            String dateStr = DateUtil.getFormatDate(DateUtil.StrToDate(subDateStr, "yyyy-MM-dd"), "yyyyMMdd");
+            Map<String, Object> map = new HashMap<>(16);
+            map.put("date", dateStr);
+            String result = HttpUtil.post(getPeersUrl() + Constant.API_BACKUP, map);
+            JSONObject parseObj = JSONUtil.parseObj(result);
+            if (parseObj.get("status").equals(Constant.API_STATUS_SUCCESS)) {
+                count++;
+            }
+        }
+        return ResponseBean.success("成功备份" + count + "天数据", null);
+    }
 
-	/**
-	 * 删除空目录
-	 * @return AjaxResult
-	 */
-	@RequestMapping("/main/remove_empty_dir")
-	@ResponseBody
-	public AjaxResult remove_empty_dir(){
-		String result = HttpUtil.post(getPeersUrl()+GoFastDfsApi.REMOVE_EMPTY_DIR, new HashMap<>());
-		JSONObject parseObj = JSONUtil.parseObj(result);
-		if(parseObj.get("status").equals("ok")) {
-			return new AjaxResult(AjaxResult.AJAX_ERROR,"操作成功,正在后台操作,请勿重复使用此功能");
-		}else{
-			return new AjaxResult(AjaxResult.AJAX_ERROR,"操作失败,请稍后再试");
-		}
-	}
+   /**
+    * @description 同步失败修复
+    * @return com.perfree.common.ResponseBean
+    * @author Perfree
+    */
+    @RequestMapping("/home/repair")
+    @ResponseBody
+    public ResponseBean repair() {
+        String result = HttpUtil.post(getPeersUrl() + Constant.API_REPAIR + "?force=1", new HashMap<>());
+        JSONObject parseObj = JSONUtil.parseObj(result);
+        if (parseObj.get("status").equals(Constant.API_STATUS_SUCCESS)) {
+            return ResponseBean.success("操作成功,正在后台操作,请勿重复使用此功能", null);
+        } else {
+            return ResponseBean.fail("操作失败,请稍后再试");
+        }
+    }
 
-	/**
-	 * 备份元数据,30天
-	 * @return
-	 */
-	@RequestMapping("/main/backup")
-	@ResponseBody
-	public AjaxResult backup(){
-		int count = 0;
-		for (int i = 0; i > -30; i--){
-			String subDateStr = DateUtil.dayAddOrCut(DateUtil.getFormatDate("yyyy-MM-dd"), i);
-			String dateStr = DateUtil.getFormatDate(DateUtil.StrToDate(subDateStr, "yyyy-MM-dd"), "yyyyMMdd");
-			Map<String, Object> map = new HashMap<>(16);
-			map.put("date", dateStr);
-			String result = HttpUtil.post(getPeersUrl() + GoFastDfsApi.BACKUP, map);
-			JSONObject parseObj = JSONUtil.parseObj(result);
-			if(parseObj.get("status").equals("ok")) {
-				count ++;
-			}
-		}
-		return new AjaxResult(AjaxResult.AJAX_SUCCESS,"成功备份"+count+"天数据");
-	}
+   /**
+    * @description 获取所有集群
+    * @return com.perfree.common.ResponseBean
+    * @author Perfree
+    */
+    @RequestMapping("/home/getAllPeers")
+    @ResponseBody
+    public ResponseBean getAllPeers(){
+        List<Peers> peers = peersService.list();
+        return ResponseBean.success(peers);
+    }
 
-	/**
-	 * 同步失败修复
-	 * @return AjaxResult
-	 */
-	@RequestMapping("/main/repair")
-	@ResponseBody
-	public AjaxResult repair(){
-		String result = HttpUtil.post(getPeersUrl()+GoFastDfsApi.REPAIR+"?force=1", new HashMap<>());
-		JSONObject parseObj = JSONUtil.parseObj(result);
-		if(parseObj.get("status").equals("ok")) {
-			return new AjaxResult(AjaxResult.AJAX_ERROR,"操作成功,正在后台操作,请勿重复使用此功能");
-		}else{
-			return new AjaxResult(AjaxResult.AJAX_ERROR,"操作失败,请稍后再试");
-		}
-	}
+    /**
+     * @description 切换集群
+     * @param id id
+     * @param session session
+     * @return com.perfree.common.ResponseBean
+     * @author Perfree
+     */
+    @RequestMapping("/home/switchPeers")
+    @ResponseBody
+    public ResponseBean switchPeers(int id, HttpSession session){
+        if(id == getPeers().getId()){
+            return ResponseBean.fail("当前正在使用此集群");
+        }
+        User user = new User();
+        user.setPeersId(id);
+        user.setId(getUser().getId());
+        user.setUpdateTime(new Date());
+        if(userService.updateById(user)){
+            Peers peers = peersService.getById(id);
+            session.setAttribute("peers",peers);
+            return ResponseBean.success();
+        }
+        return ResponseBean.fail("切换失败");
+    }
 
-	/**
-	 * 获取所有集群
-	 * @return AjaxResult
-	 */
-	@RequestMapping("/main/getAllPeers")
-	@ResponseBody
-	public AjaxResult getAllPeers(){
-		List<Peers> peers = peersMapper.getAllPeers();
-		return new AjaxResult(AjaxResult.AJAX_SUCCESS,peers);
-	}
-
-	/**
-	 * 切换集群
-	 * @param id
-	 * @return AjaxResult
-	 */
-	@RequestMapping("/main/switchPeers")
-	@ResponseBody
-	public AjaxResult switchPeers(int id, HttpSession session){
-		if(id == getPeers().getId()){
-			return new AjaxResult(AjaxResult.AJAX_ERROR,"当前正在使用此集群");
-		}
-		User user = new User();
-		user.setPeersId(id);
-		user.setId(getUser().getId());
-		user.setUpdateTime(DateUtil.getFormatDate(new Date()));
-		if(userMapper.switchPeers(user) > 0){
-			Peers peers = peersMapper.getPeersById(id);
-			session.setAttribute("peers",peers);
-			return new AjaxResult(AjaxResult.AJAX_SUCCESS);
-		}
-		return new AjaxResult(AjaxResult.AJAX_ERROR,"切换失败");
-	}
 }

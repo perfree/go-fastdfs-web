@@ -4,18 +4,26 @@
 <meta charset="UTF-8">
 <title>个人资料</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<link rel="stylesheet" th:href="@{/plugins/layui/css/layui.css}" media="all">
-<link rel="stylesheet" th:href="@{/plugins/layer/theme/default/layer.css}" media="all">
-<link rel="stylesheet" th:href="@{/plugins/font-awesome/css/font-awesome.min.css}" media="all">
+<link rel="stylesheet" th:href="@{/static/lib/layui-v2.5.6/layui/css/layui.css}">
+<link th:href="@{/static/lib/font-awesome-4.7.0/css/font-awesome.min.css}" rel="stylesheet"/>
 <style>
 	.layui-form-label{
 		width: 120px;
 		color: #657180;
 	}
+	.editUser {
+		height: 33px;
+		line-height: 33px;
+		background-color: #627aad;
+	}
+	.reset{
+		height: 33px;
+		line-height: 33px;
+	}
 </style>
 </head>
 <body>
-<div class="layui-container" style="width: 100%;">
+<div class="layui-container" style="width: 100%;padding: 0">
 	<div class="layui-row">
 		<div class="layui-col-md12" style="padding:5px;">
 			<div class="layui-card">
@@ -59,8 +67,8 @@
 						</div>
 						<div class="layui-form-item">
 							<div class="layui-input-block">
-								<button class="layui-btn" lay-submit="" lay-filter="editUser">立即提交</button>
-								<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+								<button class="layui-btn editUser" lay-submit="" lay-filter="editUser">立即提交</button>
+								<button type="reset" class="reset layui-btn layui-btn-primary">重置</button>
 							</div>
 						</div>
 					</form>
@@ -69,15 +77,14 @@
 		</div>
 	</div>
 </div>
-<script th:src="@{/js/jquery.min.js}"></script>
-<script th:src="@{/plugins/layer/layer.js}"></script>
-<script th:src="@{/plugins/layui/layui.js}"></script>
+<script th:src="@{/static/lib/jquery/jquery-3.5.1.min.js}"></script>
+<script th:src="@{/static/lib/layui-v2.5.6/layui/layui.js}"></script>
 <script>
 	layui.use('form', function() {
 		var form = layui.form;
 		form.on('submit(editUser)', function(data){
 			$.post("/settings/editUser",data.field,function (data) {
-				if(data.state == 200){
+				if(data.code === 200){
 					layer.msg("修改成功", {icon: 6});
 					setTimeout(function(){
 						window.location.reload();

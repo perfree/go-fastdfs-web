@@ -1,90 +1,82 @@
 package com.perfree.controller;
 
-
-import javax.servlet.http.HttpSession;
-
-import org.apache.log4j.Logger;
+import com.perfree.common.ResponseBean;
+import com.perfree.model.User;
+import com.perfree.service.UserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.perfree.common.AjaxResult;
-import com.perfree.entity.User;
-
 /**
- * 系统处理controller,主要处理登录等系统级别的逻辑
+ * @description 常用Controller,包含首页,登录,退出等
  * @author Perfree
- *
+ * @date 2021/3/22 13:44
  */
 @Controller
-public class SystemController {
-	
-	private static Logger logger = Logger.getLogger(SystemController.class);
+public class SystemController extends BaseController {
+    private final static Logger LOGGER = LoggerFactory.getLogger(SystemController.class);
 
-	/**
-	 * 登录页
-	 * @return String
-	 */
-	@RequestMapping("/login")
-	public String login() {
-		return "login";
-	}
-	
-	@RequestMapping("/error/{status}")
-	public String error(@PathVariable String status) {
-		return status;
-	}
-	
-	/**
-	 * 登录操作
-	 * @param user
-	 * @return AjaxResult
-	 */
-	@ResponseBody
-	@RequestMapping(method=RequestMethod.POST,path="/doLogin")
-	public AjaxResult doLogin(User user, Boolean rememberMe, HttpSession session) {
-		AjaxResult result = null;
-		if(rememberMe == null) {
-            rememberMe = false;
+    @Autowired
+    private UserService userService;
+
+    /**
+     * @description 登录页
+     * @return java.lang.String
+     * @author Perfree
+     */
+    @RequestMapping("/login")
+    public String login() {
+        return "login";
+    }
+
+    /**
+     * @description 登录
+     * @param user  user
+     * @return com.perfree.common.ResponseBean
+     * @author Perfree
+     */
+    @RequestMapping("/doLogin")
+    @ResponseBody
+    public ResponseBean doLogin(User user) {
+        try {
+            UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(user.getAccount(),user.getPassword(), false);
+            Subject subject = SecurityUtils.getSubject();
+            subject.login(usernamePasswordToken);
+            LOGGER.info("{} >>>login", user.getAccount());
+            return ResponseBean.success();
+        }catch (IncorrectCredentialsException e) {
+            LOGGER.info(user.getAccount() + e.getMessage());
+            return ResponseBean.fail("密码错误");
+        }catch (UnknownAccountException e) {
+            LOGGER.info(user.getAccount() + e.getMessage());
+            return ResponseBean.fail("用户不存在");
+        }catch (Exception e) {
+            LOGGER.info(user.getAccount() + e.getMessage());
+            return ResponseBean.fail("系统异常");
         }
-		try {
-			UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(user.getAccount(),user.getPassword(),rememberMe);
-			Subject subject = SecurityUtils.getSubject();
-			subject.login(usernamePasswordToken);
-			result = new AjaxResult(AjaxResult.AJAX_SUCCESS);
-			logger.info(user.getAccount()+" >>>login");
-		}catch (IncorrectCredentialsException e) {
-			logger.info(user.getAccount()+e.getMessage());
-			result = new AjaxResult(AjaxResult.AJAX_ERROR,"密码错误");
-		}catch (UnknownAccountException e) {
-			logger.info(user.getAccount()+e.getMessage());
-			result = new AjaxResult(AjaxResult.AJAX_ERROR,"用户不存在");
-		}catch (Exception e) {
-			logger.error(user.getAccount()+e.getMessage());
-			result = new AjaxResult(AjaxResult.AJAX_ERROR,"系统异常");
-		}
-		return result;
-	}
-	
-	/**
-	 * 登出
-	 * @return String
-	 */
-	@RequestMapping(path="/logout",method=RequestMethod.GET)
-	public String logout() {
-		Subject subject = SecurityUtils.getSubject();
-        User user=new User();
+    }
+
+    /**
+     * @description 退出登录
+     * @return java.lang.String
+     * @author Perfree
+     */
+    @RequestMapping("/logout")
+    public String logout(){
+        Subject subject = SecurityUtils.getSubject();
+        User user = new User();
         BeanUtils.copyProperties(subject.getPrincipals().getPrimaryPrincipal(), user);
-        logger.info(user.getAccount()+" >>>logout");
+        LOGGER.info("{} >>>logout", user.getAccount());
         subject.logout();
-		return "redirect:/login";
-	}
+        return "redirect:/login";
+    }
 }

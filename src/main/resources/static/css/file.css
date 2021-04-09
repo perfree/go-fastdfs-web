@@ -1,6 +1,9 @@
 html,body,.layui-container,.layui-row,.layui-col-md12{
     height: 100%;
 }
+.layui-container{
+    padding: 0;
+}
 .layui-card{
     min-height: 100%;
 }
@@ -11,6 +14,20 @@ html,body,.layui-container,.layui-row,.layui-col-md12{
     fill: currentColor;
     overflow: hidden;
     margin-right: 5px;
+}
+#fileUpload {
+    display: inline-block;
+    height: 33px;
+    line-height: 33px;
+    padding: 0 18px;
+    background-color: #627aad;
+    color: #fff;
+    white-space: nowrap;
+    text-align: center;
+    font-size: 14px;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
 }
 .file-list-header-ul{
     display: table;

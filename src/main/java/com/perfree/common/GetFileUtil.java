@@ -1,16 +1,15 @@
 package com.perfree.common;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-import com.perfree.entity.FileResult;
-
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
+import com.perfree.form.FileResult;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * 获取文件列表工具类
@@ -23,12 +22,12 @@ public class GetFileUtil {
      * @param dir 要获取的目录(根目录为null)
      * @return List<FileResult>
      */
-    public static List<FileResult> getDirOrFileList(String showUrl,String serverAddress,String dir){
+    public static List<FileResult> getDirOrFileList(String showUrl, String serverAddress, String dir){
         HashMap<String, Object> param = new HashMap<>(10);
         if(StrUtil.isNotBlank(dir)){
            param.put("dir",dir);
         }
-        String result = HttpUtil.post(serverAddress + GoFastDfsApi.LIST_DIR, param);
+        String result = HttpUtil.post(serverAddress + Constant.API_LIST_DIR, param);
         JSONObject parseObj = JSONUtil.parseObj(result);
         List<FileResult> files = new ArrayList<>();
         if(parseObj.getStr("message").equals("") && StrUtil.isNotBlank(parseObj.getStr("data"))) {
@@ -49,7 +48,7 @@ public class GetFileUtil {
                 }else{
                     fileResult.setSize(FileSizeUtil.GetLength(Long.valueOf(file.getStr("size"))));
                 }
-                fileResult.setMTime(DateUtil.timeStamp2Date(file.getStr("mtime"),null));
+                fileResult.setmTime(DateUtil.timeStamp2Date(file.getStr("mtime"),null));
                 files.add(fileResult);
             }
         }

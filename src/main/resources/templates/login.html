@@ -1,47 +1,62 @@
-<html xmlns:th="http://www.thymeleaf.org">
-<head lang="zh_CN" >
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	<title>登录</title>
-	<link rel="stylesheet" th:href="@{/css/login.css}" media="all">
-	<link rel="stylesheet" th:href="@{/plugins/layui/css/layui.css}" media="all">
-	<script type="text/javascript">
-	if (window != top) 
-		top.location.href = location.href; 
-	</script>
+<!DOCTYPE html>
+<html lang="zh_CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>Go-FastDfs管理-登录</title>
+    <link rel="Shortcut Icon" th:href="@{/static/images/favicon.ico}" type="image/x-icon"/>
+    <link rel="stylesheet" th:href="@{/static/lib/layui-v2.5.6/layui/css/layui.css}">
+    <link rel="stylesheet" th:href="@{/static/css/login.css}">
+    <script type="text/javascript">
+        if (window !== top)
+            top.location.href = location.href;
+    </script>
 </head>
-<body class="login-bg">
-<div class="login">
-	<div class="message">GoFastDfs-管理登录</div>
-	<div id="darkbannerwrap"></div>
-	<form method="post" class="layui-form" action="/doLogin">
-	    <input name="account" placeholder="用户名"  type="text" lay-verify="required" class="layui-input" >
-	    <hr class="hr15">
-	    <input name="password" lay-verify="required" placeholder="密码"  type="password" class="layui-input">
-	    <hr class="hr15">
-	    <div style="height: 20px;">
-	    	<input type="checkbox" name="rememberMe" title="记住我" lay-skin="primary">
-	    	<a href="#" style="float: right;color:#666">忘记密码</a>
-	    </div>
-	    <hr class="hr15">
-	    <input class="loginin" value="登录" lay-submit lay-filter="login" style="width:100%;" type="submit">
-	</form>
+<body>
+<div class="full">
+    <div class="login-top-box"></div>
+    <div class="login-box">
+        <h2 class="login-title">登录</h2>
+        <form class="layui-form" action="">
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <input type="text" name="account" required  lay-verify="required" placeholder="请输入账户" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <input type="password" name="password" required lay-verify="required" placeholder="请输入密码" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn login-btn" lay-submit lay-filter="login">立即登录</button>
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
-<script th:src="@{/plugins/layui/layui.js}"></script>
+
+<script th:src="@{/static/lib/jquery/jquery-3.5.1.min.js}"></script>
+<script th:src="@{/static/lib/layui-v2.5.6/layui/layui.all.js}"></script>
 <script type="text/javascript">
-layui.use(['form','jquery','layer'], function(){
-  var form = layui.form,$=layui.jquery,layer=layui.layer;
-  form.on('submit(login)', function(data){
-	  $.post("/doLogin",data.field,function(result){
-		 if(result.state == 200){
-			  location.href='/';
-		 }else{
-			 layer.msg(result.msg);
-		 }
-	  });
-	  return false;
-  });
-});
+    layui.use('form', function(){
+        const form = layui.form;
+        //监听提交
+        form.on('submit(login)', function(data){
+            const index = layer.load();
+            $.post("/doLogin", data.field, function(result){
+                if(result.code === 200){
+                    layer.close(index);
+                    window.location.href = '/';
+                }else{
+                    layer.close(index);
+                    layer.msg(result.msg);
+                }
+            });
+            return false;
+        });
+    });
 </script>
 </body>
 </html>

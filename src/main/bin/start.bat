@@ -1,1 +1,0 @@
-start java -jar go-fastdfs-web.jar

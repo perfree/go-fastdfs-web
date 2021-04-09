@@ -1,10 +1,10 @@
 package com.perfree.controller;
 
 import cn.hutool.core.util.StrUtil;
-import com.perfree.common.AjaxResult;
-import com.perfree.common.GoFastDfsApi;
-import com.perfree.common.StringUtil;
+import com.perfree.common.Constant;
+import com.perfree.common.ResponseBean;
 import com.perfree.common.UploadUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,23 +23,23 @@ public class UploadController extends BaseController {
     private String tempPath;
 
     @RequestMapping("/file/upload")
-    public String index(Model model){
-        model.addAttribute("showAddress",getUploadShowUrl());
+    public String index(Model model) {
+        model.addAttribute("showAddress", getUploadShowUrl());
         return "file/upload";
     }
 
     @RequestMapping("/file/upload/moreFileUpload")
     @ResponseBody
-    public AjaxResult moreFileUpload(@RequestParam("file") MultipartFile file, String scene, String path,String showUrl){
-        if(file.isEmpty()) {
-            return new AjaxResult(AjaxResult.AJAX_ERROR,"请选择文件");
+    public ResponseBean moreFileUpload(@RequestParam("file") MultipartFile file, String scene, String path, String showUrl) {
+        if (file.isEmpty()) {
+            return ResponseBean.fail("请选择文件");
         }
-        if(StringUtil.isBlank(scene)){
-            return new AjaxResult(AjaxResult.AJAX_ERROR,"请填写上传场景");
+        if (StringUtils.isBlank(scene)) {
+            return ResponseBean.fail("请填写上传场景");
         }
-        if(StrUtil.isBlank(showUrl)){
+        if (StrUtil.isBlank(showUrl)) {
             showUrl = getUploadShowUrl();
         }
-        return UploadUtils.upload(file,getPeersUrl() + GoFastDfsApi.UPLOAD,showUrl);
+        return UploadUtils.upload(file, getPeersUrl() + Constant.API_UPLOAD, showUrl);
     }
 }
