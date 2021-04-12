@@ -40,6 +40,25 @@ function initEvent() {
         setIframeHeight();
     });
 
+    //  支持
+    $(".f-support-btn").click(function () {
+        let html = `
+        <div style="text-align: center;font-size: 17px;font-weight: 900;">
+            <p style="margin-bottom: 10px;margin-top: 5px;">您的支持是我们最大的动力</p>
+            <img src="/static/images/alipay.jpg">
+            <img src="/static/images/wechat.jpg">
+        </div>
+        `;
+        layer.open({
+            type: 1,
+            title: '支持',
+            shadeClose: true,
+            shade: 0.3,
+            area: ['400px', '320px'],
+            content: html
+        });
+    });
+
     // 侧边栏hover
     $(".f-nav-item").hover(function (e) {
         if (!isOpen) {
