@@ -91,7 +91,7 @@ html,body,.layui-container,.layui-row,.layui-col-md12{
     font-size: 1.1em;
     border-bottom: 1px solid #f3f3f3;
     word-wrap: break-word;
-    display: flex;
+    word-break: normal;
 }
 .file-details-box li span{
     float: left;

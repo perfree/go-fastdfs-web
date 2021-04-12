@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.perfree</groupId>
     <artifactId>go-fastdfs-web</artifactId>
-    <version>v1.0.0</version>
+    <version>v1.3.5</version>
     <name>go-fastdfs-web</name>
     <description>go-fastdfs-web</description>
     <properties>

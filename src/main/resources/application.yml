@@ -4,8 +4,8 @@ server:
     session:
       cookie:
         http-only: false
-version: v1.3.4
-version.date: 2019/10/14
+version: v1.3.5
+version.date: 2021/04/12
 upload.temp.path: /temp/
 spring:
   thymeleaf:

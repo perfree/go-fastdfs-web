@@ -7,6 +7,7 @@ import java.util.List;
  * @Date 2019/5/11 11:13
  */
 public class FileDetails {
+    private String url;
     private String path;
     private String size;
     private String name;
@@ -14,6 +15,14 @@ public class FileDetails {
     private String scene;
     private String timeStamp;
     private List<String> peers;
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
 
     public String getPath() {
         return path;

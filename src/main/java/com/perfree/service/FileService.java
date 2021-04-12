@@ -72,6 +72,7 @@ public class FileService {
             FileDetails fileDetails = JSONUtil.toBean(parseObj.getStr("data"), FileDetails.class);
             fileDetails.setSize(FileSizeUtil.GetLength(Long.parseLong(fileDetails.getSize())));
             fileDetails.setTimeStamp(DateUtil.getFormatDate(new Date(Long.parseLong(fileDetails.getTimeStamp())* 1000)));
+            fileDetails.setUrl(peersUrl + "/" + fileDetails.getPath().replace("files/","") + "/" + fileDetails.getName());
             return ResponseBean.success(fileDetails);
         }
         return ResponseBean.fail("获取文件信息失败");

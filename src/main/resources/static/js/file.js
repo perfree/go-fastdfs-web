@@ -118,6 +118,7 @@ $("#file-result").on("click", ".details-btn", function () {
             '<ul>' +
             '<li><span>名称:&nbsp;</span>' + result.data.name + '</li>' +
             '<li><span>路径:&nbsp;</span>' + result.data.path + '</li>' +
+            '<li><span>url:&nbsp;</span>' + result.data.url + '</li>' +
             '<li><span>MD5:&nbsp;</span>' + result.data.md5 + '</li>' +
             '<li><span>场景:&nbsp;</span>' + result.data.scene + '</li>' +
             '<li><span>大小:&nbsp;</span>' + result.data.size + '</li>' +
@@ -129,6 +130,7 @@ $("#file-result").on("click", ".details-btn", function () {
             title: '文件信息',
             shadeClose: true,
             shade: 0.3,
+            area: ['500px', '400px'],
             content: html
         });
     })
