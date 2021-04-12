@@ -22,7 +22,7 @@ public class SQLiteConfiguration {
 
     private static final Logger logger = LoggerFactory.getLogger(SQLiteConfiguration.class);
 
-    @Value("${SQLite.dbPath:/db/go-fastDfs.db}")
+    @Value("${SQLite.dbPath:/db/go-fastdfs.db}")
     private String SQLiteDbPath;
 
     @Bean
