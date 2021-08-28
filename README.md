@@ -42,6 +42,10 @@ docker run --name fastdfsweb -d -p 8088:8088 perfree/fastdfsweb
 4.停止
 ./goFastDfsWeb.sh stop
 ```
+如遇到-bash: ./goFastDfsWeb.sh: /bin/bash^M: 坏的解释器: 没有那个文件或目录错误,则执行以下命令再运行
+```bash
+sed -i 's/\r//' ./goFastDfsWeb.sh
+```
 
 ## 开发说明
 项目使用SpringBoot,Mybatis-Plus,Shiro进行开发,为方便后期用户安装,数据库采用Sqlite.
