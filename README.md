@@ -3,6 +3,8 @@
 
 [前往 Go-Fastdfs](https://github.com/sjqzhang/go-fastdfs)
 
+[Go-Fastdfs web管理平台 - Golang版本](https://github.com/perfree/go-fastdfs-web-go)
+
 ## 简单预览图
 ![控制台](./screen/01.png)
 
