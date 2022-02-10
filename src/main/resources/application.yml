@@ -4,7 +4,7 @@ server:
     session:
       cookie:
         http-only: false
-version: v1.3.5
+version: v1.3.7
 version.date: 2021/04/12
 upload.temp.path: /temp/
 spring:
