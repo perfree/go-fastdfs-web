@@ -72,7 +72,7 @@ public class UploadUtils {
      * @param showUrl showUrl
      * @return ResponseBean
      */
-    public static ResponseBean upload(MultipartFile file, String path, String showUrl) {
+    public static ResponseBean upload(MultipartFile file, String url, String showUrl,String path) {
         try {
             CloseableHttpClient httpClient = HttpClientBuilder.create().build();
             CloseableHttpResponse httpResponse = null;
@@ -80,12 +80,13 @@ public class UploadUtils {
                     .setConnectTimeout(200000)
                     .setSocketTimeout(2000000)
                     .build();
-            HttpPost httpPost = new HttpPost(path);
+            HttpPost httpPost = new HttpPost(url);
             httpPost.setConfig(requestConfig);
             MultipartEntityBuilder multipartEntityBuilder = MultipartEntityBuilder.create()
                     .setMode(HttpMultipartMode.BROWSER_COMPATIBLE)
                     .setCharset(StandardCharsets.UTF_8)
                     .addTextBody("output", "json")
+                    .addTextBody("path", path)
                     .addBinaryBody("file", file.getInputStream(),
                             ContentType.DEFAULT_BINARY, file.getOriginalFilename());
             httpPost.setEntity(multipartEntityBuilder.build());
