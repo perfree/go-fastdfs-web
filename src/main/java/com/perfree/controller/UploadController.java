@@ -40,6 +40,6 @@ public class UploadController extends BaseController {
         if (StrUtil.isBlank(showUrl)) {
             showUrl = getUploadShowUrl();
         }
-        return UploadUtils.upload(file, getPeersUrl() + Constant.API_UPLOAD, showUrl);
+        return UploadUtils.upload(file, getPeersUrl() + Constant.API_UPLOAD, showUrl,path);
     }
 }
